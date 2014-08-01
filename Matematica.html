@@ -37,9 +37,10 @@
 	var canvas;
 	function resize(){
 		if(_inited){
-			//director.setScale(Math.min(window.outerWidth/1024, window.outerHeight/768),Math.min(window.outerWidth/1024, window.outerHeight/768))
-			director.setScale(1, 1);
-			document.getElementById("wrap").style.width=parseInt(Math.min(window.innerWidth/1024, window.innerHeight/768)*1024)+"px";
+		if(window.innerHeight<768 || window.innerWidth<1024){
+				director.setScale(Math.min(window.innerWidth/1024, window.innerHeight/768),Math.min(window.innerWidth/1024, window.innerHeight/768))
+				document.getElementById("wrap").style.width=parseInt(Math.min(window.innerWidth/1024, window.innerHeight/768)*1024)+"px";
+			}
 		}
 	}
 	function _onLoad(){

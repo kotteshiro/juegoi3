@@ -413,7 +413,7 @@ function spashMsg(src,fncb,requireclick){
 		this.addBehavior( comporta2 );
 		comporta2.addListener({
 	        behaviorExpired : function(behavior, time, actor) {
-				updateonwherever();
+				//updateonwherever();
 	           actor.destroy()
 	        }});
 		this.clickcb();

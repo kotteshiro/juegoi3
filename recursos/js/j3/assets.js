@@ -1,4 +1,4 @@
-var _images= [ 	
+var _images_= [ 	
 	{id:'fondo_a',     url:'recursos/imagenes/fondo_a.png'},
 	{id:'fondo_b',     url:'recursos/imagenes/fondo_b.png'},
 	{id:'fondo_c',     url:'recursos/imagenes/fondo_c.png'},
@@ -49,3 +49,6 @@ var _images= [
 	{id:'flechaCuerpo',     url:'recursos/imagenes/j3/flechaCuerpo.png'},
 	
 ];
+
+subtmitfiles(_images_);
+

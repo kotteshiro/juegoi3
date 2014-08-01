@@ -2,8 +2,8 @@ var cohete_;
 sc(function(escena){
 	escena.name="scintro";
 	escena.setClip(true);
-	trace(">scintro");
- 	var bg = animbg(escena),
+	trace(">scintro espacio");
+ 	//var bg = animbg(escena),
 		bgIntro = obj("bgSpace", escena, "bgIntro", 0, 0, 1, 1);
 	
 	var earthCont	= new CAAT.ActorContainer()
