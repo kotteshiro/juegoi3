@@ -1,4 +1,4 @@
-//NICO
+//biologia
 var  texttest;
 var selectglobal;
 var tryFails=0;
@@ -139,6 +139,7 @@ function acjuego(conten){
 		clockController("stop");
 		sonido.play("win");
 		spashMsg("tit_intento3",function(){muestraescenario();});
+		//updateonwherever();
 		updatebtnmute();
 		clockController("start");
 		//parafernalia
@@ -147,6 +148,7 @@ function acjuego(conten){
 		clockController("stop");
 		trace("Mensaje Excelente");
 		sonido.play("win");
+		//updateonwherever();
 		spashMsg("tit_excelente",salirgame);
 		gameover=true;
 	}
@@ -241,6 +243,7 @@ function startClock(cdt) {
 }
 
 function setCountdown(cdt) {
+	//if(typeof onTimeOver === "undefined") var onTimeOver=false;
 	trace("CountDown!");
 	if(!currTimer) {
 		currTimer = new CountDown({
@@ -248,7 +251,7 @@ function setCountdown(cdt) {
 			onTick: function(time) {
 				clock.txt.setText(currTimer.format(time));
 			},
-			onStop: onTimeOver || function(time) {
+			onStop: window.onTimeOver || function(time) {
 				// Game end.
 				console.warn("Time over method not implemented!");
 				trace("The game should reset!");

@@ -1,3 +1,10 @@
+window.onTimeOver=function(){
+	gameOver();
+}
+
+function gameOver(){
+	menuprinc();
+}
 function Play(ac){
 	
 	this.e1=new Escena(ac,"e1",this);
@@ -34,7 +41,7 @@ function Play(ac){
 		}else if(logro.getLvlIx()<9){
 			redes.viewEscena(logro.getLvlIx())
 		}else{
-			menuprinc();
+			gameOver();
 		}
 	}
 	
