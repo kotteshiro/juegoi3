@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta name="viewport" content="width=device-width"/>
+	<meta charset="UTF-8">
+	<script src="recursos/libs/easeljs-0.7.1.min.js"></script>
+	<script src="recursos/libs/soundjs-0.5.2.min.js"></script>
+	<script src="recursos/libs/caat/caat.js"></script>
+	<script src="recursos/js/assets.js"></script>
+	<script src="recursos/js/aclogro.js"></script>
+	<script src="recursos/js/caattemplate.js"></script>
+	<script src="recursos/js/acjuego.js"></script>
+	<script src="recursos/js/core.js"></script>
+	<script src="recursos/js/main.js"></script>
+	<script src="recursos/js/acfondo.js"></script>
+	<script src="recursos/js/acmenu.js"></script>
+	<script src="recursos/js/actitulo.js"></script>
+	<script src="recursos/js/scintro.js"></script>
+	<script src="recursos/js/scprinc.js"></script>
+	<script src="recursos/js/scingame.js"></script>
+	<script src="recursos/js/scayuda.js"></script>
+	<script src="recursos/js/sonido2.js"></script>
+	
+	
+	<script type="text/javascript">
+	//Audio = Audio || function(){} *
+	if(Audio==undefined){
+		alert("Su navegador no soporta 'Audio' en HTML5, por favor actualize.");
+		Audio = Audio || function(){}
+	}
+	var _inited=false;
+	var bg;
+	var director;
+	var canvas;
+	function resize(){
+		if(_inited){
+			director.setScale(Math.min(window.innerWidth/1024, window.innerHeight/768),Math.min(window.innerWidth/1024, window.innerHeight/768))
+			document.getElementById("wrap").style.width=parseInt(Math.min(window.innerWidth/1024, window.innerHeight/768)*1024)+"px";
+		}
+	}
+	function _onLoad(){
+		console.log("cargado");
+		sonido.init();
+		ini(1024,768,'_c',_images,_loaded);//caattemplate.js
+		/***/
+		window.onresize = resize;
+		window.ondeviceorientation  = resize;
+	}
+	function _loaded(dire){
+		_inited=true;
+		director=dire;
+		canvas=director.canvas;
+		onloadimgs(director);
+		
+		resize();
+	}
+	
+	
+</script>
+ 
+
+	<title>Colores Primarios</title>
+	<style type="text/css">
+	canvas{
+	/*border-style: solid;*/
+	}
+	body{
+		margin: 0px;
+		overflow: hidden;
+		padding: 0px;
+	}
+	#wrap{
+		margin: 0 auto;
+	}
+	</style>
+</head>
+<body onload="_onLoad();">
+	<div id="wrap">
+		<canvas id="_c"></canvas>
+	</div>
+	<div id="consoleoutput"></div>
+</body>
+</html>
