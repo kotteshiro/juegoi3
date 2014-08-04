@@ -14,7 +14,7 @@ sc(function(escena){
 		sonido.stop("sonidoIntro");
 		sonido.stop("sonidoTitulo");
 		sonido.play("sonidoEnunciado");
-		
+		logro.reset();
 		switch(a.name){
 			case "btninfo":
 				trace("ssdasd");

@@ -63,6 +63,9 @@ var _images_= [
     {id: 'sino',url: path + 'sino.png'}, 
     {id: 'marco-blanco',url: path + 'marco-blanco.png'}, 
     {id: 'en-pausa',url: path + 'en-pausa.png'},
+	{id: 'jugar_salir',url: path + 'jugar_salir.png'},
+	{id: 'puntaje',url: path + 'puntaje.png'},
+	
 ];
 
 subtmitfiles(_images_);

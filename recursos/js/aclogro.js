@@ -46,6 +46,7 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
 		if(i == 4) {
 			ESC = 7;
 			startPos += 20;
+			recreateSeq = true;
 		}
 		
 		if(i == 8) {
@@ -63,8 +64,9 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
 			
 			recreateSeq = false;
 		}
-
+		console.log("LOGRO SECUENCIA:",tmpSeq,ESC);
 		var tmpStar = new MovieClipSprite(spminilogros.getRef(), tmpSeq, 200, startPos, 0).stop(ESC);
+		tmpStar.secuencia=tmpSeq;
 		logros.estrellas.push(tmpStar);
 		ac.addChild(tmpStar.getActor());
 		startPos += sep;
@@ -97,9 +99,11 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
     
     this.reset = function() {
         for (var i in logros.estrellas) {
-            logros.estrellas[i].stop(0);
+            logros.estrellas[i].stop(logros.estrellas[i].secuencia[0]); 
         }
         logros.currlvl = 0;
+		currScore = 0;
+		this.updateScore();
     }
 	
 	this.calculateScoreFromTime = function(millis) {

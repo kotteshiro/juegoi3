@@ -232,18 +232,25 @@ function setMISC(act,cbdrag,cbdrop,cbdraging,grilla){
 	act.originalx=act.x;
 	act.originaly=act.y;
 	act.mouseDown=function(e){
+		e.source.currsx=.4;
+		e.source.currsy=.4;
 		this.setScale(.4,.4);
 		cbdrag.call(this,e);
 	}
+	
 	act.mouseUp=function(e){
 		//this.setScale(1,1);
 		cbdrop.call(this,e);
 	}
+	
 	act.mouseDrag=function(e){
 		//console.log(e);
 		cbdraging.call(this,e);
 	}
+	
 	act.volver=function(){
+		e.source.currsx=1;
+		e.source.currsy=1;
 		animaa(this,{x:this.originalx,y:this.originaly,scalex:1,scaley:1,alpha:1});
 	}
 }
@@ -257,6 +264,8 @@ function animaa(obj,props){
 		obj.y=props.y //TODO
 	}
 	if(props.scalex){
+		e.source.currsx=props.scalex;
+		e.source.currsy=props.scaley;
 		obj.setScale(props.scalex,props.scaley)
 	}
 	if(props.alpha){
@@ -304,6 +313,8 @@ function ponerNumero(donde,valor,plus,cb){
 	var sp={sprite:[getsprt("numeros",11,3), (valor)+plus, (valor)+plus],x: donde.x, y:donde.y, click:cb};
 	//var act =btn(uniq("num"),conten,donde.padre);
 	var btn1=btn(uniq("num"),donde.padre,sp).setScale(1,1);
+	btn1.currsx=1;
+	btn1.currsy=1;
 	btn1.plus=plus;
 	btn1.valor=valor;
 	btn1.setVal=function(ca){

@@ -16,6 +16,9 @@ var countDownTime = 0.1;
 
 function onTimeOver(time) {
 	trace("Time's up!");
+	currScore=0;
+	logro.reset();
+	pantallaGameOver(currScore,"tit_intento1");
 }
 
 sc(function(escena) {
@@ -170,7 +173,7 @@ Etapa1.prototype.reset = Etapa2.prototype.reset = Etapa3.prototype.reset = funct
 	advanceLevel();
 	this.startIntento();
 };
-
+/*
 function animaa(obj, props) {
     if (props.x) { // animapos
         obj.x = props.x //TODO
@@ -179,7 +182,7 @@ function animaa(obj, props) {
     if (props.scalex) {
         obj.setScale(props.scalex, props.scaley)
     }
-}
+}*/
 
 function Enunciado(dad) {
     this.currNum1;
@@ -235,6 +238,7 @@ function enpausa(escena) {
 ;
 function newgamelvl1() {
     trace("nuevo juego lvl 1");
+	logro.reset();
     var ac = new CAAT.ActorContainer().setClip(true);
     ac.setBounds(5, 5, 1024 - 10, 768 - 10);
     var gam = acjuego(ac).obj;
@@ -302,7 +306,8 @@ function loadLiteraryBooks(where, count) {
 				{
 					sprite:	[litFigureBookSprite, cols[0], cols[0]],
 					x: 144,
-					y: 405
+					y: 405,
+					hoveranim:false
 				}
 			);
 			tmp.id = getLiteraryTypeName(cols[0]);
@@ -314,7 +319,8 @@ function loadLiteraryBooks(where, count) {
 				{
 					sprite: [litFigureBookSprite, cols[1], cols[1]],
 					x: 566,
-					y: 405
+					y: 405,
+					hoveranim:false
 				}
 			);
 			tmp.id = getLiteraryTypeName(cols[1]);
@@ -334,7 +340,8 @@ function loadLiteraryBooks(where, count) {
 				{
 					sprite:	[litFigureBookSprite, cols[0], cols[0]],
 					x: 334,
-					y: 384
+					y: 384,
+					hoveranim:false
 				}
 			);
 			tmp.id = getLiteraryTypeName(cols[0]);
@@ -346,7 +353,8 @@ function loadLiteraryBooks(where, count) {
 				{
 					sprite: [litFigureBookSprite, cols[1], cols[1]],
 					x: 130,
-					y: 516
+					y: 516,
+					hoveranim:false
 				}
 			);
 			tmp.id = getLiteraryTypeName(cols[1]);
@@ -357,7 +365,8 @@ function loadLiteraryBooks(where, count) {
 				{
 					sprite: [litFigureBookSprite, cols[2], cols[2]],
 					x: 546,
-					y: 516
+					y: 516,
+					hoveranim:false
 				}
 			);
 			tmp.id = getLiteraryTypeName(cols[2]);
@@ -379,7 +388,8 @@ function loadLiteraryBooks(where, count) {
 				{
 					sprite:	[litFigureBookSprite, cols[0], cols[0]],
 					x: 146,
-					y: 384
+					y: 384,
+					hoveranim:false
 				}
 			);
 			tmp.id = getLiteraryTypeName(cols[0]);
@@ -391,7 +401,8 @@ function loadLiteraryBooks(where, count) {
 				{
 					sprite: [litFigureBookSprite, cols[1], cols[1]],
 					x: 568,
-					y: 384
+					y: 384,
+					hoveranim:false
 				}
 			);
 			tmp.id = getLiteraryTypeName(cols[1]);
@@ -402,7 +413,8 @@ function loadLiteraryBooks(where, count) {
 				{
 					sprite: [litFigureBookSprite, cols[2], cols[2]],
 					x: 146,
-					y: 516
+					y: 516,
+					hoveranim:false
 				}
 			);
 			tmp.id = getLiteraryTypeName(cols[2]);
@@ -413,7 +425,8 @@ function loadLiteraryBooks(where, count) {
 				{
 					sprite: [litFigureBookSprite, cols[3], cols[3]],
 					x: 568,
-					y: 516
+					y: 516,
+					hoveranim:false
 				}
 			);
 			tmp.id = getLiteraryTypeName(cols[3]);
@@ -511,6 +524,7 @@ function addDragNDrop(object, onDrag, onDrop, onDragging) {
 	object.mouseDown = function(e) {
 		trace("Start dragging.");
 		trace(e);
+		this.currsx=this.currsy=.4;
 		this.setScale(.4, .4);
 		
 		if(onDrag)
@@ -541,6 +555,7 @@ function addDragNDrop(object, onDrag, onDrop, onDragging) {
 	}
 	
 	object.volver = function() {
+		this.currsx=this.currsy=1;
 		animaa(this, {x: this.originalx, y: this.originaly, scalex: 1, scaley: 1, alpha: 1});
 	}
 }
@@ -595,7 +610,10 @@ function checkEarnCondition() {
 	if(earnPoint) {
 		if(logro) {
 			logro.addLogro();
+			setTimeout(function(){
 			etapa.reset();
+			}, 1000);
+			
 		}
 		else
 			trace("no logro ¬¬");
@@ -624,7 +642,9 @@ function advanceLevel(){
             case 12:
 				clockController("stop");
 				clockController("destroy");
-                spashMsg("tit_excelente");
+                
+               
+				pantallaGameOver(currScore,"tit_excelente");
 				break;
         }
          

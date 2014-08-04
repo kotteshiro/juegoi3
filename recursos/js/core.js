@@ -41,13 +41,14 @@ function obj(namae,escena,imgid,x,y,sx,sy){
 	escena.instancias[namae]=a;
 	a.name=namae;
 	return a;
-
 }
+
 function btn(namae,escena,prop){
 	//spr,x,y,fncb
 	trace("miau");
 	prop.sprite[3]=prop.sprite[3] ? prop.sprite[3] : prop.sprite[2];
 	prop.sprite[4]=prop.sprite[4] ? prop.sprite[4] : prop.sprite[2];
+	prop.hoveranim=(prop.hoveranim===false) ? false : true;
 	// setAsButton(spriteImageIndex, normal, over, press, disabled, fn)
 	var b1= new CAAT.Actor().setAsButton(prop.sprite[0].getRef(), prop.sprite[1], prop.sprite[2], prop.sprite[3], prop.sprite[4], prop.click).
             setLocation(prop.x,prop.y);
@@ -57,7 +58,11 @@ function btn(namae,escena,prop){
 	
 	b1.mouseEnter=function(e){
 		console.log(e);
-		e.source.scaleTo(1.1, 1.1, 50);
+		e.source.currsx=e.source.currsx||1;
+		e.source.currsy=e.source.currsy||1;
+		if(prop.hoveranim)
+		e.source.scaleTo(e.source.currsx + 0.1 , e.source.currsy + 0.1, 50) ;
+		
 		b1.olffunc();
 		if(prop.mouseEnter) prop.mouseEnter(e);
 		sonido.play("boton")
@@ -65,7 +70,9 @@ function btn(namae,escena,prop){
 	b1.olffuncme=b1.mouseExit;
 	
 	b1.mouseExit=function(e){
-		e.source.scaleTo(1, 1, 50);
+		e.source.currsx=e.source.currsx||1;
+		e.source.currsy=e.source.currsy||1;
+		e.source.scaleTo(e.source.currsx, e.source.currsy, 50);
 		b1.olffuncme()
 		
 		if(prop.mouseExit) prop.mouseExit(e);
@@ -372,16 +379,17 @@ function getsprt(spritename,ancho,alto){
 	sprtglobal[spritename]=sprtglobal[spritename] || new CAAT.SpriteImage().initialize(director.getImage(spritename),alto,ancho);
 	return sprtglobal[spritename];
 }
-function spashMsg(src,fncb,requireclick){
+function spashMsg(src,fncb,requireclick,escena){
 	requireclick=requireclick||false;
 	fncb=(fncb) ? fncb : function(){};
 	escondeescenario();
+	var donde=escena||director.currentScene;
 	//obj("inst00",director,'fondo_a',0,0,.5,.5);
-	//spla=obj("splashmsg",director.currentScene,'tit_excelente',0,0,.5,.5);.
-	var zona2 = obj(uniq("z"),director.currentScene,'zonasensiblefull',0,0,1,1);
+	//spla=obj("splashmsg",donde,'tit_excelente',0,0,.5,.5);.
+	var zona2 = obj(uniq("z"),donde,'zonasensiblefull',0,0,1,1);
 	var img=director.getImage(src);
 	var comporta1=new CAAT.ScaleBehavior() //aparece
-		.setFrameTime( director.currentScene.time, 500 )
+		.setFrameTime( donde.time, 500 )
 		.setValues( 0, 1, 0, 1 )
 		.setInterpolator(new CAAT.Interpolator().createBounceOutInterpolator(0,false));
 	
@@ -399,14 +407,14 @@ function spashMsg(src,fncb,requireclick){
 		.emptyBehaviorList()
 		.addBehavior( comporta1 );
 	
-	director.currentScene.addChild(spla);
+	donde.addChild(spla);
 	spla.mouseEnabled=true;
 	
 	spla.clickcb=fncb;
 	spla.desapareceme=function(){
 		zona2.destroy();
 		var comporta2=new CAAT.ScaleBehavior() //desaparece
-		.setFrameTime( director.currentScene.time, 300 )
+		.setFrameTime( donde.time, 300 )
 		.setValues( 1, 0, 1, 0 );
 		//.setInterpolator(new CAAT.Interpolator().createBounceOutInterpolator(0,false));
 		
