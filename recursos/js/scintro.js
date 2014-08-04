@@ -32,24 +32,10 @@ sc(function(escena){
 	var zonamouseClick=function(e){  
 		trace("entra",bg);
 		bgmusic.play();
-		//director.setScene(0); 
-		//director.switchToNextScene(1000, false,true);
-		/*director.easeInOut(
-                                1,
-                                CAAT.Scene.EASE_TRANSLATE,
-                                CAAT.Actor.prototype.ANCHOR_TOP,
-                                2,
-                                CAAT.Scene.EASE_TRANSLATE,
-                                CAAT.Actor.prototype.ANCHOR_TOP,
-                                1000,
-                                false,
-                                (new CAAT.Interpolator).createExponentialInOutInterpolator(3,!1),
-                                (new CAAT.Interpolator).createExponentialInOutInterpolator(3,!1));
-		director.easeInOutRandom(1,2,1000,1);*/
 		toscenaanim(1)
 	}
-	btn("scintro2",escena,{sprite:[getsprt("zonasensiblefull",1,2), 1, 1],x:0,y:0,click:zonamouseClick});
-	btn("scintro3",escena,{sprite:[getsprt("zonasensiblefull",1,2), 1, 1],x:0,y:384,click:zonamouseClick});
+	btn("scintro211",escena,{sprite:[getsprt("zonasensiblefull",1,2), 1, 1],x:0,y:0,click:zonamouseClick});
+	btn("scintro311",escena,{sprite:[getsprt("zonasensiblefull",1,2), 1, 1],x:0,y:384,click:zonamouseClick});
 	//btn("scintro4_", escena, {sprite:[splogogly, 1, 1], x:341, y:343-50, click:mmcl}).setScale(1.5, 1.5);
 	//window.document.addEventListener("touchstart",zona.mouseClick);
 });

@@ -12,13 +12,41 @@ var hojasFigLitSprite = new Array();
 var spritePrefix = "figlit_";
 var figsLiters = ["personificacion", "comparacion", "hiperbole", "metafora"];
 var holders = new Array();
-var countDownTime = 0.1;
-
+var countDownTime = 25/60;
+var avisostimeout=["tit_intento1","tit_intento2"];
+var avisoindex=0;
+function avisoTO(){
+	
+	spashMsg(avisostimeout[avisoindex]);
+	
+	avisoindex++;
+	if(avisoindex>=avisostimeout.length){
+		avisoindex=0;
+	}
+}
 function onTimeOver(time) {
-	trace("Time's up!");
-	currScore=0;
-	logro.reset();
-	pantallaGameOver(currScore,"tit_intento1");
+	//alert("Time's upa!"+time);
+	//logro.reset();
+	if(time==0){
+		 sonido.play("timeout");
+		if(logro.getLvlIx()<4){
+			while(logro.getLvlIx()>0){
+				logro.removeLogro();
+			}
+			avisoTO();
+		}else if(logro.getLvlIx()<8){
+			while(logro.getLvlIx()>4){
+				logro.removeLogro();
+			}
+			avisoTO();
+		}else{
+			while(logro.getLvlIx()>8){
+				logro.removeLogro();
+			}
+		}
+		clockController("init");
+	}
+	//pantallaGameOver(currScore,"tit_intento1");
 }
 
 sc(function(escena) {

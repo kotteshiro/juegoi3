@@ -158,18 +158,21 @@ function acjuego(conten){
 	ac.obj.init();
 	return ac;
 }
+
 function escondeescenario(){
 	for(var i in tjcolores){
 		tjcolores[i].visible=false;
 	}
 	//tjcolores.reloj.visible=tienetime;
 }
+
 function muestraescenario(){
 	for(var i in tjcolores){
 		tjcolores[i].visible=true;
 	}
 	tjcolores.reloj.visible=tienetime;
 }
+
 function acchrono(conten){
 	var ac=new CAAT.ActorContainer();
 	obj("tiempo",ac,'tiempo',0,0,1,1);
@@ -177,10 +180,11 @@ function acchrono(conten){
 	conten.addChild(ac);
 	return ac;
 }
+
 function clockController(action){
 	//tjcolores.reloj=tjcolores.reloj || {}
 	//tjcolores.reloj.visible=tienetime;
-	var cdt = 0.05;
+	var cdt = 10;
 	
 	if(typeof countDownTime !== "undefined")
 		cdt = countDownTime;
@@ -260,7 +264,6 @@ function setCountdown(cdt) {
 		currTimer.stop().reset().start(cdt);
 	}
 }
-
 function setTimer() {
 	trace("Timer!");
 	if(!currTimer) {

@@ -113,6 +113,22 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
 		currScore += ((rightScore / 2) * (scoreLevelMultiplier * 0.3)) - (minutes * spentTimeScore);
 		this.updateScore();
 	};
+	this.removeLogro=function(){
+		var curr = logros.estrellas[logros.currlvl-1];
+		if (curr != undefined) {
+			
+			if(logros.currlvl == 4)
+				scoreLevelMultiplier = 2;
+
+			if(logros.currlvl == 8)
+				scoreLevelMultiplier = 3;
+		
+			currScore -= rightScore * scoreLevelMultiplier;
+			this.updateScore();
+			logros.currlvl--;
+			curr.stop(curr.secuencia[0], true);
+		}
+	}
 	
     return this;
 }
