@@ -8,7 +8,7 @@ var onloadimgs=function() {
 	spiconos= new CAAT.SpriteImage().initialize(director.getImage('iconos_comandos'), 2, 7);
 	spicnsoc= new CAAT.SpriteImage().initialize(director.getImage('iconos_socialesplus'), 2, 6);
 	splogogly= new CAAT.SpriteImage().initialize(director.getImage('logogly'));
-	spminilogros= new CAAT.SpriteImage().initialize(director.getImage('barra_logros'),3,7);
+	spminilogros= new CAAT.SpriteImage().initialize(director.getImage('barra_logros'),3,24);
 	sptarjetacolors= new CAAT.SpriteImage().initialize(director.getImage('colors'),1,3);
 	spsino= new CAAT.SpriteImage().initialize(director.getImage('sino'),1,2);
 	

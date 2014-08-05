@@ -14,4 +14,15 @@ var _images_ = [
     {id: 'figlit_metafora',url: path + 'j2/fig_lit_metafora.png'}, 
     {id: 'flit_libros_sprite',url: path + 'j2/figuras_literarias.png'}
 ];
+var _sonido_espe_ = [
+    {id:"bgmusic" , url: "recursos/sonidos/MUSICA-LENGUAJE.ogg"},
+    //{id:"boton" , url: "recursos/sonidos/deseleccionar.ogg"},
+    //{id:"10" , url: "recursos/sonidos/10.ogg"},
+    //{id:"mostrarpanel" , url: "recursos/sonidos/mostrarpanel.ogg"},
+   // {id:"suma_mal" , url: "recursos/sonidos/suma_mal.ogg"},
+    {id:"sonidoTitulo" , url: "recursos/sonidos/j2/VJ_001L_titulo.mp3"},
+    {id:"sonidoIntro" , url: "recursos/sonidos/j2/VJ_001L_intro.mp3"},
+    {id:"sonidoEnunciado" , url: "recursos/sonidos/j2/VJ_001L_enunciado.mp3"}
+];
+         
 subtmitfiles(_images_);

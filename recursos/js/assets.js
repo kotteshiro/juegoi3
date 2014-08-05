@@ -20,7 +20,7 @@ var _images_= [
 	{id:'enunciado_nivel1',     url:'recursos/imagenes/enunciado_nivel1.png'},
 	{id:'enunciado_nivel2',     url:'recursos/imagenes/enunciado_nivel2.png'},
 	{id:'enunciado_nivel3',     url:'recursos/imagenes/enunciado_nivel3.png'},
-	{id:'barra_logros',     url:'recursos/imagenes/barra_logros_b.png'},
+	{id:'barra_logros',     url:'recursos/imagenes/barra_logros_b1.png'},
 	{id:'colors',     url:'recursos/imagenes/colors.png'},
 	{id:'tit_excelente',     url:'recursos/imagenes/tit_excelente.png'},
 	{id:'fondo_tranvia',     url:'recursos/imagenes/fondo_tranvia.png'},
@@ -39,6 +39,7 @@ var _images_= [
     {id: 'bgStars', url: path + 'Pres_estrellas.png'},
     {id: 'earthIntro',url: path + 'Pres_planeta_tierra.png'}, 
     {id: 'barraLogros',url: path + 'barra_logros.png'}, 
+	{id: 'texto_intro',url: path + 'texto_intro.png'}, 
     {id: 'clockBorder',url: path + 'reloj_A.png'}, 
     {id: 'logogly',url: path + 'GYL.png'}, 
     {id: 'modos',url: path + 'modos-10.png'}, 
@@ -63,6 +64,21 @@ var _images_= [
 	{id: 'jugar_salir',url: path + 'jugar_salir.png'},
 	{id: 'puntaje',url: path + 'puntaje.png'},
 	
+];
+
+
+var _audio_= [
+	{id:'COMENZAR',     url:"recursos/sonidos/COMENZAR.ogg"},
+	{id:'CONTROLES',     url:"recursos/sonidos/CONTROLES.ogg"},
+	{id:'ELEMENTO',     url:"recursos/sonidos/ELEMENTO.ogg"},
+	{id:'ESTRELLA',     url:"recursos/sonidos/ESTRELLA.ogg"},
+	{id:'EXCELENTE',     url:"recursos/sonidos/EXCELENTE.ogg"},
+	{id:'FALLIDO',     url:"recursos/sonidos/INTENTO-FALLIDO.ogg"},
+	{id:'MUSICA-BIOLOGIA',     url:"recursos/sonidos/MUSICA-BIOLOGIA.ogg"},
+	{id:'MUSICA-MATEMATICA',     url:"recursos/sonidos/MUSICA-MATEMATICA.ogg"},
+	{id:'PASAR-NIVEL',     url:"recursos/sonidos/PASAR-NIVEL.ogg"},
+	{id:'SELECCION-RELAJADO-TIEMPO',     url:"recursos/sonidos/SELECCION-RELAJADO-TIEMPO.ogg"},
+	{id:'TITULO-ABRE',     url:"recursos/sonidos/TITULO-ABRE.ogg"},
 ];
 
 subtmitfiles(_images_);

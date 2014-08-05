@@ -47,8 +47,20 @@ var _images_= [
 	{id:'especies',     url:'recursos/imagenes/j3/ESPECIES.png'},
 	{id:'flechaPunta',     url:'recursos/imagenes/j3/flechaPunta.png'},
 	{id:'flechaCuerpo',     url:'recursos/imagenes/j3/flechaCuerpo.png'},
-	
 ];
-
+var _audio_= [
+	{id:'COMENZAR',     url:"recursos/sonidos/COMENZAR.ogg"},
+	{id:'CONTROLES',     url:"recursos/sonidos/CONTROLES.ogg"},
+	{id:'ELEMENTO',     url:"recursos/sonidos/ELEMENTO.ogg"},
+	{id:'ESTRELLA',     url:"recursos/sonidos/ESTRELLA.ogg"},
+	{id:'EXCELENTE',     url:"recursos/sonidos/EXCELENTE.ogg"},
+	{id:'FALLIDO',     url:"recursos/sonidos/INTENTO-FALLIDO.ogg"},
+	{id:'MUSICA-BIOLOGIA',     url:"recursos/sonidos/MUSICA-BIOLOGIA.ogg"},
+	{id:'MUSICA-LENGUAJE',     url:"recursos/sonidos/MUSICA-LENGUAJE.ogg"},
+	{id:'MUSICA-MATEMATICA',     url:"recursos/sonidos/MUSICA-MATEMATICA.ogg"},
+	{id:'PASAR-NIVEL',     url:"recursos/sonidos/PASAR-NIVEL.ogg"},
+	{id:'SELECCION-RELAJADO-TIEMPO',     url:"recursos/sonidos/SELECCION-RELAJADO-TIEMPO.ogg"},
+	{id:'TITULO-ABRE',     url:"recursos/sonidos/TITULO-ABRE.ogg"},
+];
 subtmitfiles(_images_);
 

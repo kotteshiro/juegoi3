@@ -81,10 +81,12 @@ function acjuego(conten){
 		if(logro) {
 			switch(logro.getLvlIx()){
 				case 4:
+					sonido.stop("PASAR-NIVEL");
 					cambioescena(2);
 					enunciado.setBackgroundImage(director.getImage("enunciado_nivel2"))
 				break;
 				case 8:
+					sonido.stop("PASAR-NIVEL");
 					cambioescena(3);
 					enunciado.setBackgroundImage(director.getImage("enunciado_nivel3"))
 				break;
@@ -146,7 +148,7 @@ function acjuego(conten){
 	function mensajeExcelente(){
 		clockController("stop");
 		trace("Mensaje Excelente");
-		sonido.play("win");
+		sonido.play("EXCELENTE");
 		spashMsg("tit_excelente",salirgame);
 		gameover=true;
 	}

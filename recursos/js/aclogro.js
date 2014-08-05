@@ -36,36 +36,37 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
     ac.addChild(scoreText);
 	
     var sep = 35;
-	var startPos = 95,
+	var startPos = 99,
 		ESC = 0,
 		tmpSeq,
 		recreateSeq = true,
 		addMargin = false;
+	var cuantos=24
 	
 	for(var i = 0; i < 12; i++) {
 		if(i == 4) {
-			ESC = 7;
-			startPos += 20;
+			ESC = cuantos*1;
+			startPos += 19;
 			recreateSeq = true;
 		}
 		
 		if(i == 8) {
-			ESC = 14;
-			startPos += 18;
+			ESC = cuantos*2;
+			startPos += 17;
 			recreateSeq = true;
 		}
 		
 		if(recreateSeq) {
 			tmpSeq = new Array();
 			
-			for(var j = 0; j < 7; j++) {
+			for(var j = 0; j < cuantos; j++) {
 				tmpSeq.push(j + ESC);
 			}
 			
 			recreateSeq = false;
 		}
 		console.log("LOGRO SECUENCIA:",tmpSeq,ESC);
-		var tmpStar = new MovieClipSprite(spminilogros.getRef(), tmpSeq, 200, startPos, 0).stop(ESC);
+		var tmpStar = new MovieClipSprite(spminilogros.getRef(), tmpSeq, 100, startPos-9, -3).stop(ESC);
 		tmpStar.secuencia=tmpSeq;
 		logros.estrellas.push(tmpStar);
 		ac.addChild(tmpStar.getActor());
@@ -74,6 +75,7 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
     
     conten.addChild(ac);
 	
+	this.ac=ac;
     this.getLvl = function() {
         return logros.estrellas[logros.currlvl];
     }
@@ -84,6 +86,7 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
     
     this.wrongAnswer = function() {
         trace("Wrong answer! Substracting points...");
+		sonido.play("FALLIDO");
         currScore += wrongScore;
 		this.updateScore();
     }
@@ -135,6 +138,7 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
 
 function addLogro() {
     //suena
+	sonido.play("ESTRELLA");
     var curr = logros.estrellas[logros.currlvl];
     trace("Current Level: " + logros.currlvl);
 	

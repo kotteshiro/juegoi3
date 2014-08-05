@@ -10,7 +10,7 @@ sc(function(escena){
 	trace(">scprinc");
 	scprinc=escena;
 	scprinc.fnclick=function(a){
-		trace("click",a);
+		trace("click",a);		
 		sonido.stop("sonidoIntro");
 		sonido.stop("sonidoTitulo");
 		sonido.play("sonidoEnunciado");
@@ -20,15 +20,19 @@ sc(function(escena){
 				trace("ssdasd");
   			break;
 			case "calma":
+				currLevel=1;
 				tienetime=false;
 				toscenaanim("scingame");
 				clockController("init");
+				gamestart();
 				//toscenaanim("scingame");
 			break;
 			case "tiempo":
+				currLevel=1;
 				tienetime=true;
 				toscenaanim("scingame");
 				clockController("init");
+				gamestart();
 				//toscenaanim("scingame");
 			break;
 		}
@@ -48,9 +52,9 @@ sc(function(escena){
 	
 	var bgDesc = acdesc(escena);
 	bgDesc.setScale(0, 0).scaleTo(1, 1, 1000, 0, .5, .5, rebote);
-	var btna=btn("inst08",escena,{sprite:[spmodos, 0, 2],x:130+70,y:343-10,click:scprinc.fnclick});//
+	var btna=btn("inst08",escena,{sprite:[spmodos, 0, 0],x:130+70,y:343-10,click:scprinc.fnclick});//
 	btna.setScale(1,1).name="calma";
-	var btnb=btn("inst09",escena,{sprite:[spmodos, 1, 3],x:460+70,y:343-10,click:scprinc.fnclick});
+	var btnb=btn("inst09",escena,{sprite:[spmodos, 1, 1],x:460+70,y:343-10,click:scprinc.fnclick});
 	btnb.setScale(1,1).name="tiempo";
 	
 	btna.setScale(0,0).scaleTo(1, 1, 1000, 0, .5, .5,rebote)

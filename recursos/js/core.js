@@ -55,17 +55,17 @@ function btn(namae,escena,prop){
 	escena.addChild(b1);
 	b1.name=namae;
 	b1.olffunc=b1.mouseEnter;
-	
+	var sonidohover=prop.soundhover||"ELEMENTO";
 	b1.mouseEnter=function(e){
 		console.log(e);
 		e.source.currsx=e.source.currsx||1;
 		e.source.currsy=e.source.currsy||1;
 		if(prop.hoveranim)
-		e.source.scaleTo(e.source.currsx + 0.1 , e.source.currsy + 0.1, 50) ;
+		e.source.scaleTo(e.source.currsx + 0.1 , e.source.currsy + 0.1, 80) ;
 		
 		b1.olffunc();
 		if(prop.mouseEnter) prop.mouseEnter(e);
-		sonido.play("boton")
+		sonido.play(sonidohover);
 	}
 	b1.olffuncme=b1.mouseExit;
 	
@@ -256,12 +256,12 @@ function MovieClipSprite(spriteref,secuencia,fps,x,y){
 	this.actor=tmp = new CAAT.Actor().
 		setBackgroundImage(spriteref,true).
 		setLocation( x,y ).
-		setScale( 1,1 ).
+		setScale( 1 , 1 ).
 		setAnimationImageIndex( secuencia ).
 		setChangeFPS(this.fps).
+		setClip(false).
 		enableEvents(false);
 	//this.actor.backgroundImage.changeFPS=Number.MAX_VALUE;
-	
 	
 	this.actor.backgroundImage.spriteIndex=this.currentFrame;
 	this.stop=function(ix){

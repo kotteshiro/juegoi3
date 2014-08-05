@@ -56,7 +56,7 @@ function onTimeOver(time) {
 sc(function(escena) {
     escenajuego = escena;
     escena.name = "scingame";
-	//alert("ANYON");
+	alert("ANYON");
 	// Nico
 	if(hojasFigLitSprite.length <= 0) {
 		var figname;
@@ -77,33 +77,23 @@ sc(function(escena) {
 		litFigureBookSprite = getsprt("flit_libros_sprite", 2, 2);
 	}
 	//= Nico
-    obj("fondo_escena", escenajuego, "fondo", 0, 0, 1, 1);
-    obj("fondo_hojas", escenajuego, "fondo_hojas", 9, 147, 1, 1);
-	gamestart();
-});
-function gamestart(){
 	
-	_etapa1();
-
-	if(logro){
-		logro.reset();		
-	}else
-		logro=new aclogro(escenajuego, 200, 700);
-}
+    _etapa1();
+    logro = aclogro(escena, 200, 700);
+});
 function limpiaescenario(){
 	if(currE){
 		if(currE.menu){
 			currE.menu.destroy();
-		}
-		if(currE.logro){
-			currE.logro.destroy();
 		}
 		currE.ac.destroy();
 		currE.menu=undefined;
 	}
 }
 function _etapa1(){
-    limpiaescenario();
+    obj("fondo_escena", escenajuego, "fondo", 0, 0, 1, 1);
+    obj("fondo_hojas", escenajuego, "fondo_hojas", 9, 147, 1, 1);
+	limpiaescenario();
     currE=e1=new Etapa1(escenajuego);
 	e1.setTime();
     e1.startIntento();
@@ -682,17 +672,16 @@ function checkEarnCondition() {
 
 function advanceLevel(){
     if(logro) {
-      /*  if(logro.getLvlIx()!=12 && logro.getLvlIx()!=4 && logro.getLvlIx()!=8) {
+        if(logro.getLvlIx()!=12 && logro.getLvlIx()!=4 && logro.getLvlIx()!=8) {
             sonido.play("mostrarpanel");
-        }*/
+        }
 		
         switch(logro.getLvlIx()){
             case 4:
 				if(currLevel!=2){
 					currLevel=2;
 					clockController("stop");
-					sonido.play("PASAR-NIVEL");
-					spashMsg("tit_intento3",_etapa2,false);
+					spashMsg("tit_intento3",_etapa2,true);
 				}
 				return false;
             	break;
@@ -700,16 +689,14 @@ function advanceLevel(){
 				if(currLevel!=3){
 					currLevel=3
 					clockController("stop");
-					sonido.play("PASAR-NIVEL");
-					spashMsg("tit_intento3",_etapa3,false);
+					spashMsg("tit_intento3",_etapa3,true);
 					return false;
 				}
             	break;
             case 12:
 				clockController("stop");
-				clockController("destroy");   
-				sonido.play("EXCELENTE");
-				spashMsg("tit_excelente",function(){pantallaGameOver(currScore)},false);
+				clockController("destroy");              
+				pantallaGameOver(currScore,"tit_excelente");
 				return false;
 				break;
         }

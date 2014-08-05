@@ -9,24 +9,25 @@ sc(function(escena){
 	var earthCont	= new CAAT.ActorContainer()
 		.setBounds(160, 420, 719, 359.5),
 		bgStars = new CAAT.Actor()
-			.setLocation(-405, -190)
+			.setLocation(-405, -100)
 			.setBackgroundImage(director.getImage("bgStars"))
 			.addBehavior(new CAAT.RotateBehavior().setCycle(true).setFrameTime(0, 80000000).setValues(0, -360)),
 		earthActor = new CAAT.Actor()
-			.setLocation(0, 0)
+			.setLocation(-214, 60)
 			.setSize(719, 719)
 			.setBackgroundImage(director.getImage("earthIntro"))
 			.addBehavior(new CAAT.RotateBehavior().setCycle(true).setFrameTime(0, 20000000).setValues(0, -360));
-		
+		window.earthActor=earthActor;
 	earthCont.addChild(earthActor);
 	escena.addChild(bgStars);
 	escena.addChild(earthCont);
 	
-	var cohete=obj("scintro4",escena,'cohete',"center", 100,1,1);
+	var cohete=obj("scintro4",escena,'cohete',"center", 132,1,1);
+	window.textoa=obj("texto_intro",escena,'texto_intro',335, 720,1,1);
 	cohete_=cohete;
 	//var zona = obj("scintro2",escena,'zonasensiblefull',0,0,1024,768);
 	
-	tweenTranslation("tituloanim",cohete,2000,cohete.x,cohete.y+10,new CAAT.Interpolator().createExponentialInOutInterpolator(true,1),true,0,0,0);
+	//tweenTranslation("tituloanim",cohete,2000,cohete.x,cohete.y+10,new CAAT.Interpolator().createExponentialInOutInterpolator(true,1),true,0,0,0);
 	
 	//zona.mouseEnabled=true;
 	var zonamouseClick=function(e){  

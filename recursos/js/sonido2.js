@@ -1,13 +1,18 @@
-var bgmusic={play:function(){}};
+var bgmusic={play:function(){}},
+soundList = [];
 var sonido={
 	init:function(){
+		 
+		 createjs.Sound.registerPlugins([createjs.WebAudioPlugin, createjs.HTMLAudioPlugin, createjs.FlashPlugin]);
+		// createjs.FlashPlugin.swfPath = "../libs/src/SoundJS/";
 		 createjs.Sound.alternateExtensions = ["mp3"];
 		 createjs.Sound.addEventListener("fileload", loadHandler);
-		 createjs.Sound.registerSound("recursos/sonidos/music.ogg", "bgmusic");
-		 createjs.Sound.registerSound("recursos/sonidos/deseleccionar.ogg", "boton");
-		 createjs.Sound.registerSound("recursos/sonidos/10.ogg", "10");
-		 createjs.Sound.registerSound("recursos/sonidos/mostrarpanel.ogg", "mostrarpanel");
-		 createjs.Sound.registerSound("recursos/sonidos/suma_mal.ogg", "suma_mal");
+		 _sonido_espe_=_sonido_espe_||[];
+		 var kha=_audio_.concat(_sonido_espe_);
+		for(var i in kha){	
+			if(kha[i])
+			createjs.Sound.registerSound(kha[i].url, kha[i].id);
+		}
 		 function loadHandler(event) {
 			 // This is fired for each sound that is registered.
 			 if(event.id=="bgmusic"){
@@ -24,10 +29,16 @@ var sonido={
 		this.mute(this.ismute())
 		 
 	},
-	play:function(id){
+	play:function(id, cb){
 		//soundManager.play(id);
-		var kl = createjs.Sound.createInstance(id).play();
-		if(kl==false) console.error(kl,"Error reproduciendo sonido",id);
+		if(soundList[id] === undefined) {
+			soundList[id] = createjs.Sound.createInstance(id);
+			soundList[id].addEventListener("complete", cb || function() {});
+		}
+		
+		soundList[id].play();
+		if(soundList[id] == false)
+			console.error(soundList[id],"Error reproduciendo sonido",id);
 	},
 	mute:function(a){
 		//k=(a) ? soundManager.mute() : soundManager.unmute();
@@ -48,6 +59,11 @@ var sonido={
 			case false:
 				return false;
 			default:
+		}
+	},
+	stop: function(id) {
+		if(soundList[id] !== undefined) {
+			soundList[id].stop();
 		}
 	}
 }
