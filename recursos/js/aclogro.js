@@ -9,7 +9,7 @@ var rightScore = 1000,
 
 function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
     var ac = new CAAT.ActorContainer();
-    ac.setBounds(x, y, 1024, 118);
+    ac.setBounds(x, y, 1024, 20);
 	trace("Has time: " + tienetime);
     /*var estrellita = new CAAT.Actor().
 		setBackgroundImage(spminilogros.getRef(),true).

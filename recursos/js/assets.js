@@ -65,22 +65,23 @@ var _images_= [
 	{id: 'jugar_salir',url: path + 'jugar_salir.png'},
 	{id: 'puntaje',url: path + 'puntaje.png'},
 	{id: 'sprite-motor',url: path + 'sprite-motor.png'},
+	{id: 'estrella',url: path + 'estrella.png'},
 	
 ];
 
 
 var _audio_= [
-	{id:'COMENZAR',     					url:"recursos/sonidos/COMENZAR.ogg"					},
-	{id:'CONTROLES',     					url:"recursos/sonidos/CONTROLES.ogg"				},
-	{id:'ELEMENTO',    						url:"recursos/sonidos/ELEMENTO.ogg"					},
-	{id:'ESTRELLA',     					url:"recursos/sonidos/ESTRELLA.ogg"					},
-	{id:'EXCELENTE',     					url:"recursos/sonidos/EXCELENTE.ogg"				},
-	{id:'FALLIDO',     						url:"recursos/sonidos/INTENTO-FALLIDO.ogg"			},
-	{id:'PASAR-NIVEL',     					url:"recursos/sonidos/PASAR-NIVEL.ogg"				},
-	{id:'SELECCION-RELAJADO-TIEMPO',     	url:"recursos/sonidos/SELECCION-RELAJADO-TIEMPO.ogg"},
-	{id:'TITULO-ABRE',     					url:"recursos/sonidos/TITULO-ABRE.ogg"				},
-	{id:'TIME_OVER',     					url:"recursos/sonidos/TIME_OVER.ogg"				},
-	{id:'CORRECTO',     					url:"recursos/sonidos/CORRECTO.ogg"					},
+	{id:'COMENZAR',     					url:"recursos/sonidos/COMENZAR.mp3"					},
+	{id:'CONTROLES',     					url:"recursos/sonidos/CONTROLES.mp3"				},
+	{id:'ELEMENTO',    						url:"recursos/sonidos/ELEMENTO.mp3"					},
+	{id:'ESTRELLA',     					url:"recursos/sonidos/ESTRELLA.mp3"					},
+	{id:'EXCELENTE',     					url:"recursos/sonidos/EXCELENTE.mp3"				},
+	{id:'FALLIDO',     						url:"recursos/sonidos/INTENTO_FALLIDO.mp3"			},
+	{id:'PASAR-NIVEL',     					url:"recursos/sonidos/PASAR_NIVEL.mp3"				},
+	{id:'SELECCION-RELAJADO-TIEMPO',     	url:"recursos/sonidos/SELECCION_RELAJADO_TIEMPO.mp3"},
+	{id:'TITULO-ABRE',     					url:"recursos/sonidos/TITULO_ABRE.mp3"				},
+	{id:'TIME_OVER',     					url:"recursos/sonidos/TIME_OVER.mp3"				},
+	{id:'CORRECTO',     					url:"recursos/sonidos/CORRECTO.mp3"					},
 	
 	
 ];

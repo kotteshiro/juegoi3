@@ -21,6 +21,7 @@ sc(function(escena){
 		window.earthActor=earthActor;
 	earthCont.addChild(earthActor);
 	escena.addChild(bgStars);
+	estrella(escena)
 	escena.addChild(earthCont);
 	
 	
@@ -69,3 +70,60 @@ sc(function(escena){
 	//window.document.addEventListener("touchstart",zona.mouseClick);
 	
 });
+
+function estrella(donde) {
+	
+		
+		var NS= 1;
+		for( var i=0; i<NS; i++ ) {
+			donde.estrella=donde.estrella||obj(uniq("estrella"), donde, "estrella", 0, 0, 1, 1);
+			var star= donde.estrella;
+			
+			/*star.addBehavior(
+							new CAAT.Behavior.PathBehavior().
+									setFrameTime( donde.time, 600+(400*Math.random()) ).
+									setPath(
+											new CAAT.PathUtil.Path().
+													beginPath( 0,0 ).
+													addQuadricTo( 8, 4, 3, 1 ).
+													endPath()
+									)
+							).
+					setDiscardable(true).
+					setFrameTime( donde.time, Number.MAX_VALUE );
+		}*/
+		
+			var x= (Math.random()<.5?0:donde.width);
+			var y= -200;//donde.y+donde.height/2;
+			var sgnX= (Math.random()<.5?1:-1);
+			var sgnY= (Math.random()<.5?1:-1);
+			var cpx= x+ (500+Math.random()*80)*sgnX;
+			var cpy= y+ (20+Math.random()*40)*sgnY;
+
+			var fpy= director.height-200;//+(50*Math.random());
+			var fpx= cpx+(80*Math.random())*sgnX;
+
+			star.emptyBehaviorList().
+					addBehavior(
+							new CAAT.Behavior.PathBehavior().
+									setFrameTime( donde.time, 6000 ).
+									setPath(
+											new CAAT.PathUtil.ArcPath().
+											initialize(donde.width/2,donde.height, 600+(Math.random()*200), Math.PI*2).
+											setClockWise((Math.random()<.5?1:0))
+									).
+									addListener( {
+											behaviorExpired : function(behavior, time, actor) {
+												actor.setExpired(true);
+												estrella(donde);
+												//starCache.push(actor);
+											}
+									}).
+									setAutoRotate(true)
+							).
+					setDiscardable(true).
+					setFrameTime( donde.time, Number.MAX_VALUE );
+
+		//	donde.addChild(star);
+		}
+}

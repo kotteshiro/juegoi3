@@ -200,6 +200,8 @@ function clockController(action){
 		var sec=[];
 		for(var i=0;i<360;i++){ sec.push(i); }
 		clock.progress = new MovieClipSprite(prsp.getRef(), sec,75, 53, 648);
+		clock.progress.stop();
+		clock.progress.getActor().setScale(1.05,1.05)
 		escenajuego.addChild(clock.progress.getActor());
 		//clock.progress = obj("clockBorder", escenajuego, "clockBorder", 30, 600, 1, 1);
 	}
@@ -241,6 +243,22 @@ function clockController(action){
 			currTimer.start(cdt);
 			break;
 	}
+	/*clocktype=="countDown";
+	var sec=[];
+	switch(clocktype){
+		case "countDown":
+			for(var i=359;i>0;i--){ 
+				sec.push(i);
+			}
+		break;
+		case "timmer":
+			for(var i=0;i<360;i++){ 
+				sec.push(i);
+			}
+		break;
+	}
+	clock.progress.actor.backgroundImage.animationImageIndex=sec;*/
+	
 }
 
 function startClock(cdt) {
@@ -260,9 +278,14 @@ function setCountdown(cdt) {
 	trace("CountDown!");
 	if(!currTimer) {
 		currTimer = new CountDown({
-			delay: 1000,
+			delay: 1000/6,
 			onTick: function(time) {
 				clock.txt.setText(currTimer.format(time));
+				var degrree=Math.floor((time/1000)*6)+1;
+				//console.log(degrree,time);
+				if(degrree>=360) 
+					degrree=359; //fix error 
+				clock.progress.getActor().backgroundImage.spriteIndex=degrree;
 			},
 			onStop: onTimeOver || function(time) {
 				// Game end.
@@ -280,9 +303,15 @@ function setTimer() {
 	trace("Timer!");
 	if(!currTimer) {
 		currTimer = new Timer({
-			delay: 1000,
+			delay: 1000/6,
 			onTick: function(time) {
+				//console.log(Math.floor(time/1000));
 				clock.txt.setText(currTimer.format(time));
+				
+				
+				if(clock.progress.getActor().backgroundImage.spriteIndex+1>=360 || Math.floor(time/1000)<=0) 
+					clock.progress.getActor().backgroundImage.spriteIndex=0;
+				clock.progress.getActor().backgroundImage.spriteIndex++;
 			},
 			onStop: function(time) {
 				trace("Clock stopped!", time);

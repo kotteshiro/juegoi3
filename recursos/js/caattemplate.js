@@ -66,8 +66,9 @@ var ini = function( width, height, runHere, imagesURL, onEndLoading )   {
         imagesURL,
         function on_load( counter, images ) {
 			trace("img>",counter," of ",images.length);
+			Loader.onUpdateImgsCounter(counter, images.length);
             if ( counter==images.length ) {
-
+				Loader.onImgLoaded();
                 director.emptyScenes();
                 director.setImagesCache(images);
 

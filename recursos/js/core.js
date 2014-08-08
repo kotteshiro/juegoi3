@@ -124,9 +124,10 @@ function destacadoonmover(actor){
 		actor.setAlpha(.5);
 	}
 }
-function tweenTranslation(id,actor,time,tox,toy,interpolacion,cycle,delay,x,y){
+function tweenTranslation(id,actor,time,tox,toy,interpolacion,cycle,delay,x,y,pingpong){
 	//interpolacion=interpolacion ? interpolacion : new CAAT.Interpolator().createExponentialOutInterpolator(1,false);
     //TO-DO: Reciclar comportamientos (Behavior), actualmente se agregan N por cada llamada a esta funcion, la idea es que al llamar al mismo tween si existe reprodusca uno ya existente.
+	pingpong=pingpong||false;
 	delay=(delay!=undefined) ? delay : 0;
 	x=(x!=undefined) ? x : 0;
 	y=(y!=undefined) ? y : 0;
@@ -145,6 +146,7 @@ function tweenTranslation(id,actor,time,tox,toy,interpolacion,cycle,delay,x,y){
 			trace("setenado traslasion");
 			path_behavior.setTranslation(x,y);// set path traverse by the center of the rectangle shape.
 		}*/
+		if(pingpong) path_behavior.setPingPong(pingpong);
 	actor.addBehavior( path_behavior );
 	return path_behavior;
 }
@@ -385,7 +387,7 @@ function getsprt(spritename,ancho,alto){
 	return sprtglobal[spritename];
 }
 function spashMsg(src,fncb,requireclick,escena,timea){
-	timea=timea||1000;
+	timea=timea||2000;
 	requireclick=requireclick||false;
 	fncb=(fncb) ? fncb : function(){};
 	escondeescenario();
@@ -712,25 +714,31 @@ function shakeevery(what,ini,to){
 	
 	var rb = new CAAT.RotateBehavior().
 				setCycle(false).
-				setFrameTime(what.time+randomInt(ini,to), 100).
+				setFrameTime(what.time+randomInt(ini,to), 500).
 				setValues( 0, Math.PI/20 , .50, .50 ).
-				setPingPong(true).
-				setInterpolator(
-				new CAAT.Interpolator().createCubicBezierInterpolator(
-						{x:0,y:0},
-						{x:1,y:0},
-						{x:0,y:1},
-						{x:1,y:1},
-						true));
+				setPingPong(true);
 		window.bha=rb;
 	rb.addListener({
 		behaviorExpired : function(behavior, time, actor) {
+			//jump(what,ini,to);
 			shakeevery(what,ini,to);
 		}});
 	if(what.shake!=false){
 		what.addBehavior(rb);
 	}else{
-		what.removeBehaviour(what.behaviorList[0]);
+		//what.removeBehaviour(what.behaviorList[0]);
 	}
-	
+
+}
+function jump(what,ini,to){
+	var g=tweenTranslation(uniq("what!"),what,1000, what.x, what.y-20,rebote,false,randomInt(ini,to),0,0,true);
+	trace("!>>>",tituloanim.y);
+	g.addListener({
+		behaviorExpired : function(behavior, time, actor) {
+			jump(what,ini,to);
+		},
+		behaviorStarted: function(behavior, time, actor){
+			
+		}
+	});
 }

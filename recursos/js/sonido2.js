@@ -5,7 +5,7 @@ var sonido={
 		 
 		 createjs.Sound.registerPlugins([createjs.WebAudioPlugin, createjs.HTMLAudioPlugin, createjs.FlashPlugin]);
 		// createjs.FlashPlugin.swfPath = "../libs/src/SoundJS/";
-		 createjs.Sound.alternateExtensions = ["mp3"];
+		 createjs.Sound.alternateExtensions = ["ogg"];
 		 createjs.Sound.addEventListener("fileload", loadHandler);
 		 _sonido_espe_=_sonido_espe_||[];
 		 var kha=_audio_.concat(_sonido_espe_);
@@ -13,7 +13,15 @@ var sonido={
 			if(kha[i])
 			createjs.Sound.registerSound(kha[i].url, kha[i].id);
 		}
+		var countCargados=0;
 		 function loadHandler(event) {
+			countCargados++;
+			Loader.onUpdateAudioCounter(i,countCargados);
+			if(i==countCargados){
+				Loader.onAudioLoaded();
+			}
+			
+			console.log("aidioloader",event);
 			 // This is fired for each sound that is registered.
 			 if(event.id=="bgmusic"){
 				 trace("sonido cargado",event);

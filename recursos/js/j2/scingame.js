@@ -1,4 +1,5 @@
  //var scprinc= director.createScene();
+var clocktype="";
 var alphawhj;
 var gen;
 var todo = [];
@@ -84,11 +85,14 @@ sc(function(escena) {
 function gamestart(){
 	
 	_etapa1();
+	
 
 	if(logro){
 		logro.reset();		
 	}else
 		logro=new aclogro(escenajuego, 200, 700);
+	
+		
 }
 function limpiaescenario(){
 	if(currE){
@@ -153,7 +157,7 @@ function Etapa1(padre) {
     
     this.ac = new CAAT.ActorContainer().setClip(true);
     this.ac.setBounds(5, 5, 1024 - 10, 768 - 10);
-    this.enunciado = new Enunciado(this.ac);
+    window.enunciado=this.enunciado = new Enunciado(this.ac);
     padre.addChild(this.ac);
 }
 
@@ -238,6 +242,8 @@ function Enunciado(dad) {
     this.currNum1;
     this.currNum2;
     this.bg = obj(uniq("enunciado"), dad, "enunciado", 242, 29);
+	
+	tocasuena(this.bg,"sonidoEnunciado");
 }
 
 function MenuInGame(escena) {
@@ -534,7 +540,7 @@ function loadLiteraryPages(where, spriteArray, startPosX) {
 				y: 150
 			}
 		);
-		shakeevery(tmp,1000,5000);
+		shakeevery(tmp,4000,10000);
 		
 		window.ojas.push(tmp);
 		tmp.id = element.id;

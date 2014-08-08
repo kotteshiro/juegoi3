@@ -16994,6 +16994,11 @@ CAAT.Module({
              */
             paintN:function (director, time, x, y) {
                 var el = this.mapInfo[this.spriteIndex];
+                if(el==undefined){
+                    console.warn("No existe spriteIndex: ",this.spriteIndex, "para la imagen:",this.image, "se pinta el ultimo.");
+                    for(var last in this.mapInfo){ }
+                    el = this.mapInfo[last];
+                }
                 director.ctx.drawImage(
                     this.image,
                     el.x, el.y,
@@ -23469,7 +23474,12 @@ CAAT.Module({
                 }
 
                 var offset = this.getOffset(this.canvas);
-
+                //kottemodification
+                console.log(this.canvas.style.left,this.canvas.style.top);
+                offset.x+=Number(this.canvas.style.left.replace("px",""));
+                offset.y+=Number(this.canvas.style.top.replace("px",""));
+                //endkottemodification           
+                
                 posx -= offset.x;
                 posy -= offset.y;
 
