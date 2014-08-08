@@ -33,9 +33,9 @@ sc(function(escena){
 	
 	//obj("inst06",escena,"gal",770,255,.5,.5);
 	//tweenTranslation("btnshow3",btn2,1000,btn2.x+xdif,btn2.y,new CAAT.Interpolator().createBounceOutInterpolator(0,false),false,500);
-	var btna=btn("inst08",escena,{sprite:[getsprt("jugar_salir",2,2), 0, 2],x:130+70,y:343-10,click:gofnclick});//
+	var btna=btn("inst08",escena,{sprite:[getsprt("jugar_salir",2,2), 0, 0],x:130+70,y:343-10,click:gofnclick});//
 	btna.setScale(1,1).name="jugar";
-	var btnb=btn("inst09",escena,{sprite:[getsprt("jugar_salir",2,2), 1, 3],x:460+70,y:343-10,click:gofnclick});
+	var btnb=btn("inst09",escena,{sprite:[getsprt("jugar_salir",2,2), 1, 1],x:460+70,y:343-10,click:gofnclick});
 	btnb.setScale(1,1).name="salir";
 	
 	btna.setScale(0,0).scaleTo(1, 1, 1000, 0, .5, .5,rebote)

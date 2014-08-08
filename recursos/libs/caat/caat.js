@@ -16993,7 +16993,6 @@ CAAT.Module({
              * @return this
              */
             paintN:function (director, time, x, y) {
-
                 var el = this.mapInfo[this.spriteIndex];
                 director.ctx.drawImage(
                     this.image,
@@ -20008,7 +20007,7 @@ CAAT.Module({
                 this.mouseExit=     function() {};
                 this.mouseDown=     function() {};
                 this.mouseUp=       function() {};
-                this.mouseClick=    function() {};
+                this.mouseDown=    function() {};
                 this.mouseDrag=     function() {};
                 return this;
             },

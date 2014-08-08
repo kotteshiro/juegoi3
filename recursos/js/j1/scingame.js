@@ -445,7 +445,7 @@ function enpausa(escena){
 					
 	var h1_1=	obj("pa8a",escena,'fondo_ayuda',0,0,1,1);
 	var h1_0=	obj("fost08b",escena,'en-pausa',222,137,1,1);	//222,137
-	h1_0.mouseClick=function(a){
+	h1_0.mouseDown=function(a){
 		//alert("bye pausa");
 		//h1_1.mouseClick(a);
 		h1_1.destroy();

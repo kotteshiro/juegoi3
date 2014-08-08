@@ -419,7 +419,7 @@ function spashMsg(src,fncb,requireclick){
 		this.clickcb();
 		//this.destroy();
 	}
-	spla.mouseClick=spla.desapareceme;
+	spla.mouseDown=spla.desapareceme;
 	//tweenScale("btnshow5",spla,1000,0,0,new CAAT.Interpolator().createBounceOutInterpolator(0,false),false,1500);
 	
 	return spla;

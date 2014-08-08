@@ -177,8 +177,9 @@ function muestraescenario(){
 
 function acchrono(conten){
 	var ac=new CAAT.ActorContainer();
-	obj("tiempo",ac,'tiempo',0,0,1,1);
-	ac.barra=obj("tiempo_accion",ac,'tiempo_accion',59,47,1,1);
+	//obj("tiempo",ac,'tiempo',0,0,1,1);
+	//ac.barra=obj("tiempo_accion",ac,'tiempo_accion',59,47,1,1);
+	
 	conten.addChild(ac);
 	return ac;
 }
@@ -193,6 +194,15 @@ function clockController(action){
 	
 	if(clock.border == undefined)
 		clock.border = obj("clockBorder", escenajuego, "clockBorder", 30, 600, 1, 1);
+	
+	if(clock.progress == undefined){
+		var prsp= new CAAT.SpriteImage().initialize(director.getImage('relojanim'),10,36);
+		var sec=[];
+		for(var i=0;i<360;i++){ sec.push(i); }
+		clock.progress = new MovieClipSprite(prsp.getRef(), sec,75, 53, 648);
+		escenajuego.addChild(clock.progress.getActor());
+		//clock.progress = obj("clockBorder", escenajuego, "clockBorder", 30, 600, 1, 1);
+	}
 	
 	if(clock.txt === undefined) {
 		clock.txt = timerTxt = new CAAT.TextActor()

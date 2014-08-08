@@ -23,7 +23,7 @@ var onloadimgs=function() {
 		};
 		funciones[i].cb(funciones[i].sc);
 	}
-	toscenaanim(2) //removethis
+	//toscenaanim(2) //removethis
 }
 var spmodos;
 var spiconos;
@@ -33,16 +33,50 @@ function mutebtnaction(){
 		//director.setSoundEffectsEnabled(!director.audioManager.isSoundEffectsEnabled());
 		sonido.mute(!sonido.ismute())
 		updatebtnmute();
+		
+		if(sonido.ismute()==false){
+			bgmusic.setMute(window.bgmismute); //seteamos el estado guardado de bgm
+			updatebgmbtnmute();
+			//window.bgmismute=bgmusic.getMute();
+		}else{		
+			//está muteado
+			window.bgmismute=bgmusic.getMute(); //guardamos el estado de bgm
+			if(!bgmusic.getMute()){ //muteamos el bgm
+				mutebgmbtnaction(true);
+			}
+			
+		}
+		
+		
+}
+function mutebgmbtnaction(force){
+		force=force||false
+		
+		if(!force && sonido.ismute()) return;
+		//director.setSoundEffectsEnabled(!director.audioManager.isSoundEffectsEnabled());
+		bgmusic.setMute(!bgmusic.getMute())
+		updatebgmbtnmute();
 }
 
 function updatebtnmute(){
 	for(var i in director.scenes){
 		if(director.scenes[i].botonmute !== undefined){
 			if(sonido.ismute())
-				director.scenes[i].botonmute.setButtonImageIndex(6, 6+7, 6, 6);
+				director.scenes[i].botonmute.setButtonImageIndex(4, 4+7, 4, 4);	
 			else
-				director.scenes[i].botonmute.setButtonImageIndex(5, 5+7, 5, 5);
+				director.scenes[i].botonmute.setButtonImageIndex(3, 3+7, 3, 3);
+		}
+	} 
+	updatebgmbtnmute();
+}
+function updatebgmbtnmute(){
+	if(bgmusic.getMute==undefined) return;
+	for(var i in director.scenes){
+		if(director.scenes[i].botonbgmmute !== undefined){
+			if(!bgmusic.getMute())
+				director.scenes[i].botonbgmmute.setButtonImageIndex(5, 5+7, 5, 5);
+			else
+				director.scenes[i].botonbgmmute.setButtonImageIndex(6, 6+7, 6, 6);
 		}
 	}
-		
 }

@@ -66,11 +66,12 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
 			recreateSeq = false;
 		}
 		console.log("LOGRO SECUENCIA:",tmpSeq,ESC);
-		var tmpStar = new MovieClipSprite(spminilogros.getRef(), tmpSeq, 100, startPos-9, -3).stop(ESC);
+		var tmpStar = new MovieClipSprite(spminilogros.getRef(), tmpSeq, 50, startPos-10, -6).stop(ESC);
 		tmpStar.secuencia=tmpSeq;
 		logros.estrellas.push(tmpStar);
 		ac.addChild(tmpStar.getActor());
 		startPos += sep;
+		window.ultimaestrella=tmpStar;
 	}
     
     conten.addChild(ac);
@@ -88,6 +89,10 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
         trace("Wrong answer! Substracting points...");
 		sonido.play("FALLIDO");
         currScore += wrongScore;
+		this.updateScore();
+    }
+	this.correctAnswer = function() {
+		sonido.play("CORRECTO");
 		this.updateScore();
     }
     
@@ -152,6 +157,7 @@ function addLogro() {
         currScore += rightScore * scoreLevelMultiplier;
 		this.updateScore();
         logros.currlvl++;
+		sube(curr.actor);
         curr.play(0, true);
     }
 }

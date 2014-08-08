@@ -22,6 +22,7 @@ function obj(namae,escena,imgid,x,y,sx,sy){
 	var a = new CAAT.Actor().
 		setBackgroundImage(director.getImage(imgid));
 		a.setLocation(0,0);
+		a.enableEvents(false);
 		a.setScaleAnchored(sx,sy,0,0);
 	switch(x){
 		case "center":
@@ -40,6 +41,7 @@ function obj(namae,escena,imgid,x,y,sx,sy){
 	if(escena.instancias[namae] != undefined) console.warn("Instancia de nombre: "+escena.instancias[namae].name+" ya existe.");
 	escena.instancias[namae]=a;
 	a.name=namae;
+	
 	return a;
 }
 
@@ -49,6 +51,7 @@ function btn(namae,escena,prop){
 	prop.sprite[3]=prop.sprite[3] ? prop.sprite[3] : prop.sprite[2];
 	prop.sprite[4]=prop.sprite[4] ? prop.sprite[4] : prop.sprite[2];
 	prop.hoveranim=(prop.hoveranim===false) ? false : true;
+	prop.subir=prop.subir||false;
 	// setAsButton(spriteImageIndex, normal, over, press, disabled, fn)
 	var b1= new CAAT.Actor().setAsButton(prop.sprite[0].getRef(), prop.sprite[1], prop.sprite[2], prop.sprite[3], prop.sprite[4], prop.click).
             setLocation(prop.x,prop.y);
@@ -58,6 +61,8 @@ function btn(namae,escena,prop){
 	var sonidohover=prop.soundhover||"ELEMENTO";
 	b1.mouseEnter=function(e){
 		console.log(e);
+		if(prop.subir)
+		sube(e.source);
 		e.source.currsx=e.source.currsx||1;
 		e.source.currsy=e.source.currsy||1;
 		if(prop.hoveranim)
@@ -379,7 +384,8 @@ function getsprt(spritename,ancho,alto){
 	sprtglobal[spritename]=sprtglobal[spritename] || new CAAT.SpriteImage().initialize(director.getImage(spritename),alto,ancho);
 	return sprtglobal[spritename];
 }
-function spashMsg(src,fncb,requireclick,escena){
+function spashMsg(src,fncb,requireclick,escena,timea){
+	timea=timea||1000;
 	requireclick=requireclick||false;
 	fncb=(fncb) ? fncb : function(){};
 	escondeescenario();
@@ -397,7 +403,7 @@ function spashMsg(src,fncb,requireclick,escena){
 	trace("!>>>",tituloanim.y);*/
 	comporta1.addListener({
 		behaviorExpired : function(behavior, time, actor) {
-			if(!requireclick) setTimeout(function(){spla.desapareceme()},800)
+			if(!requireclick) setTimeout(function(){spla.desapareceme()},timea)
 
 		//tweenTranslation("tituloanim",actor,5000,actor.x,actor.y+10,new CAAT.Interpolator().createExponentialInOutInterpolator(true,1),true,0,0,0);
 	}});
@@ -427,12 +433,13 @@ function spashMsg(src,fncb,requireclick,escena){
 		this.clickcb();
 		//this.destroy();
 	}
-	spla.mouseClick=spla.desapareceme;
+	spla.mouseDown=spla.desapareceme;
 	//tweenScale("btnshow5",spla,1000,0,0,new CAAT.Interpolator().createBounceOutInterpolator(0,false),false,1500);
 	
 	return spla;
 	
 }
+var splashmsg=spashMsg;
 function randomInt(ini,to){ return Math.round(Math.random()*(to-ini))+ini }
 
 function layout(position) {
@@ -588,7 +595,6 @@ function FlechaAtoB(where,a,b,margen){
 	this.l2=this.l2||new Linea({x:this.x1+(Math.cos(-this.rotation+(Math.PI/4)+Math.PI)*20),y:this.y1+(Math.sin(-this.rotation+(Math.PI/4)+Math.PI)*20)},{x:this.x1,y:this.y1},where,this.color);
 	this.l3=this.l3||new Linea({x:this.x1+(Math.cos(-this.rotation-(Math.PI/4)+Math.PI)*20),y:this.y1+(Math.sin(-this.rotation-(Math.PI/4)+Math.PI)*20)},{x:this.x1,y:this.y1},where,this.color);
 	this.update=function(){
-			
 			this._rotation=getAngulo({x:this.x0,y:this.y0},{x:this.x1,y:this.y1});	
 			this.rotation=this._rotation.radianes;
 			this.xi=this.x0+(Math.cos(this.rotation)*this.margen);
@@ -678,4 +684,53 @@ function Linea(from,to, where,color){
 		this.line.to.x=x;
 		this.line.to.y=y;
 	}
+}
+function sube(that){
+	that.parent.setZOrder( that, Number.MAX_VALUE );
+}
+function clicktap(obj, fncb){
+	obj.enableEvents(true);
+	obj._clicktaps=obj._clicktaps||[];
+	obj._clicktaps.push(fncb);
+	obj.mouseDown=function(e){				
+		console.log("mousedown",e);
+		for(var k in this._clicktaps){
+			this._clicktaps[k](e);
+		}
+		this.mouseUp(e);
+	}
+}
+function Button(elemento,clickCb){
+	
+}
+
+function tocasuena(que,cual){
+	clicktap(que,function(){ sonido.play(cual) });
+}
+
+function shakeevery(what,ini,to){
+	
+	var rb = new CAAT.RotateBehavior().
+				setCycle(false).
+				setFrameTime(what.time+randomInt(ini,to), 100).
+				setValues( 0, Math.PI/20 , .50, .50 ).
+				setPingPong(true).
+				setInterpolator(
+				new CAAT.Interpolator().createCubicBezierInterpolator(
+						{x:0,y:0},
+						{x:1,y:0},
+						{x:0,y:1},
+						{x:1,y:1},
+						true));
+		window.bha=rb;
+	rb.addListener({
+		behaviorExpired : function(behavior, time, actor) {
+			shakeevery(what,ini,to);
+		}});
+	if(what.shake!=false){
+		what.addBehavior(rb);
+	}else{
+		what.removeBehaviour(what.behaviorList[0]);
+	}
+	
 }

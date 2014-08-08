@@ -4,8 +4,8 @@ var _images_= [
 	{id:'fondo_c',     url:'recursos/imagenes/fondo_c.png'},
 	{id:'fondo_d',     url:'recursos/imagenes/fondo_d.png'},
 	{id:'logogly',     url:'recursos/imagenes/GYL.png'},
-	{id:'nube_titulo',     url:'recursos/imagenes/nube_titulo.png'},
-	{id:'titulo',     url:'recursos/imagenes/titulo.png'},
+	{id:'nube_titulo',     url:'recursos/imagenes/j3/intro_titulo.png'},
+	{id:'titulo',     url:'recursos/imagenes/j3/intro_titulo.png'},
 	{id:'modos',     url:'recursos/imagenes/modos-10.png'},
 	{id:'fondo_iconos_comandos',     url:'recursos/imagenes/fondo_iconos_comandos.png'},
 	{id:'iconos_comandos',     url:'recursos/imagenes/iconos_comandos.png'},
@@ -48,19 +48,10 @@ var _images_= [
 	{id:'flechaPunta',     url:'recursos/imagenes/j3/flechaPunta.png'},
 	{id:'flechaCuerpo',     url:'recursos/imagenes/j3/flechaCuerpo.png'},
 ];
-var _audio_= [
-	{id:'COMENZAR',     url:"recursos/sonidos/COMENZAR.ogg"},
-	{id:'CONTROLES',     url:"recursos/sonidos/CONTROLES.ogg"},
-	{id:'ELEMENTO',     url:"recursos/sonidos/ELEMENTO.ogg"},
-	{id:'ESTRELLA',     url:"recursos/sonidos/ESTRELLA.ogg"},
-	{id:'EXCELENTE',     url:"recursos/sonidos/EXCELENTE.ogg"},
-	{id:'FALLIDO',     url:"recursos/sonidos/INTENTO-FALLIDO.ogg"},
-	{id:'MUSICA-BIOLOGIA',     url:"recursos/sonidos/MUSICA-BIOLOGIA.ogg"},
-	{id:'MUSICA-LENGUAJE',     url:"recursos/sonidos/MUSICA-LENGUAJE.ogg"},
-	{id:'MUSICA-MATEMATICA',     url:"recursos/sonidos/MUSICA-MATEMATICA.ogg"},
-	{id:'PASAR-NIVEL',     url:"recursos/sonidos/PASAR-NIVEL.ogg"},
-	{id:'SELECCION-RELAJADO-TIEMPO',     url:"recursos/sonidos/SELECCION-RELAJADO-TIEMPO.ogg"},
-	{id:'TITULO-ABRE',     url:"recursos/sonidos/TITULO-ABRE.ogg"},
+var _sonido_espe_ = [
+	{id:"bgmusic" , url: "recursos/sonidos/MUSICA-BIOLOGIA.ogg"},
+	{id:"sonidoTitulo" , url: "recursos/sonidos/j2/VJ_001L_titulo.mp3"},
+	{id:"sonidoIntro" , url: "recursos/sonidos/j2/VJ_001L_intro.mp3"},
+	{id:"sonidoEnunciado" , url: "recursos/sonidos/j2/VJ_001L_enunciado.mp3"}
 ];
 subtmitfiles(_images_);
-

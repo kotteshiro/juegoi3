@@ -3,6 +3,7 @@ sc(function(escena){
 	escena.name="scintro";
 	escena.setClip(true);
 	trace(">scintro espacio");
+	
  	//var bg = animbg(escena),
 		bgIntro = obj("bgSpace", escena, "bgIntro", 0, 0, 1, 1);
 	
@@ -11,23 +12,50 @@ sc(function(escena){
 		bgStars = new CAAT.Actor()
 			.setLocation(-405, -100)
 			.setBackgroundImage(director.getImage("bgStars"))
-			.addBehavior(new CAAT.RotateBehavior().setCycle(true).setFrameTime(0, 80000000).setValues(0, -360)),
+			.addBehavior(new CAAT.RotateBehavior().setCycle(true).setFrameTime(0, 8000000).setValues(0, -360)),
 		earthActor = new CAAT.Actor()
 			.setLocation(-214, 60)
 			.setSize(719, 719)
 			.setBackgroundImage(director.getImage("earthIntro"))
-			.addBehavior(new CAAT.RotateBehavior().setCycle(true).setFrameTime(0, 20000000).setValues(0, -360));
+			.addBehavior(new CAAT.RotateBehavior().setCycle(true).setFrameTime(0, 3000000).setValues(0, -360));
 		window.earthActor=earthActor;
 	earthCont.addChild(earthActor);
 	escena.addChild(bgStars);
 	escena.addChild(earthCont);
 	
-	var cohete=obj("scintro4",escena,'cohete',"center", 132,1,1);
+	
+	
+	
+	
+	
+	
+	
+	/* COHETE! */
+	var cohetec = new CAAT.ActorContainer();
+	var simotor= new CAAT.SpriteImage().initialize(director.getImage('sprite-motor'),5,13);
+	var sec=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60 ,61 ,62, 63, 64];
+	var fire = new MovieClipSprite(simotor.getRef(), sec,75, 0, 60);
+	
+    cohetec.setBounds(200, 118,1,1);
+	cohetec.addChild(fire.getActor());
+	//var fuego=obj("scintro4",escena,'cohete',"center", 132,1,1);
+	var cohete=obj("scintro4",cohetec,'cohete',98, 0,1,1);
+	
+	window.cohete=cohetec;
+	cohetec.x=270;
+	cohetec.y=158;
+	escena.addChild(cohetec);
+	
+	
+	
+	//tweenTranslation("tituloanim",cohetec,5000,cohetec.x,cohetec.y+10,new CAAT.Interpolator().createExponentialInOutInterpolator(true,1),true,0,0,0);
+	tweenTranslation("tituloanim1",cohetec,30000,cohetec.x+100,cohetec.y,new CAAT.Interpolator().createExponentialInOutInterpolator(true,1),true,0,0,0);
+	/*FIN COHETE*/
+	
 	window.textoa=obj("texto_intro",escena,'texto_intro',335, 720,1,1);
-	cohete_=cohete;
 	//var zona = obj("scintro2",escena,'zonasensiblefull',0,0,1024,768);
 	
-	//tweenTranslation("tituloanim",cohete,2000,cohete.x,cohete.y+10,new CAAT.Interpolator().createExponentialInOutInterpolator(true,1),true,0,0,0);
+	//
 	
 	//zona.mouseEnabled=true;
 	var zonamouseClick=function(e){  
@@ -39,4 +67,5 @@ sc(function(escena){
 	btn("scintro311",escena,{sprite:[getsprt("zonasensiblefull",1,2), 1, 1],x:0,y:384,click:zonamouseClick});
 	//btn("scintro4_", escena, {sprite:[splogogly, 1, 1], x:341, y:343-50, click:mmcl}).setScale(1.5, 1.5);
 	//window.document.addEventListener("touchstart",zona.mouseClick);
+	
 });

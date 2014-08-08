@@ -35,6 +35,7 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
 		.setText(currScore.toString());
     ac.addChild(scoreText);
 	
+	var framesanim=24;
     var sep = 35;
 	var startPos = 95,
 		ESC = 0,
@@ -44,13 +45,13 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
 	
 	for(var i = 0; i < 9; i++) {
 		if(i == 3) {
-			ESC = 7;
+			ESC = framesanim*1;
 			startPos += 20;
 			recreateSeq = true;
 		}
 		
 		if(i == 6) {
-			ESC = 14;
+			ESC = framesanim*2;
 			startPos += 18;
 			recreateSeq = true;
 		}
@@ -58,21 +59,24 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
 		if(recreateSeq) {
 			tmpSeq = new Array();
 			
-			for(var j = 0; j < 7; j++) {
+			for(var j = 0; j < framesanim; j++) {
 				tmpSeq.push(j + ESC);
 			}
 			
 			recreateSeq = false;
 		}
 		console.log("LOGRO SECUENCIA:",tmpSeq,ESC);
-		var tmpStar = new MovieClipSprite(spminilogros.getRef(), tmpSeq, 200, startPos, 0).stop(ESC);
+		var tmpStar = new MovieClipSprite(spminilogros.getRef(), tmpSeq, 80, startPos, -5).stop(ESC);
+		tmpStar.secuencia=tmpSeq;
 		logros.estrellas.push(tmpStar);
 		ac.addChild(tmpStar.getActor());
 		startPos += sep;
+		window.ultimaestrella=tmpStar;
 	}
     
     conten.addChild(ac);
 	
+	this.ac=ac;
     this.getLvl = function() {
         return logros.estrellas[logros.currlvl];
     }
@@ -83,7 +87,12 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
     
     this.wrongAnswer = function() {
         trace("Wrong answer! Substracting points...");
+		sonido.play("FALLIDO");
         currScore += wrongScore;
+		this.updateScore();
+    }
+	this.correctAnswer = function() {
+		sonido.play("CORRECTO");
 		this.updateScore();
     }
     
@@ -98,9 +107,11 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
     
     this.reset = function() {
         for (var i in logros.estrellas) {
-            logros.estrellas[i].stop(0);
+            logros.estrellas[i].stop(logros.estrellas[i].secuencia[0]);
         }
         logros.currlvl = 0;
+		currScore = 0;
+		this.updateScore();
     }
 	
 	this.calculateScoreFromTime = function(millis) {
@@ -110,6 +121,22 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
 		currScore += ((rightScore / 2) * (scoreLevelMultiplier * 0.3)) - (minutes * spentTimeScore);
 		this.updateScore();
 	};
+	this.removeLogro=function(){
+		var curr = logros.estrellas[logros.currlvl-1];
+		if (curr != undefined) {
+			
+			if(logros.currlvl == 4)
+				scoreLevelMultiplier = 2;
+
+			if(logros.currlvl == 8)
+				scoreLevelMultiplier = 3;
+		
+			currScore -= rightScore * scoreLevelMultiplier;
+			this.updateScore();
+			logros.currlvl--;
+			curr.stop(curr.secuencia[0], true);
+		}
+	}
 	
     return this;
 }
@@ -130,6 +157,7 @@ function addLogro() {
         currScore += rightScore * scoreLevelMultiplier;
 		this.updateScore();
         logros.currlvl++;
+		sube(curr.actor);
         curr.play(0, true);
     }
 }

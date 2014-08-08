@@ -19,7 +19,8 @@ var sonido={
 				 trace("sonido cargado",event);
 				 bgmusic = createjs.Sound.createInstance("bgmusic"); //createjs.Sound.play("bgmusic");  // play using id.  Could also use full sourcepath or event.src.
 				 bgmusic.addEventListener("complete", handleComplete);
-				 bgmusic.play();
+				 bgmusic.setVolume(.5)
+				 //bgmusic.play();
 			 }
 		 }
 		 
@@ -29,13 +30,14 @@ var sonido={
 		this.mute(this.ismute())
 		 
 	},
-	play:function(id, cb){
+	play:function(id, cb,volume){
+		volume=volume||.5;
 		//soundManager.play(id);
 		if(soundList[id] === undefined) {
 			soundList[id] = createjs.Sound.createInstance(id);
 			soundList[id].addEventListener("complete", cb || function() {});
 		}
-		
+		soundList[id].setVolume(volume)
 		soundList[id].play();
 		if(soundList[id] == false)
 			console.error(soundList[id],"Error reproduciendo sonido",id);

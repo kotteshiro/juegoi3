@@ -21,7 +21,7 @@ var currM;
 function avisoTO(){
 	
 	spashMsg(avisostimeout[avisoindex]);
-	
+	sonido.play("TIME_OVER");
 	avisoindex++;
 	if(avisoindex>=avisostimeout.length){
 		avisoindex=0;
@@ -113,12 +113,6 @@ function _etapa1(){
 function _etapa2(){
 	trace("Etapa 2");
 	limpiaescenario();
-    /*if(e1)
-		e1.ac.destroy()
-    if(e1.menu)
-		e1.menu.destroy();*/
-    //var tmp = obj("fondo_escena", escenajuego, "fondo", 0, 0, 1, 1);
-    //obj("fondo_hojas", escenajuego, "fondo_hojas", 9, 147, 1, 1);
     currE=e2=new Etapa2(escenajuego);
 	
     e2.startIntento();
@@ -267,16 +261,19 @@ function MenuInGame(escena) {
                 //play
                 break;
             case "btn3": //info
-                lastScena = director.scenes.indexOf(director.currentScene);
-                toscenaanim(3);
+                //lastScena = director.scenes.indexOf(director.currentScene);
+                //toscenaanim(3);
+				mutebgmbtnaction();
                 break;
             case "btn5":
-                mutebtnaction(e);
+                mutebtnaction();
                 break;
         }
         trace(e);
     }
-    menux = acmenu(escena, [{ix: 2,fn: clicbtn}, {ix: 0,fn: clicbtn}, {ix: 3,fn: clicbtn}, {ix: 5,fn: clicbtn}, {ix: 4,fn: clicbtn}]); //siempre al top
+    menux = acmenu(escena, [{ix: 2,fn: clicbtn}, {ix: 0,fn: clicbtn}, {ix: 3,fn: clicbtn}, {ix: 5,fn: clicbtn}]); //siempre al top
+	updatebtnmute();
+	updatebgmbtnmute();
     return menux;
 }
 
@@ -285,13 +282,17 @@ function enpausa(escena) {
     clockController("pause");
     var h1_1 = obj("pa8a", escena, 'fondo_ayuda', 0, 0, 1, 1);
     var h1_0 = obj("fost08b", escena, 'en-pausa', 222, 137, 1, 1); //222,137
-    h1_0.mouseClick = function(a) {
+	
+	var fn=function(a) {
 		clockController("resume");
         h1_1.destroy();
         h1_0.destroy();
     }
+	
+   	clicktap(h1_1,fn);
+	clicktap(h1_0,fn);
 }
-;
+
 function newgamelvl1() {
     trace("nuevo juego lvl 1");
 	logro.reset();
@@ -502,8 +503,9 @@ function loadLiteraryBooks(where, count) {
 	tmp = undefined;
 	cols = undefined;
 	valid = new Array();
-	
+
 	for(var i = 0; i < actors.books.length; i++) {
+		//holders[i].addBehavior(rb);
 		holders[i].valid = false;
 		holders[i].hasElement = false;
 	}
@@ -519,6 +521,7 @@ function loadLiteraryPages(where, spriteArray, startPosX) {
 	trace("SpriteArray Length: " + spriteArray.length);
 	trace(spriteArray);
 	
+	window.ojas=[];
 	for(var i = 0; i < spriteArray.length; i++) {
 		var element = spriteArray[i];
 		trace("Element:", element);
@@ -531,6 +534,9 @@ function loadLiteraryPages(where, spriteArray, startPosX) {
 				y: 150
 			}
 		);
+		shakeevery(tmp,1000,5000);
+		
+		window.ojas.push(tmp);
 		tmp.id = element.id;
 		addDragNDrop(tmp,
 			function(e) {
@@ -550,8 +556,11 @@ function loadLiteraryPages(where, spriteArray, startPosX) {
 				if(!e.dropsOn.valid) {
 					logro.wrongAnswer();
 					e.dropsOn.hasElement = false;
+					e.source.shake=true;;
 					e.source.volver();
 				} else {
+					e.source.shake=false;
+					logro.correctAnswer();
 					checkEarnCondition();
 					removeDragNDrop(e.source);
 				}
@@ -578,6 +587,7 @@ function addDragNDrop(object, onDrag, onDrop, onDragging) {
 	object.originaly = object.y;
 	
 	object.mouseDown = function(e) {
+		sube(this);
 		trace("Start dragging.");
 		trace(e);
 		this.currsx=this.currsy=.4;
@@ -692,7 +702,8 @@ function advanceLevel(){
 					currLevel=2;
 					clockController("stop");
 					sonido.play("PASAR-NIVEL");
-					spashMsg("tit_intento3",_etapa2,false);
+					
+					spashMsg("tit_intento3",function(){ setTimeout(_etapa2, 400); },false);
 				}
 				return false;
             	break;
@@ -701,14 +712,16 @@ function advanceLevel(){
 					currLevel=3
 					clockController("stop");
 					sonido.play("PASAR-NIVEL");
-					spashMsg("tit_intento3",_etapa3,false);
+					spashMsg("tit_intento3",function(){ setTimeout(_etapa3, 400); },false);
 					return false;
 				}
             	break;
             case 12:
 				clockController("stop");
-				clockController("destroy");   
-				sonido.play("EXCELENTE");
+				clockController("destroy");  
+				if(!bgmusic.setVolume(.08)) bgmusic.setMute(true)
+				
+				sonido.play("EXCELENTE",function(){ if(!bgmusic.setVolume(.5)) bgmusic.setMute(false);},1);
 				spashMsg("tit_excelente",function(){pantallaGameOver(currScore)},false);
 				return false;
 				break;

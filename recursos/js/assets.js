@@ -41,6 +41,7 @@ var _images_= [
     {id: 'barraLogros',url: path + 'barra_logros.png'}, 
 	{id: 'texto_intro',url: path + 'texto_intro.png'}, 
     {id: 'clockBorder',url: path + 'reloj_A.png'}, 
+	{id: 'relojanim',url: path + 'relojanim.png'},
     {id: 'logogly',url: path + 'GYL.png'}, 
     {id: 'modos',url: path + 'modos-10.png'}, 
     {id: 'fondo_iconos_comandos',url: path + 'fondo_iconos_comandos.png'}, 
@@ -63,22 +64,25 @@ var _images_= [
     {id: 'en-pausa',url: path + 'en-pausa.png'},
 	{id: 'jugar_salir',url: path + 'jugar_salir.png'},
 	{id: 'puntaje',url: path + 'puntaje.png'},
+	{id: 'sprite-motor',url: path + 'sprite-motor.png'},
 	
 ];
 
 
 var _audio_= [
-	{id:'COMENZAR',     url:"recursos/sonidos/COMENZAR.ogg"},
-	{id:'CONTROLES',     url:"recursos/sonidos/CONTROLES.ogg"},
-	{id:'ELEMENTO',     url:"recursos/sonidos/ELEMENTO.ogg"},
-	{id:'ESTRELLA',     url:"recursos/sonidos/ESTRELLA.ogg"},
-	{id:'EXCELENTE',     url:"recursos/sonidos/EXCELENTE.ogg"},
-	{id:'FALLIDO',     url:"recursos/sonidos/INTENTO-FALLIDO.ogg"},
-	{id:'MUSICA-BIOLOGIA',     url:"recursos/sonidos/MUSICA-BIOLOGIA.ogg"},
-	{id:'MUSICA-MATEMATICA',     url:"recursos/sonidos/MUSICA-MATEMATICA.ogg"},
-	{id:'PASAR-NIVEL',     url:"recursos/sonidos/PASAR-NIVEL.ogg"},
-	{id:'SELECCION-RELAJADO-TIEMPO',     url:"recursos/sonidos/SELECCION-RELAJADO-TIEMPO.ogg"},
-	{id:'TITULO-ABRE',     url:"recursos/sonidos/TITULO-ABRE.ogg"},
+	{id:'COMENZAR',     					url:"recursos/sonidos/COMENZAR.ogg"					},
+	{id:'CONTROLES',     					url:"recursos/sonidos/CONTROLES.ogg"				},
+	{id:'ELEMENTO',    						url:"recursos/sonidos/ELEMENTO.ogg"					},
+	{id:'ESTRELLA',     					url:"recursos/sonidos/ESTRELLA.ogg"					},
+	{id:'EXCELENTE',     					url:"recursos/sonidos/EXCELENTE.ogg"				},
+	{id:'FALLIDO',     						url:"recursos/sonidos/INTENTO-FALLIDO.ogg"			},
+	{id:'PASAR-NIVEL',     					url:"recursos/sonidos/PASAR-NIVEL.ogg"				},
+	{id:'SELECCION-RELAJADO-TIEMPO',     	url:"recursos/sonidos/SELECCION-RELAJADO-TIEMPO.ogg"},
+	{id:'TITULO-ABRE',     					url:"recursos/sonidos/TITULO-ABRE.ogg"				},
+	{id:'TIME_OVER',     					url:"recursos/sonidos/TIME_OVER.ogg"				},
+	{id:'CORRECTO',     					url:"recursos/sonidos/CORRECTO.ogg"					},
+	
+	
 ];
 
 subtmitfiles(_images_);
