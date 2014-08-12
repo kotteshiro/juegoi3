@@ -75,7 +75,7 @@ function acPuntaje(conten,padre){
 	 ac.addChild(padre.scoreText);
 	conten.addChild(ac);
 	
-	return ac;
+	return ac; 
 }
 
 function pantallaGameOver(puntaje,splash){
