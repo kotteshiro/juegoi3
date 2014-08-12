@@ -69,9 +69,9 @@ sc(function(escena){
 	
 	//obj("inst06",escena,"gal",770,255,.5,.5);
 	//tweenTranslation("btnshow3",btn2,1000,btn2.x+xdif,btn2.y,new CAAT.Interpolator().createBounceOutInterpolator(0,false),false,500);
-	var btna=btn("inst08",escena,{sprite:[spmodos, 0, 2],x:130+70,y:343-10,click:scprinc.fnclick});//
+	var btna=btn("inst08",escena,{sprite:[spmodos, 0, 0],x:130+70,y:343-10,click:scprinc.fnclick});//
 	btna.setScale(1,1).name="calma";
-	var btnb=btn("inst09",escena,{sprite:[spmodos, 1, 3],x:460+70,y:343-10,click:scprinc.fnclick});
+	var btnb=btn("inst09",escena,{sprite:[spmodos, 1, 1],x:460+70,y:343-10,click:scprinc.fnclick});
 	btnb.setScale(1,1).name="tiempo";
 	
 	btna.setScale(0,0).scaleTo(1, 1, 1000, 0, .5, .5,rebote)
