@@ -219,7 +219,11 @@ function clockController(action){
 
 	switch(action) {
 		case 'init':
-			if(currTimer) currTimer = undefined;
+			if(currTimer){
+				currTimer.cancelNextCallBackAtStop();
+				currTimer.stop(); //.reset();
+				currTimer = undefined;
+			}
 			startClock(cdt);
 			break;
 			

@@ -40,6 +40,7 @@ function onTimeOver(time) {
 			while(logro.getLvlIx()>8){
 				logro.removeLogro();
 			}
+			avisoTO();
 		}
 		clockController("init");
 	}
