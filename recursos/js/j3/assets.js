@@ -49,7 +49,7 @@ var _images_= [
 	{id:'flechaCuerpo',     url:'recursos/imagenes/j3/flechaCuerpo.png'},
 ];
 var _sonido_espe_ = [
-	{id:"bgmusic" , url: "recursos/sonidos/MUSICA-BIOLOGIA.ogg"},
+	{id:"bgmusic" , url: "recursos/sonidos/j3/MUSICA-BIOLOGIA.ogg"},
 	{id:"sonidoTitulo" , url: "recursos/sonidos/j2/VJ_001L_titulo.mp3"},
 	{id:"sonidoIntro" , url: "recursos/sonidos/j2/VJ_001L_intro.mp3"},
 	{id:"sonidoEnunciado" , url: "recursos/sonidos/j2/VJ_001L_enunciado.mp3"}

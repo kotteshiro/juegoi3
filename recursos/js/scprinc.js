@@ -22,7 +22,6 @@ sc(function(escena){
 				}*/
 				//scayuda
 				//director.easeInOut( director.currentScene.id, typein, anchorin, outSceneIndex, typeout, anchorout, time, alpha, interpolatorIn, interpolatorOut )
-				
 				trace("ssdasd");
   			break;
 			case "calma":
@@ -66,7 +65,7 @@ sc(function(escena){
 			sonido.play("TITULO-ABRE");
 		}
 	});
-	
+	//menu=new MenuInGame(escena);
 	//obj("inst06",escena,"gal",770,255,.5,.5);
 	//tweenTranslation("btnshow3",btn2,1000,btn2.x+xdif,btn2.y,new CAAT.Interpolator().createBounceOutInterpolator(0,false),false,500);
 	var btna=btn("inst08",escena,{sprite:[spmodos, 0, 0],x:130+70,y:343-10,click:scprinc.fnclick});//
@@ -98,3 +97,10 @@ sc(function(escena){
 	//fondo_texto=escena.instancias.inst10;
 	//fondo_texto=escena.instancias.inst10;
 });
+
+function gamestart(){
+	if(logro){
+		logro.reset();		
+	}else
+		logro=new aclogro(escenajuego, 200, 700);
+}

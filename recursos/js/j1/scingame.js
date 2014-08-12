@@ -491,41 +491,6 @@ function Grilla(padre,prop){
 	
 	padre.addChild(this.ac);
 }
-/*
-function MenuInGame(escena){
-	function clicbtn(e){
-		switch(e.name){
-			case "btn2": //volver
-				clockController("pause");
-				confirmdialog(escena,function(conf){
-					if(conf){
-						clockController("destroy");
-						toscenaanim(1);
-						game1.obj.init();	
-					}
-				});
-				
-			break;
-			case "btn0": //
-				//alert("El juego está en pausa");
-				
-				enpausa(escena);
-				//play
-			break;
-			case "btn3": //info
-				lastScena=director.scenes.indexOf(director.currentScene);
-				toscenaanim(3);
-			break;
-			case "btn5":
-				mutebtnaction(e);
-			break;
-		}
-		trace(e);
-	}
-	menux=acmenu(escena,[{ix:2,fn:clicbtn},{ix:0,fn:clicbtn},{ix:3,fn:clicbtn},{ix:5,fn:clicbtn},{ix:4,fn:clicbtn}]); //siempre al top
-	return menux;
-}
-*/
 
 function newgamelvl1(){
 	trace("nuevo juego lvl 1");

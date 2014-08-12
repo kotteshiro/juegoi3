@@ -20,9 +20,9 @@ function Play(ac){
 	
 	this.escenas=[this.e1,this.e2,this.e3,this.e4,this.e5,this.e6,this.e7,this.e8,this.e9];
 	
-	this.e1.currRed.armar(getRandomA("redesrnd",redescfg));
-	this.e2.currRed.armar(getRandomA("redesrnd",redescfg));
-	this.e3.currRed.armar(getRandomA("redesrnd",redescfg));
+	this.e1.currRed.armar (getRandomA("redesrnd",redescfg));
+	this.e2.currRed.armar (getRandomA("redesrnd",redescfg));
+	this.e3.currRed.armar (getRandomA("redesrnd",redescfg));
 	this.e4.currRed.armar1(getRandomA("redesrnd",redescfg));
 	this.e5.currRed.armar1(getRandomA("redesrnd",redescfg));
 	this.e6.currRed.armar1(getRandomA("redesrnd",redescfg));
@@ -32,7 +32,7 @@ function Play(ac){
 	this.e9.currRed.armar2(getRandomA("redesrnd",redescfg));
 	
 	this.siguiente=function(){
-	//	alert("siguiente nivel");
+	
 		console.log("levl=",logro.getLvlIx());
 		if(logro.getLvlIx()<3){
 			redes.viewEscena(logro.getLvlIx())
@@ -67,6 +67,7 @@ function Red(eta,name){
 }
 
 function Escena(ac,name,juego){
+	
 	trace("Escena",name);
 	this.juego=juego;
 	this.name=name;
@@ -75,6 +76,7 @@ function Escena(ac,name,juego){
 	this.ac.setClip(true);
 	this.currRed=new Red(this,name);
 	ac.addChild(this.ac);
+	
 }
 
 
@@ -254,6 +256,8 @@ Red.prototype.armar=function(cfg){
 	//desordenar fichas
 	intercambiarPosicionesRand(this.currFichas);
 
+
+	this.menu=new MenuInGame(this.donde);
 }
 function inabilitareventos(source){
 	source.mouseDown=function(){};
@@ -528,6 +532,7 @@ Red.prototype.armar1=function(cfg){
  
 	/*
 */
+	this.menu=new MenuInGame(this.donde);
 	window.nodos=this.nodos;
 }
 
@@ -794,6 +799,9 @@ Red.prototype.armar2=function(cfg){
 	//desordenar fichas
 	intercambiarPosicionesRand(this.currFichas);
 	window.nodos=this.nodos;
+	
+	//pongo el menú
+	this.menu=new MenuInGame(this.donde);
 }
 Red.prototype.chequea1=function(){
 	console.log("CHEQUEADNDODOODO!!")
@@ -808,6 +816,7 @@ Red.prototype.chequea1=function(){
 		logro.addLogro();
 		spashMsg("tit_excelente",this.etapa.juego.siguiente);
 	}
+	
 }
 Red.prototype.ahoraFlecha=function(src){
 	var This=this;
