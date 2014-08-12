@@ -47,10 +47,10 @@ sc(function(escena){
 	function clicbtn(e){
 		switch(e.name){
 			case "btn3":
-				lastScena=director.scenes.indexOf(director.currentScene);
+				/*lastScena=director.scenes.indexOf(director.currentScene);
 				toscenaanim(3);
 			break;
-			case "btn5":
+			case "btn5":*/
 				mutebtnaction(e);
 			break;
 		}
@@ -80,7 +80,7 @@ function acPuntaje(conten,padre){
 
 function pantallaGameOver(puntaje,splash){
 	toscenaanim("scgameover");
-	 window.textoscore.setText(puntaje.toString());
+	 window.textoscore.setText(puntaje.toLocaleString());
 	 if(splash){
 		 setTimeout(function(){
 		 spashMsg(splash,undefined,undefined,scgameover);

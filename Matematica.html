@@ -2,11 +2,14 @@
 <html lang="en-US">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width"/>
+	
+	<script src="recursos/js/preloader.js"></script>
 	<script src="recursos/libs/timer.min.js"></script>
 	<script src="recursos/libs/countdown.min.js"></script>
 	<script src="recursos/libs/soundjs-0.5.2.min.js"></script>
 	<script src="recursos/libs/caat/caat.js"></script>
+	<script src="recursos/js/precore.js"></script>
+	<script src="recursos/js/assets.js"></script>
 	<script src="recursos/js/j1/assets.js"></script>
 	<script src="recursos/js/aclogro.js"></script>
 	<script src="recursos/js/caattemplate.js"></script>
@@ -21,6 +24,7 @@
 	<script src="recursos/js/j1/scingame.js"></script>
 	<script src="recursos/js/j1/scingame1.js"></script>
 	<script src="recursos/js/scayuda.js"></script>
+	<script src="recursos/js/scgameover.js"></script>
 	<script src="recursos/js/sonido2.js"></script>
 	
 	
@@ -39,11 +43,21 @@
 		if(_inited){
 		if(window.innerHeight<768 || window.innerWidth<1024){
 				director.setScale(Math.min(window.innerWidth/1024, window.innerHeight/768),Math.min(window.innerWidth/1024, window.innerHeight/768))
-				document.getElementById("wrap").style.width=parseInt(Math.min(window.innerWidth/1024, window.innerHeight/768)*1024)+"px";
+				var a=parseInt(Math.min(window.innerWidth/1024, window.innerHeight/768)*1024);
+				var h=parseInt(Math.min(window.innerWidth/1024, window.innerHeight/768)*768);
+				document.getElementById("wrap").style.width=a+"px";
+				document.getElementById("wrap").style.height=h+"px";
+				var sobrawidth	=window.innerWidth  - a;
+				var sobraheight	=window.innerHeight - h;
+				document.getElementById("_c").style["top"]=Math.round(sobraheight/2)+"px";
+				document.getElementById("_c").style["left"]=Math.round(sobrawidth/2)+"px";
+				//document.getElementById("_c").style.width=a+"px";
+				console.log("resize...",a,h);
 			}
 		}
 	}
 	function _onLoad(){
+		Loader.onBodyLoaded();
 		console.log("cargado");
 		sonido.init();
 		ini(1024,768,'_c',_images,_loaded);//caattemplate.js
@@ -74,11 +88,39 @@
 		padding: 0px;
 	}
 	#wrap{
-		margin: 0 auto;
+		/*overflow: hidden;
+		position: fixed;*/
+	}
+	#loadinglayer{
+		background-color: #FFF;
+		width: 100%;
+		height: 100%;
+		float: left;
+		display: block;
+		position: fixed;
+		vertical-align: middle;
+	}
+	#centrado{
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		height: 30%;
+		width: 50%;
+		margin: -15% 0 0 -25%;
+		text-align: center;
+	}
+	#_c{
+		position: fixed;
 	}
 	</style>
 </head>
-<body onload="_onLoad();">
+<body onload="_onLoad();" id="body">
+	<div id="loadinglayer">
+		<div id="centrado">
+			<div id="imagenLoading"><img src="recursos/imagenes/ajax-loader.gif" alt="loading"/></div>
+			<div id="textoLoading">0% cargado.</div>
+		</div>
+	</div>
 	<div id="wrap">
 		<canvas id="_c"></canvas>
 	</div>

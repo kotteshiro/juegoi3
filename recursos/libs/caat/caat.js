@@ -16729,9 +16729,10 @@ CAAT.Module({
              * @return this
              */
             initialize:function (image, rows, columns) {
-
+                console.log(image)
                 if (!image) {
-                    console.log("Null image for SpriteImage.");
+                    console.error("Null image for SpriteImage.");
+                    return null;
                 }
 
                 if ( isString(image) ) {
@@ -23475,7 +23476,7 @@ CAAT.Module({
 
                 var offset = this.getOffset(this.canvas);
                 //kottemodification
-                console.log(this.canvas.style.left,this.canvas.style.top);
+               // console.log(this.canvas.style.left,this.canvas.style.top);
                 offset.x+=Number(this.canvas.style.left.replace("px",""));
                 offset.y+=Number(this.canvas.style.top.replace("px",""));
                 //endkottemodification           
@@ -23533,7 +23534,8 @@ CAAT.Module({
                                 this.screenMousePoint.x,
                                 this.screenMousePoint.y)));
                 }
-
+                window.globalmdfn=window.globalmdfn||function(){};
+                window.globalmdfn(lactor);
                 this.lastSelectedActor = lactor;
             },
 

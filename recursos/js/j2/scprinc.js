@@ -44,20 +44,9 @@ sc(function(escena){
 	}
 	
 	//balanceo
-	var rb = new CAAT.RotateBehavior().
-                    setCycle(true).
-                    setFrameTime(0, 8000).
-                    setValues( -Math.PI / 40, Math.PI / 40, .50, 0 ).
-                    setInterpolator(
-                            new CAAT.Interpolator().createCubicBezierInterpolator(
-                                    {x:0,y:0},
-                                    {x:1,y:0},
-                                    {x:0,y:1},
-                                    {x:1,y:1},
-                                    true));
-									
+										
 	window.titul=tituloanim=actitulo(escena);
-	tituloanim.addBehavior(rb)
+	//tituloanim.addBehavior(rb)
 	tituloanim.y=-tituloanim.height;
 	trace("WIDTH: " + tituloanim.width);
 	var g=tweenTranslation("tituloanim",tituloanim,1000, tituloanim.x, -20,rebote,false,600);

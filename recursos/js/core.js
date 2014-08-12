@@ -433,6 +433,7 @@ function spashMsg(src,fncb,requireclick,escena,timea){
 	           actor.destroy()
 	        }});
 		this.clickcb();
+		this.desapareceme=function(){};
 		//this.destroy();
 	}
 	spla.mouseDown=spla.desapareceme;
@@ -739,6 +740,61 @@ function jump(what,ini,to){
 		},
 		behaviorStarted: function(behavior, time, actor){
 			
+		}
+	});
+}
+
+function MenuInGame(escena) {
+    var clicbtn= function(e) {
+		console.log("click btn menu",e.name);
+        switch (e.name) {
+            case "btn2": //volver
+				clockController("pause");
+                confirmdialog(escena, function(conf) {
+                    if (conf) {
+						clockController("destroy");
+                        toscenaanim(1);
+						if(game1)
+							game1.obj.init();
+                    }
+                });
+                
+                break;
+            case "btn0":
+				trace("Btn0 - PAUSE");
+                enpausa(escena);
+                //play
+                break;
+            case "btn3": //info
+                //lastScena = director.scenes.indexOf(director.currentScene);
+                //toscenaanim(3);
+				mutebtnaction();
+                break;
+            case "btn5":
+                mutebtnaction();
+                break;
+        }
+        trace(e);
+    }
+    menux = acmenu(escena, [{ix: 2,fn: clicbtn}, {ix: 0,fn: clicbtn}, {ix: 3,fn: clicbtn}, {ix: 5,fn: clicbtn}]); //siempre al top
+	console.log("Nuevo menu in game");
+	updatebtnmute();
+	updatebgmbtnmute();
+    return menux;
+}
+function destroySmooty(whata){
+	var rb = new CAAT.AlphaBehavior().
+		setValues(1,0).
+        setCycle(false).
+        setFrameTime( whata.time, 600 );
+		
+	whata.addBehavior(rb);
+	rb.addListener({
+		behaviorExpired : function(behavior, time, actor) {
+			actor.destroy();
+			actor=undefined;
+		},
+		behaviorStarted: function(behavior, time, actor){
 		}
 	});
 }

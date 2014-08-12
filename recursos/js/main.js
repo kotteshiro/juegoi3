@@ -42,10 +42,11 @@ function mutebtnaction(){
 			//está muteado
 			window.bgmismute=bgmusic.getMute(); //guardamos el estado de bgm
 			if(!bgmusic.getMute()){ //muteamos el bgm
-				mutebgmbtnaction(true);
+				//mutebgmbtnaction(true);
 			}
 			
 		}
+		updatebgmbtnmute();
 		
 		
 }
@@ -54,7 +55,8 @@ function mutebgmbtnaction(force){
 		
 		if(!force && sonido.ismute()) return;
 		//director.setSoundEffectsEnabled(!director.audioManager.isSoundEffectsEnabled());
-		bgmusic.setMute(!bgmusic.getMute())
+		//bgmusic.setMute(!bgmusic.getMute())
+		mutebtnaction();
 		updatebgmbtnmute();
 }
 
@@ -70,13 +72,28 @@ function updatebtnmute(){
 	updatebgmbtnmute();
 }
 function updatebgmbtnmute(){
-	if(bgmusic.getMute==undefined) return;
+	if(sonido.ismute==undefined) return;
 	for(var i in director.scenes){
 		if(director.scenes[i].botonbgmmute !== undefined){
-			if(!bgmusic.getMute())
+			if(!sonido.ismute())
 				director.scenes[i].botonbgmmute.setButtonImageIndex(5, 5+7, 5, 5);
 			else
 				director.scenes[i].botonbgmmute.setButtonImageIndex(6, 6+7, 6, 6);
 		}
 	}
+}
+function enpausa(escena) {
+	trace("En Pausa!");
+    clockController("pause");
+    var h1_1 = obj("pa8a", escena, 'fondo_ayuda', 0, 0, 1, 1);
+    var h1_0 = obj("fost08b", escena, 'en-pausa', 222, 137, 1, 1); //222,137
+	
+	var fn=function(a) {
+		clockController("resume");
+        h1_1.destroy();
+        h1_0.destroy();
+    }
+	
+   	clicktap(h1_1,fn);
+	clicktap(h1_0,fn);
 }

@@ -5,7 +5,6 @@ var _images_= [
 	{id:'fondo_c',     url:'recursos/imagenes/fondo_c.png'},
 	{id:'fondo_d',     url:'recursos/imagenes/fondo_d.png'},
 	{id:'logogly',     url:'recursos/imagenes/GYL.png'},
-	{id:'nube_titulo',     url:'recursos/imagenes/nube_titulo.png'},
 	{id:'titulo',     url:'recursos/imagenes/titulo.png'},
 	//{id:'barra-inferior',     url:'recursos/imagenes/barra-inferior.png'},
 	{id:'modos',     url:'recursos/imagenes/modos-10.png'},
@@ -66,7 +65,6 @@ var _images_= [
 	{id: 'puntaje',url: path + 'puntaje.png'},
 	{id: 'sprite-motor',url: path + 'sprite-motor.png'},
 	{id: 'estrella',url: path + 'estrella.png'},
-	
 ];
 
 

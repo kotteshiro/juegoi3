@@ -246,59 +246,6 @@ function Enunciado(dad) {
 	tocasuena(this.bg,"sonidoEnunciado");
 }
 
-function MenuInGame(escena) {
-    function clicbtn(e) {
-        switch (e.name) {
-            case "btn2": //volver
-				clockController("pause");
-                confirmdialog(escena, function(conf) {
-                    if (conf) {
-						clockController("destroy");
-                        toscenaanim(1);
-						if(game1)
-							game1.obj.init();
-                    }
-                });
-                
-                break;
-            case "btn0":
-				trace("Btn0 - PAUSE");
-                enpausa(escena);
-                //play
-                break;
-            case "btn3": //info
-                //lastScena = director.scenes.indexOf(director.currentScene);
-                //toscenaanim(3);
-				mutebgmbtnaction();
-                break;
-            case "btn5":
-                mutebtnaction();
-                break;
-        }
-        trace(e);
-    }
-    menux = acmenu(escena, [{ix: 2,fn: clicbtn}, {ix: 0,fn: clicbtn}, {ix: 3,fn: clicbtn}, {ix: 5,fn: clicbtn}]); //siempre al top
-	updatebtnmute();
-	updatebgmbtnmute();
-    return menux;
-}
-
-function enpausa(escena) {
-	trace("En Pausa!");
-    clockController("pause");
-    var h1_1 = obj("pa8a", escena, 'fondo_ayuda', 0, 0, 1, 1);
-    var h1_0 = obj("fost08b", escena, 'en-pausa', 222, 137, 1, 1); //222,137
-	
-	var fn=function(a) {
-		clockController("resume");
-        h1_1.destroy();
-        h1_0.destroy();
-    }
-	
-   	clicktap(h1_1,fn);
-	clicktap(h1_0,fn);
-}
-
 function newgamelvl1() {
     trace("nuevo juego lvl 1");
 	logro.reset();

@@ -10,6 +10,7 @@ var Loader={
 		this.porcentajeTotal=Math.round(this.porcentajeTotal*100);
 		
 		console.log("cargado=",this.porcentajeTotal);
+		console.info("Unidades="+Math.round((this.unitstoload/3)*100),"Imagenes="+Math.round(this.porcentajeImagenes*100),"Audios="+Math.round((this.porcentajeAudios)*100))
 		if(this.porcentajeTotal>=100){
 			this.porcentajeTotal=100;
 			//this.onFullLoaded();

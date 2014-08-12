@@ -44,13 +44,18 @@ sc(function(escena){
 	var  bg=animbg(escena,300000);
 	tituloanim=actitulo(escena);
 	tituloanim.y=-tituloanim.height;
+	tocasuena(tituloanim,"sonidoTitulo");
 	//placeHelper(tituloanim);
 	var g=tweenTranslation("tituloanim",tituloanim,1000,tituloanim.x,0,rebote,false,600);
 	trace("!>>>",tituloanim.y);
 	g.addListener({
 		behaviorExpired : function(behavior, time, actor) {
-		//tweenTranslation("tituloanim",actor,5000,actor.x,actor.y+10,new CAAT.Interpolator().createExponentialInOutInterpolator(true,1),true,0,0,0);
-	}});
+	
+		},
+		behaviorStarted: function(behavior, time, actor){
+			sonido.play("TITULO-ABRE");
+		}
+	});
 	
 	//obj("inst06",escena,"gal",770,255,.5,.5);
 	//tweenTranslation("btnshow3",btn2,1000,btn2.x+xdif,btn2.y,new CAAT.Interpolator().createBounceOutInterpolator(0,false),false,500);
@@ -66,11 +71,13 @@ sc(function(escena){
 	acmenupric(escena,[{ix:3,fn:clicbtn},{ix:5,fn:clicbtn},{ix:0,fn:clicbtn},{ix:5,fn:clicbtn},{ix:4,fn:clicbtn}]);
 	
 	function clicbtn(e){
+		console.log("nuevo click",e.name)
 		switch(e.name){
+			
 			case "btn3":
-				lastScena=director.scenes.indexOf(director.currentScene);
+			/*	lastScena=director.scenes.indexOf(director.currentScene);
 				toscenaanim(3);
-			break;
+			break;*/
 			case "btn5":
 				mutebtnaction(e);
 			break;
