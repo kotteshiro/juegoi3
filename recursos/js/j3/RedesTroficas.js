@@ -255,9 +255,6 @@ Red.prototype.armar=function(cfg){
 	}
 	//desordenar fichas
 	intercambiarPosicionesRand(this.currFichas);
-
-
-	this.menu=new MenuInGame(this.donde);
 }
 function inabilitareventos(source){
 	source.mouseDown=function(){};
@@ -532,7 +529,7 @@ Red.prototype.armar1=function(cfg){
  
 	/*
 */
-	this.menu=new MenuInGame(this.donde);
+	//this.menu=new MenuInGame(this.donde);
 	window.nodos=this.nodos;
 }
 
@@ -801,7 +798,7 @@ Red.prototype.armar2=function(cfg){
 	window.nodos=this.nodos;
 	
 	//pongo el menú
-	this.menu=new MenuInGame(this.donde);
+	
 }
 Red.prototype.chequea1=function(){
 	console.log("CHEQUEADNDODOODO!!")

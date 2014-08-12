@@ -6,6 +6,7 @@ var logro;
 var menux;
 var escenajuego;
 var e1,e2,e3;
+var jcomandos;
 
 sc(function(escena){
 	escenajuego=escena;
@@ -22,7 +23,7 @@ sc(function(escena){
 	new FlechaAtoB(escena,{x:200,y:200},{x:200,y:100});
 	new FlechaAtoB(escena,{x:200,y:100},{x:100,y:100});*/
 	logro=aclogro(escena,200,700);
-	
+	jcomandos=new MenuInGame(escena);
 });
 function menuprinc(){
 	toscenaanim(1);

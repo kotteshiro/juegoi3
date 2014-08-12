@@ -18,6 +18,7 @@ function acmenu(conten,btns){
 	updatebgmbtnmute();
 	//conten.botonmute=btn4;
 	conten.botonbgmmute=btn3;
+	window.btnmute=conten.botonbgmmute;
 	/*btn("inst16" ,ac,{sprite:[spiconos, 6, 6+sp], x: -10, y:333+40-110, click:scprinc.fnclick}).setScale(.5,.5);
 	btn("inst17" ,ac,{sprite:[spiconos, 6, 6+sp], x: -10, y:377+40-110, click:scprinc.fnclick}).setScale(.5,.5);
 	btn("inst18" ,ac,{sprite:[spiconos, 8, 8+sp], x: -10, y:404+40-110, click:scprinc.fnclick}).setScale(.5,.5);

@@ -255,33 +255,7 @@ function newgamelvl1() {
     
     return ac
 }
-function confirmdialog(ac, cb) {
-    var h1_1 = obj("inst08", ac, 'fondo_ayuda', 0, 0, 1, 1);
-    var h1_0 = obj("inst08", ac, 'dejar_juego', 222, 137, 1, 1);
-    
-    var h1_2 = btn("BTNSI", ac, {sprite: [spsino, 0, 0],x: 394,y: 331,click: _cb}).setScale(1, 1);
-    var h1_3 = btn("BTNNO", ac, {sprite: [spsino, 1, 1],x: 394 + 100,y: 331,click: _cb}).setScale(1, 1);
-    
-    function _cb(e) {
-        trace("0>>>>>", e);
-        switch (e.name) {
-            case "BTNSI":
-                h1_0.destroy();
-                h1_1.destroy();
-                h1_2.destroy();
-                h1_3.destroy();
-                cb(true);
-                break;
-            case "BTNNO":
-                h1_0.destroy();
-                h1_1.destroy();
-                h1_2.destroy();
-                h1_3.destroy();
-                cb(false);
-                break;
-        }
-    }
-}
+
 
 // Nico
 function loadLiteraryBooks(where, count) {

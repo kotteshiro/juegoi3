@@ -45,8 +45,6 @@ var _images_= [
 	{id:'circulo',     url:'recursos/imagenes/j3/circulo-blanco.png'},
 	{id:'conjunto-circulos',     url:'recursos/imagenes/j3/conjunto-circulos-blancos.png'},
 	{id:'especies',     url:'recursos/imagenes/j3/ESPECIES.png'},
-	{id:'flechaPunta',     url:'recursos/imagenes/j3/flechaPunta.png'},
-	{id:'flechaCuerpo',     url:'recursos/imagenes/j3/flechaCuerpo.png'},
 ];
 var _sonido_espe_ = [
 	{id:"bgmusic" , url: "recursos/sonidos/j3/MUSICA-BIOLOGIA.ogg"},

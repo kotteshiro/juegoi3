@@ -776,7 +776,7 @@ function MenuInGame(escena) {
         }
         trace(e);
     }
-    menux = acmenu(escena, [{ix: 2,fn: clicbtn}, {ix: 0,fn: clicbtn}, {ix: 3,fn: clicbtn}, {ix: 5,fn: clicbtn}]); //siempre al top
+    menux = acmenu(escena, [{ix: 2,fn: clicbtn}, {ix: 0,fn: clicbtn}, {ix: 5,fn: clicbtn}]); //siempre al top
 	console.log("Nuevo menu in game");
 	updatebtnmute();
 	updatebgmbtnmute();
@@ -797,4 +797,99 @@ function destroySmooty(whata){
 		behaviorStarted: function(behavior, time, actor){
 		}
 	});
+}
+function confirmdialog(ac, cb) {
+    var h1_1 = obj("inst08", ac, 'fondo_ayuda', 0, 0, 1, 1);
+    var h1_0 = obj("inst08", ac, 'dejar_juego', 222, 137, 1, 1);
+    
+    var h1_2 = btn("BTNSI", ac, {sprite: [spsino, 0, 0],x: 394,y: 331,click: _cb}).setScale(1, 1);
+    var h1_3 = btn("BTNNO", ac, {sprite: [spsino, 1, 1],x: 394 + 100,y: 331,click: _cb}).setScale(1, 1);
+    
+    function _cb(e) {
+        trace("0>>>>>", e);
+        switch (e.name) {
+            case "BTNSI":
+                h1_0.destroy();
+                h1_1.destroy();
+                h1_2.destroy();
+                h1_3.destroy();
+                cb(true);
+                break;
+            case "BTNNO":
+                h1_0.destroy();
+                h1_1.destroy();
+                h1_2.destroy();
+                h1_3.destroy();
+                cb(false);
+                break;
+        }
+    }
+}
+function mutebtnaction(){
+		//director.setSoundEffectsEnabled(!director.audioManager.isSoundEffectsEnabled());
+		sonido.mute(!sonido.ismute())
+		updatebtnmute();
+		
+		if(sonido.ismute()==false){
+			bgmusic.setMute(window.bgmismute); //seteamos el estado guardado de bgm
+			updatebgmbtnmute();
+			//window.bgmismute=bgmusic.getMute();
+		}else{		
+			//está muteado
+			window.bgmismute=bgmusic.getMute(); //guardamos el estado de bgm
+			if(!bgmusic.getMute()){ //muteamos el bgm
+				//mutebgmbtnaction(true);
+			}
+			
+		}
+		updatebgmbtnmute();
+		
+		
+}
+function mutebgmbtnaction(force){
+		force=force||false
+		
+		if(!force && sonido.ismute()) return;
+		//director.setSoundEffectsEnabled(!director.audioManager.isSoundEffectsEnabled());
+		//bgmusic.setMute(!bgmusic.getMute())
+		mutebtnaction();
+		updatebgmbtnmute();
+}
+
+function updatebtnmute(){
+	for(var i in director.scenes){
+		if(director.scenes[i].botonmute !== undefined){
+			if(sonido.ismute())
+				director.scenes[i].botonmute.setButtonImageIndex(4, 4+7, 4, 4);	
+			else
+				director.scenes[i].botonmute.setButtonImageIndex(3, 3+7, 3, 3);
+		}
+	} 
+	updatebgmbtnmute();
+}
+function updatebgmbtnmute(){
+	if(sonido.ismute==undefined) return;
+	for(var i in director.scenes){
+		if(director.scenes[i].botonbgmmute !== undefined){
+			if(!sonido.ismute())
+				director.scenes[i].botonbgmmute.setButtonImageIndex(5, 5+7, 5, 5);
+			else
+				director.scenes[i].botonbgmmute.setButtonImageIndex(6, 6+7, 6, 6);
+		}
+	}
+}
+function enpausa(escena) {
+	trace("En Pausa!");
+    clockController("pause");
+    var h1_1 = obj("pa8a", escena, 'fondo_ayuda', 0, 0, 1, 1);
+    var h1_0 = obj("fost08b", escena, 'en-pausa', 222, 137, 1, 1); //222,137
+	
+	var fn=function(a) {
+		clockController("resume");
+        h1_1.destroy();
+        h1_0.destroy();
+    }
+	
+   	clicktap(h1_1,fn);
+	clicktap(h1_0,fn);
 }

@@ -20,6 +20,37 @@ function animbg(conten,vel){
 	var h3_1=  	obj("inst03",ac,'fondo_d',0,485,1,1);	
 	var h3_2= 	obj("inst032",ac,'fondo_d',h3_1.width,485,1,1);
 	
+	var cloud1=	obj(uniq("cloud"),ac,'fondo_nube_1',200,20,1,1);
+	var cloud2=	obj(uniq("cloud"),ac,'fondo_nube_1',200,20,1,1);
+	var cloud3=	obj(uniq("cloud"),ac,'fondo_nube_2',200,20,1,1);
+	var cloud4=	obj(uniq("cloud"),ac,'fondo_nube_2',200,20,1,1);
+	window.testcloud=cloud1;
+	muevetenube(cloud1,randomInt(-100,director.width+100));
+	muevetenube(cloud2,randomInt(-100,director.width+100));
+	muevetenube(cloud3,randomInt(-100,director.width+100));
+	muevetenube(cloud4,randomInt(-100,director.width+100));
+	function muevetenube(nube,origin,delay){
+		var dest=-nube.width;
+		var ybas=150;
+		var tiempomultiplier=1000;
+		delay=delay||0;
+		
+		nube.x=origin;
+		nube.y=ybas+randomInt(-200,200);
+		nube.scaleX=nube.scaleY=randomInt(50,100)/100;
+		nube.moveTo( 
+			dest,  //xposto
+			nube.y+randomInt(-30,30),  //yposto
+			tiempomultiplier*randomInt(15,20), //tiempo
+			delay,  //delay 
+			false, //interpolator
+			function(a,b,c){ //cb
+				var origin=director.width+nube.width+20;
+				muevetenube(c,origin,500*randomInt(1,20))
+			});
+	}
+	
+	
 	//placeHelper(h1_1)
 	//placeHelper(h2_1)
 	//placeHelper(h3_1)
