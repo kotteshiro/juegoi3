@@ -6,12 +6,44 @@ var logro;
 var menux;
 var escenajuego;
 var e1,e2,e3, etapa;
-var countDownTime = 0.1;
+var countDownTime = 60/60;
 var currE;
 var currM;
+var avisostimeout=["tit_intento1","tit_intento2"];
+var avisoindex=0;
+function avisoTO(){
+	
+	spashMsg(avisostimeout[avisoindex]);
+	sonido.play("TIME_OVER");
+	avisoindex++;
+	if(avisoindex>=avisostimeout.length){
+		avisoindex=0;
+	}
+}
 
 function onTimeOver(time) {
-	trace("Time's up!");
+	//alert("Time's upa!"+time);
+	//logro.reset();
+	if(time==0){
+		 sonido.play("timeout");
+		if(logro.getLvlIx()<4){
+			while(logro.getLvlIx()>0){
+				logro.removeLogro();
+			}
+			avisoTO();
+		}else if(logro.getLvlIx()<8){
+			while(logro.getLvlIx()>4){
+				logro.removeLogro();
+			}
+			avisoTO();
+		}else{
+			while(logro.getLvlIx()>8){
+				logro.removeLogro();
+			}
+		}
+		clockController("init");
+	}
+	//pantallaGameOver(currScore,"tit_intento1");
 }
 
 sc(function(escena){
@@ -620,7 +652,7 @@ Etapa3.prototype.startIntento=function(){
 	this.currinst=[];
 	var currFig=this.agregarFigura();
 	console.log(currFig)
-	var cv=getRandomA("vertices",currFig.vertices);
+	var cv=getRandomA("vertices"+currFig.figura,currFig.vertices);
 	var letra=window.letra=ponerLetra({padre:this.ac,x:834,y:158},cv);
 	this.currinst.push(currFig.obj);
 	this.currNum1=currFig[cv][0];
@@ -696,9 +728,7 @@ Etapa3.prototype.chekalvl=function(){
 		logro.wrongAnswer();
 		//spashMsg("tit_intento2");
 	}
-	e3.startIntento();
-	e3.enunciado.n1.numero.setVal(0);
-	e3.enunciado.n2.numero.setVal(0);
+	
 	
 	if(logro.getLvlIx()==12){
 		//alert("win");
@@ -708,6 +738,22 @@ Etapa3.prototype.chekalvl=function(){
 		spashMsg("tit_excelente",function(){pantallaGameOver(currScore)},false);
 		//spashMsg("tit_excelente",function(){toscenaanim(4)}); 
 		
+	}else{
+		e3.startIntento();
+		e3.enunciado.n1.numero.setVal(0);
+		e3.enunciado.n2.numero.setVal(0);
 	}
 	
+}
+function gamestart(){
+	
+	_etapa1();
+	
+
+	if(logro){
+		logro.reset();		
+	}else
+		logro=new aclogro(escenajuego, 200, 700);
+	
+		
 }

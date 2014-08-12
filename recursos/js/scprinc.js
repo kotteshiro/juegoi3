@@ -26,16 +26,26 @@ sc(function(escena){
 				trace("ssdasd");
   			break;
 			case "calma":
+				sonido.stop("sonidoIntro");
+				sonido.stop("sonidoTitulo");
+				sonido.play("sonidoEnunciado");
+				logro.reset();
+				currLevel=1;
 				tienetime=false;
 				toscenaanim("scingame");
-				clockController('init');
-				//toscenaanim("scingame");
+				clockController("init");
+				gamestart();
 			break;
 			case "tiempo":
+				sonido.stop("sonidoIntro");
+				sonido.stop("sonidoTitulo");
+				sonido.play("sonidoEnunciado");
+				logro.reset();
+				currLevel=1;
 				tienetime=true;
 				toscenaanim("scingame");
-				clockController('init');
-				//toscenaanim("scingame");
+				clockController("init");
+				gamestart();
 			break;
 		}
 	}
