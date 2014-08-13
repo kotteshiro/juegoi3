@@ -247,6 +247,12 @@ function clockController(action){
 			currTimer.start(cdt);
 			break;
 	}
+	clock.sube=function(){
+		sube(clock.border);
+		sube(clock.progress.actor);
+		sube(clock.txt);
+	}
+	clock.sube();
 	/*clocktype=="countDown";
 	var sec=[];
 	switch(clocktype){

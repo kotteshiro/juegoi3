@@ -19,3 +19,13 @@ function actitulo(conten){
 	ac.addBehavior(rb);
 	return ac;
 }
+
+function acdesc(content) {
+	var ac = new CAAT.ActorContainer()
+				.setGestureEnabled(false)
+				.setBounds(111, 602, 700, 125);
+	var g = obj(uniq("inst05"),ac,"descripcion",0,0,1,1);
+	ac.name="descripcion";
+	content.addChild(ac);
+	return ac;
+}

@@ -23728,7 +23728,7 @@ CAAT.Module({
                     this.getCanvasCoord(this.mousePoint, e);
                     var pos = new CAAT.Math.Point(this.mousePoint.x, this.mousePoint.y, 0);
                     this.lastSelectedActor.viewToModel(pos);
-
+                    if(this.currentScene==undefined) return;
                     var ev = new CAAT.Event.MouseEvent().init(
                         pos.x,
                         pos.y,

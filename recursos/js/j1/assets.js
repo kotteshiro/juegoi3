@@ -5,7 +5,9 @@ var _images_= [
     {id: 'titulo',url: path + 'j1/titulo.png'}, 
     {id: 'descripcion',url: path + 'j1/descripcion.png'}, 
     {id: 'enunciado',url: path + 'j1/enunciado_n123.png'}, */
+	 {id: 'descripcion',url: path + 'j1/introduccion.png'},
     // Específico Juego:
+	
     {id:'grilla',     			url:'recursos/imagenes/j1/grilla-14.png'},
 	{id:'bggrilla',     		url:'recursos/imagenes/j1/bggrilla-11.png'},
 	{id:'bichos',     			url:'recursos/imagenes/j1/escena1_insectos.png'},

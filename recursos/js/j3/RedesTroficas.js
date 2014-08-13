@@ -1,12 +1,43 @@
-window.onTimeOver=function(){
-	gameOver();
+var timae=Math.random();
+var currLevel=1;
+var avisostimeout=["tit_intento1","tit_intento2"];
+var avisoindex=0;
+function avisoTO(){
+	
+	spashMsg(avisostimeout[avisoindex]);
+	sonido.play("TIME_OVER");
+	avisoindex++;
+	if(avisoindex>=avisostimeout.length){
+		avisoindex=0;
+	}
 }
 
-function gameOver(){
-	menuprinc();
+function onTimeOver(time) {
+	//alert("Time's upa!"+time);
+	//logro.reset();
+	if(time==0){
+		 sonido.play("timeout");
+		if(logro.getLvlIx()<4){
+			while(logro.getLvlIx()>0){
+				logro.removeLogro();
+			}
+			avisoTO();
+		}else if(logro.getLvlIx()<8){
+			while(logro.getLvlIx()>4){
+				logro.removeLogro();
+			}
+			avisoTO();
+		}else{
+			while(logro.getLvlIx()>8){
+				logro.removeLogro();
+			}
+		}
+		clockController("init");
+	}
 }
 function Play(ac){
-	
+	currLevel=1;
+	timae=Math.random();
 	this.e1=new Escena(ac,"e1",this);
 	this.e2=new Escena(ac,"e2",this);
 	this.e3=new Escena(ac,"e3",this);
@@ -20,16 +51,16 @@ function Play(ac){
 	
 	this.escenas=[this.e1,this.e2,this.e3,this.e4,this.e5,this.e6,this.e7,this.e8,this.e9];
 	
-	this.e1.currRed.armar (getRandomA("redesrnd",redescfg));
-	this.e2.currRed.armar (getRandomA("redesrnd",redescfg));
-	this.e3.currRed.armar (getRandomA("redesrnd",redescfg));
-	this.e4.currRed.armar1(getRandomA("redesrnd",redescfg));
-	this.e5.currRed.armar1(getRandomA("redesrnd",redescfg));
-	this.e6.currRed.armar1(getRandomA("redesrnd",redescfg));
+	this.e1.currRed.armar (getRandomA("redesrnd"+timae,redescfg));
+	this.e2.currRed.armar (getRandomA("redesrnd"+timae,redescfg));
+	this.e3.currRed.armar (getRandomA("redesrnd"+timae,redescfg));
+	this.e4.currRed.armar1(getRandomA("redesrnd"+timae,redescfg));
+	this.e5.currRed.armar1(getRandomA("redesrnd"+timae,redescfg));
+	this.e6.currRed.armar1(getRandomA("redesrnd"+timae,redescfg));
 	
-	this.e7.currRed.armar2(getRandomA("redesrnd",redescfg));
-	this.e8.currRed.armar2(getRandomA("redesrnd",redescfg));
-	this.e9.currRed.armar2(getRandomA("redesrnd",redescfg));
+	this.e7.currRed.armar2(getRandomA("redesrnd"+timae,redescfg));
+	this.e8.currRed.armar2(getRandomA("redesrnd"+timae,redescfg));
+	this.e9.currRed.armar2(getRandomA("redesrnd"+timae,redescfg));
 	
 	this.siguiente=function(){
 	
@@ -41,8 +72,34 @@ function Play(ac){
 		}else if(logro.getLvlIx()<9){
 			redes.viewEscena(logro.getLvlIx())
 		}else{
-			gameOver();
 		}
+		switch(logro.getLvlIx()){
+            case 3:
+				if(currLevel!=2){
+					currLevel=2;
+					sonido.play("PASAR-NIVEL");
+					clockController("stop");
+					spashMsg("tit_intento3",function(){clockController("init"); },false);
+				}
+				return false;
+            	break;
+            case 6:
+				if(currLevel!=3){
+					currLevel=3
+					clockController("stop");
+					sonido.play("PASAR-NIVEL");
+					spashMsg("tit_intento3",function(){ clockController("init"); },false);
+					return false;
+				}
+            	break;
+            case 9:
+				clockController("stop");
+				clockController("destroy");  
+				sonido.play("EXCELENTE",function(){ if(!bgmusic.setVolume(.5)) bgmusic.setMute(false);},1);
+				spashMsg("tit_excelente",function(){pantallaGameOver(currScore)},false);		
+				return false;
+				break;
+        }
 	}
 	
 	this.e1.mecanica();
@@ -96,6 +153,7 @@ Play.prototype.viewEscena=function(id){
 
 //Red:
 Red.prototype.armar=function(cfg){
+	
 	this.cfg=cfg;
 	console.log("# >",this);
 	console.log("Armando",this.cfg,this.donde);
@@ -195,16 +253,18 @@ Red.prototype.armar=function(cfg){
 			this.seres.push(tmp);
 		}
 	}
+	window.seress=this.seres;
 	if(!this.seresPorGrupo){
 		console.error("WTF");
 	}
+	
 	
 	
 	//posiciona fichas
 	this.currFichas=[];
 	for(var grup in this.cfg.contenedores){
 		console.log("///////",this.etapa.name);
-		var nya=getRandomA(this.etapa.name+"anim"+grup.charAt(0),this.seresPorGrupo[grup.charAt(0)]);
+		var nya=getRandomA(this.etapa.name+"anim"+grup.charAt(0)+timae,this.seresPorGrupo[grup.charAt(0)]);
 		if(nya==undefined || nya=="") 
 		console.error("posiblemente problema con confRedes.js");
 		this.currFichas.push(nya);
@@ -227,7 +287,7 @@ Red.prototype.armar=function(cfg){
 	
 	for(var hj=0; this.currFichas.length<6; hj++){
 		var ix=(this.cfg.spriteRow*12)+8+hj;
-		var tmp=getRandomA("distact"+this.name,this.distractores);
+		var tmp=getRandomA("distact"+this.name+timae,this.distractores);
 		tmp.visible=true;
 		this.currFichas.push(tmp);
 		
@@ -276,7 +336,13 @@ Escena.prototype.mecanica=function(){
 			}
 			if(listo){
 				logro.addLogro();
-				spashMsg("tit_excelente",this.etapa.juego.siguiente);
+				var This=this;
+				//clockController("stop");
+				setTimeout(function(){
+					This.etapa.juego.siguiente();
+				}, 1);
+				
+				//spashMsg("tit_excelente",this.etapa.juego.siguiente);
 				//if(logro.getLvlIx())
 				//this=new Escena(ac,"e1");
 				//();
@@ -406,7 +472,7 @@ Red.prototype.armar1=function(cfg){
 	this.currFichas=[];
 	for(var grup in this.cfg.contenedores){
 		console.log("///////",this.etapa.name);
-		var nya=getRandomA(this.etapa.name+"anim"+grup.charAt(0),this.seresPorGrupo[grup.charAt(0)]);
+		var nya=getRandomA(this.etapa.name+"anim"+grup.charAt(0)+timae,this.seresPorGrupo[grup.charAt(0)]);
 		if(nya==undefined || nya=="") 
 		console.error("posiblemente problema con confRedes.js");
 		for(var ja in this.nodos){
@@ -648,7 +714,7 @@ Red.prototype.armar2=function(cfg){
 	this.currFichas=[];
 	for(var grup in this.cfg.contenedores){
 		console.log("///////",this.etapa.name);
-		var nya=getRandomA(this.etapa.name+"anim"+grup.charAt(0),this.seresPorGrupo[grup.charAt(0)]);
+		var nya=getRandomA(this.etapa.name+"anim"+grup.charAt(0)+timae,this.seresPorGrupo[grup.charAt(0)]);
 		if(nya==undefined || nya=="") 
 		console.error("posiblemente problema con confRedes.js");
 		for(var ja in this.nodos){
@@ -811,7 +877,11 @@ Red.prototype.chequea1=function(){
 	console.log(totalConecciones,this.conecciones.length,this.coneccioneshs.length);
 	if(totalConecciones==this.conecciones.length){
 		logro.addLogro();
-		spashMsg("tit_excelente",this.etapa.juego.siguiente);
+		
+		var This=this;
+		setTimeout(function(){
+			This.etapa.juego.siguiente();
+		}, 2000);
 	}
 	
 }

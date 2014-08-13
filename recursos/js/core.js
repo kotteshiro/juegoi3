@@ -689,7 +689,10 @@ function Linea(from,to, where,color){
 	}
 }
 function sube(that){
+	if(that!=undefined)
 	that.parent.setZOrder( that, Number.MAX_VALUE );
+	else
+	console.log("wut");
 }
 function clicktap(obj, fncb){
 	obj.enableEvents(true);

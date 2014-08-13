@@ -28,15 +28,15 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
     //placeHelper(bajoestrellas);
     
     var scoreText = new CAAT.TextActor()
-		.setFont("24px sans-serif")
+		.setFont("bold 24px Trebuchet MS, Helvetica, sans-serif")
 		.setTextAlign("right")
 		.setTextBaseline("bottom")
 		.setPosition(790, 40)
-		.setText(currScore.toString());
+		.setText(currScore.toLocaleString());
     ac.addChild(scoreText);
 	
 	var framesanim=24;
-    var sep = 35;
+    var sep = 42;
 	var startPos = 95,
 		ESC = 0,
 		tmpSeq,
@@ -102,7 +102,7 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
 		if(currScore < 0)
 			currScore = 0;
 			
-        scoreText.setText(currScore.toString());
+        scoreText.setText(currScore.toLocaleString());
     }
     
     this.reset = function() {

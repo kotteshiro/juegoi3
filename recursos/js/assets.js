@@ -6,6 +6,9 @@ var _images_= [
 	{id:'fondo_d',     url:'recursos/imagenes/fondo_d.png'},
 	{id:'logogly',     url:'recursos/imagenes/GYL.png'},
 	{id:'titulo',     url:'recursos/imagenes/titulo.png'},
+	{id:'fondo_nube_1',     url:'recursos/imagenes/fondo_nube_1.png'},
+	{id:'fondo_nube_2',     url:'recursos/imagenes/fondo_nube_2.png'},
+	
 	//{id:'barra-inferior',     url:'recursos/imagenes/barra-inferior.png'},
 	{id:'modos',     url:'recursos/imagenes/modos-10.png'},
 	{id:'fondo_iconos_comandos',     url:'recursos/imagenes/fondo_iconos_comandos.png'},

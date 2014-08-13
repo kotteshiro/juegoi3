@@ -52,7 +52,7 @@ function acjuego(conten){
 	enunciado= obj("lvl1enunc",ac,'enunciado_nivel1',150,0,1,1);
 	
 	var text = new CAAT.TextActor().
-		setFont("35px verdana").
+		setFont("bold 24px Trebuchet MS, Helvetica, sans-serif").
 		setText("").
 		setTextAlign("center").
 		setTextBaseline("bottom")
@@ -179,10 +179,11 @@ function acchrono(conten){
 	conten.addChild(ac);
 	return ac;
 }
+
 function clockController(action){
 	//tjcolores.reloj=tjcolores.reloj || {}
 	//tjcolores.reloj.visible=tienetime;
-	var cdt = 0.05;
+	var cdt = 10;
 	
 	if(typeof countDownTime !== "undefined")
 		cdt = countDownTime;
@@ -190,12 +191,23 @@ function clockController(action){
 	if(clock.border == undefined)
 		clock.border = obj("clockBorder", escenajuego, "clockBorder", 30, 600, 1, 1);
 	
+	if(clock.progress == undefined){
+		var prsp= new CAAT.SpriteImage().initialize(director.getImage('relojanim'),10,36);
+		var sec=[];
+		for(var i=0;i<360;i++){ sec.push(i); }
+		clock.progress = new MovieClipSprite(prsp.getRef(), sec,75, 53, 648);
+		clock.progress.stop();
+		clock.progress.getActor().setScale(1.05,1.05)
+		escenajuego.addChild(clock.progress.getActor());
+		//clock.progress = obj("clockBorder", escenajuego, "clockBorder", 30, 600, 1, 1);
+	}
+	
 	if(clock.txt === undefined) {
 		clock.txt = timerTxt = new CAAT.TextActor()
-			.setFont("24px sans-serif")
+			.setFont("bold 24px Trebuchet MS, Helvetica, sans-serif")
 			.setTextAlign("center")
 			.setTextBaseline("bottom")
-			.setPosition(90, 700)
+			.setPosition(93, 700)
 			.setText("00:00")
 			.setTextFillStyle("#E84E1B");	
 		escenajuego.addChild(clock.txt);
@@ -203,7 +215,11 @@ function clockController(action){
 
 	switch(action) {
 		case 'init':
-			if(currTimer) currTimer = undefined;
+			if(currTimer){
+				currTimer.cancelNextCallBackAtStop();
+				currTimer.stop(); //.reset();
+				currTimer = undefined;
+			}
 			startClock(cdt);
 			break;
 			
@@ -227,6 +243,28 @@ function clockController(action){
 			currTimer.start(cdt);
 			break;
 	}
+	clock.sube=function(){
+		sube(clock.border);
+		sube(clock.progress.actor);
+		sube(clock.txt);
+	}
+	clock.sube();
+	/*clocktype=="countDown";
+	var sec=[];
+	switch(clocktype){
+		case "countDown":
+			for(var i=359;i>0;i--){ 
+				sec.push(i);
+			}
+		break;
+		case "timmer":
+			for(var i=0;i<360;i++){ 
+				sec.push(i);
+			}
+		break;
+	}
+	clock.progress.actor.backgroundImage.animationImageIndex=sec;*/
+	
 }
 
 function startClock(cdt) {
@@ -296,7 +334,7 @@ function showFinalScore(container) {
 			.setBounds(491, 259)
 			.setBackgroundImage(director.getImage("bgScore")),
 		scoreTxt = new TextActor()
-			.setFont("24px sans-serif")
+			.setFont("bold 24px Trebuchet MS, Helvetica, sans-serif")
 			.setTextAlign("right")
 			.setTextBaseline("bottom")
 			.setPosition(100, 100)
