@@ -2,6 +2,7 @@ var instances=[];
 var loading;
 var funciones=[];
 var funciones1=[];
+var allarrows = new Array();
 function sc(fncallback,scena){
 	funciones.push({cb:fncallback,sc:scena});
 }
@@ -503,8 +504,15 @@ function addDragNDrop(object, onDrag, onDrop, onDragging) {
 			onDragging.call(this, e);
 	}
 	
-	object.volver = function() {
-		animaa(this, {x: this.originalx, y: this.originaly, scalex: 1, scaley: 1, alpha: 1});
+	object.volver = function(animado) {
+		if(animado==undefined) animado=true;
+		if(animado)
+			animaa(this, {x: this.originalx, y: this.originaly, scalex: 1, scaley: 1, alpha: 1});
+		else{
+			this.x=this.originalx; 
+			this.y=this.originaly;
+			this.alpha=this.scalex=this.scaley=1;
+		}
 	}
 }
 
@@ -567,6 +575,7 @@ function setoriginalpos(that){
 }
 
 function FlechaAtoB(where,a,b,margen){
+	allarrows.push(this);
 	this.margen=margen||60;
 	this.color="rgb(0,0,0);";
 	this.x0=a.x;
@@ -631,6 +640,9 @@ function FlechaAtoB(where,a,b,margen){
 		this.x1=x1;
 		this.y1=y1;
 		this.update();
+	}
+	this.destroyme=function(){
+		this.contenedor.destroy();
 	}
 	//this.update();
 }

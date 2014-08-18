@@ -22,14 +22,6 @@ function acjuego(conten){
 	game1=ac;
 	
 	ac.obj.fnclick=function(e){
-	/*	switch(e.name){
-			case "rojo":
-			break;
-			case "azul":
-			brak;
-			case "amarillo":
-			break;
-		}*/
 		if(ac.obj.currColor==e.name){
 			bueno();
 		}else{
@@ -189,7 +181,7 @@ function clockController(action){
 		cdt = countDownTime;
 	
 	if(clock.border == undefined)
-		clock.border = obj("clockBorder", escenajuego, "clockBorder", 30, 600, 1, 1);
+		clock.border = obj("clockBorder", escenajuego, "clockBorder", 30, 600-17, 1, 1);
 	
 	if(clock.progress == undefined){
 		var prsp= new CAAT.SpriteImage().initialize(director.getImage('relojanim'),10,36);
@@ -279,15 +271,20 @@ function startClock(cdt) {
 		}
 	}
 }
-
+ 
 function setCountdown(cdt) {
 	//if(typeof onTimeOver === "undefined") var onTimeOver=false;
 	trace("CountDown!");
 	if(!currTimer) {
 		currTimer = new CountDown({
-			delay: 1000,
+			delay: 1000/6,
 			onTick: function(time) {
 				clock.txt.setText(currTimer.format(time));
+				var degrree=Math.floor((time/1000)*6)+1;
+				//console.log(degrree,time);
+				if(degrree>=360) degrree=359; //fix error 
+				if(degrree<0) degrree=0;
+				clock.progress.getActor().backgroundImage.spriteIndex=degrree;
 			},
 			onStop: window.onTimeOver || function(time) {
 				// Game end.
@@ -306,9 +303,14 @@ function setTimer() {
 	trace("Timer!");
 	if(!currTimer) {
 		currTimer = new Timer({
-			delay: 1000,
+			delay: 1000/6,
 			onTick: function(time) {
 				clock.txt.setText(currTimer.format(time));
+				
+				
+				if(clock.progress.getActor().backgroundImage.spriteIndex+1>=360 || Math.floor(time/1000)<=0) 
+					clock.progress.getActor().backgroundImage.spriteIndex=0;
+				clock.progress.getActor().backgroundImage.spriteIndex++;
 			},
 			onStop: function(time) {
 				trace("Clock stopped!", time);

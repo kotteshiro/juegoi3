@@ -111,7 +111,8 @@ function estrella(donde) {
 									setPath(
 											new CAAT.PathUtil.ArcPath().
 											initialize(donde.width/2,donde.height, 600+(Math.random()*200), Math.PI*2).
-											setClockWise((Math.random()<.5?1:0))
+											//setClockWise((Math.random()<.5?1:0))
+											setClockWise(true)
 									).
 									addListener( {
 											behaviorExpired : function(behavior, time, actor) {

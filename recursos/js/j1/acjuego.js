@@ -193,7 +193,7 @@ function clockController(action){
 		cdt = countDownTime;
 	
 	if(clock.border == undefined)
-		clock.border = obj("clockBorder", escenajuego, "clockBorder", 30, 600, 1, 1);
+		clock.border = obj("clockBorder", escenajuego, "clockBorder", 30, 600-17, 1, 1);
 	
 	if(clock.progress == undefined){
 		var prsp= new CAAT.SpriteImage().initialize(director.getImage('relojanim'),10,36);

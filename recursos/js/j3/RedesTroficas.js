@@ -2,6 +2,7 @@ var timae=Math.random();
 var currLevel=1;
 var avisostimeout=["tit_intento1","tit_intento2"];
 var avisoindex=0;
+var counterarmado=0;
 function avisoTO(){
 	
 	spashMsg(avisostimeout[avisoindex]);
@@ -17,24 +18,38 @@ function onTimeOver(time) {
 	//logro.reset();
 	if(time==0){
 		 sonido.play("timeout");
-		if(logro.getLvlIx()<4){
+		if(logro.getLvlIx()<3){
 			while(logro.getLvlIx()>0){
 				logro.removeLogro();
 			}
+			redes.e1.currRed.restablecer1()
+			redes.e2.currRed.restablecer1()
+			redes.e3.currRed.restablecer1()
+			redes.viewEscena(0);
 			avisoTO();
-		}else if(logro.getLvlIx()<8){
-			while(logro.getLvlIx()>4){
+		}else if(logro.getLvlIx()<6){
+			while(logro.getLvlIx()>3){
 				logro.removeLogro();
 			}
+			redes.e4.currRed.restablecer2()
+			redes.e5.currRed.restablecer2()
+			redes.e6.currRed.restablecer2()
+			redes.viewEscena(3);
 			avisoTO();
 		}else{
-			while(logro.getLvlIx()>8){
+			while(logro.getLvlIx()>6){
 				logro.removeLogro();
 			}
+			redes.e7.currRed.restablecer3()
+			redes.e8.currRed.restablecer3()
+			redes.e9.currRed.restablecer3()
+			redes.viewEscena(6);
+			avisoTO();
 		}
 		clockController("init");
 	}
 }
+
 function Play(ac){
 	currLevel=1;
 	timae=Math.random();
@@ -54,6 +69,7 @@ function Play(ac){
 	this.e1.currRed.armar (getRandomA("redesrnd"+timae,redescfg));
 	this.e2.currRed.armar (getRandomA("redesrnd"+timae,redescfg));
 	this.e3.currRed.armar (getRandomA("redesrnd"+timae,redescfg));
+	
 	this.e4.currRed.armar1(getRandomA("redesrnd"+timae,redescfg));
 	this.e5.currRed.armar1(getRandomA("redesrnd"+timae,redescfg));
 	this.e6.currRed.armar1(getRandomA("redesrnd"+timae,redescfg));
@@ -148,12 +164,13 @@ Play.prototype.viewEscena=function(id){
 	}
 	var sel=arr[id];
 	sel.ac.visible=true;
+	window.currescenabio=sel;
 	return sel;
 }
 
 //Red:
 Red.prototype.armar=function(cfg){
-	
+	fuearmado();
 	this.cfg=cfg;
 	console.log("# >",this);
 	console.log("Armando",this.cfg,this.donde);
@@ -289,6 +306,7 @@ Red.prototype.armar=function(cfg){
 		var ix=(this.cfg.spriteRow*12)+8+hj;
 		var tmp=getRandomA("distact"+this.name+timae,this.distractores);
 		tmp.visible=true;
+		sube(tmp);
 		this.currFichas.push(tmp);
 		
 	}
@@ -311,61 +329,16 @@ Red.prototype.armar=function(cfg){
 		this.currFichas[j].setPosition(138+(129*j),160);
 		//setoriginalpos(this.currFichas[j]);
 		this.currFichas[j].visible=true;
+		sube(this.currFichas[j]);
 		ika++;
 	}
 	//desordenar fichas
 	intercambiarPosicionesRand(this.currFichas);
 }
-function inabilitareventos(source){
-	source.mouseDown=function(){};
-	source.mouseDrag=function(){};
-	source.mouseUp=function(){};
-	source.inabil=true;
-}
-Escena.prototype.mecanica=function(){
-	this.currRed.onDrop=function(owo){
-		console.log("VALIDAR",owo,this);
-		if(!owo.source.isDistractor && (owo.dropsOn.grupo.charAt(0)==owo.source.grupo.charAt(0))){
-			//logro.addLogro()
-			var listo=true;
-			//owo.source
-			inabilitareventos(owo.source);
-			for(var k in this.nodos){
-				console.log("chekuing",this.nodos[k].current,k);
-				listo&=(this.nodos[k].current!=undefined);
-			}
-			if(listo){
-				logro.addLogro();
-				var This=this;
-				//clockController("stop");
-				setTimeout(function(){
-					This.etapa.juego.siguiente();
-				}, 1);
-				
-				//spashMsg("tit_excelente",this.etapa.juego.siguiente);
-				//if(logro.getLvlIx())
-				//this=new Escena(ac,"e1");
-				//();
-			}
-		}else{
-			//if(owo.dropsOn.current!=owo.source){
-				
-			//}
-			if(owo.dropsOn.current==undefined || owo.dropsOn.grupo==undefined || owo.dropsOn.current.grupo==undefined || owo.dropsOn.grupo.charAt(0)!=owo.dropsOn.current.grupo.charAt(0)){
-			 owo.dropsOn.current=undefined;
-			}
-			
-			owo.source.volver();
-			//if(!owo.dropsOn.current.inabil)
-			
-			logro.wrongAnswer()
-		}
-	}
-}
-
 
 //Red1:
 Red.prototype.armar1=function(cfg){
+	fuearmado();
 	this.cfg=cfg;
 	console.log("# >",this);
 	console.log("Armando",this.cfg,this.donde);
@@ -588,6 +561,7 @@ Red.prototype.armar1=function(cfg){
 										This.chequea1();
 									};
 		this.currFichas[j].visible=true;
+		sube(this.currFichas[j]);
 		ika++;
 	}
 	//desordenar fichas
@@ -598,11 +572,8 @@ Red.prototype.armar1=function(cfg){
 	//this.menu=new MenuInGame(this.donde);
 	window.nodos=this.nodos;
 }
-
-
-
-
 Red.prototype.armar2=function(cfg){
+	fuearmado()
 	this.cfg=cfg;
 	console.log("# >",this);
 	console.log("Armando",this.cfg,this.donde);
@@ -632,10 +603,7 @@ Red.prototype.armar2=function(cfg){
 		//this.nodos.push(nodo);
 	}
 	//window.nodos=this.nodos;
-	
 
-	
-	
 	this.seres=[];
 	this.sprtanimalesRedes = getsprt("especies", 12, 6);
 	var This=this;
@@ -831,6 +799,7 @@ Red.prototype.armar2=function(cfg){
 										This.chequea1();
 									};
 		this.currFichas[j].visible=true;
+		sube(this.currFichas[j]);
 		ika++;
 	}
 	//habilitar fichas
@@ -857,6 +826,7 @@ Red.prototype.armar2=function(cfg){
 		this.currFichas[j].setPosition(138+(129*j),160);
 		//setoriginalpos(this.currFichas[j]);
 		this.currFichas[j].visible=true;
+		sube(this.currFichas[j]);
 		ika++;
 	}
 	//desordenar fichas
@@ -875,7 +845,7 @@ Red.prototype.chequea1=function(){
 		totalConecciones+=this.cfg.contenedores[g].coneccion.length;
 	}
 	console.log(totalConecciones,this.conecciones.length,this.coneccioneshs.length);
-	if(totalConecciones==this.conecciones.length){
+	if(totalConecciones==this.coneccioneshs.length){
 		logro.addLogro();
 		
 		var This=this;
@@ -959,4 +929,110 @@ Red.prototype.ahoraFlecha=function(src){
 						console.log("This.coneccioneshs",This.coneccioneshs);
 						This.chequea1();
 					};
+}
+function inabilitareventos(source){
+	source.savedenvt={};
+	source.savedenvt.mouseDown=source.mouseDown;
+	source.savedenvt.mouseDrag=source.mouseDrag;
+	source.savedenvt.mouseUp=source.mouseUp;
+	
+	source.mouseDown=function(){};
+	source.mouseDrag=function(){};
+	source.mouseUp=function(){};
+	source.inabil=true;
+}
+function rehabilitareventos(source){
+	if(!source.savedenvt||source.savedenvt==undefined) return;
+	
+	source.mouseDown=source.savedenvt.mouseDown;
+	source.mouseDrag=source.savedenvt.mouseDrag;
+	source.mouseUp=source.savedenvt.mouseUp;
+	source.inabil=false;
+}
+Escena.prototype.mecanica=function(){
+	this.currRed.onDrop=function(owo){
+		console.log("VALIDAR",owo,this);
+		if(!owo.source.isDistractor && (owo.dropsOn.grupo.charAt(0)==owo.source.grupo.charAt(0))){
+			//logro.addLogro()
+			var listo=true;
+			//owo.source
+			inabilitareventos(owo.source);
+			for(var k in this.nodos){
+				console.log("chekuing",this.nodos[k].current,k);
+				listo&=(this.nodos[k].current!=undefined);
+			}
+			if(listo){
+				logro.addLogro();
+				var This=this;
+				//clockController("stop");
+				setTimeout(function(){
+					This.etapa.juego.siguiente();
+				}, 1);
+				
+				//spashMsg("tit_excelente",this.etapa.juego.siguiente);
+				//if(logro.getLvlIx())
+				//this=new Escena(ac,"e1");
+				//();
+			}
+		}else{
+			//if(owo.dropsOn.current!=owo.source){
+				
+			//}
+			if(owo.dropsOn.current==undefined || owo.dropsOn.grupo==undefined || owo.dropsOn.current.grupo==undefined || owo.dropsOn.grupo.charAt(0)!=owo.dropsOn.current.grupo.charAt(0)){
+			 owo.dropsOn.current=undefined;
+			}
+			
+			owo.source.volver();
+			//if(!owo.dropsOn.current.inabil)
+			
+			logro.wrongAnswer()
+		}
+	}
+}
+function fuearmado(){
+	counterarmado++;
+	console.log("fuearmado();",counterarmado%redescfg.length);
+	if(counterarmado%redescfg.length==0)
+	timae=Math.random();
+}
+
+Red.prototype.restablecer1=function(){
+	var papi=undefined;
+	for(var t in this.currFichas){
+		var cf = this.currFichas[t];
+		cf.current=undefined;
+		cf.volver(false);
+		rehabilitareventos(cf)
+		papi=papi||cf.papi;
+	}
+	for(var k in papi.nodos){
+		var nodo=papi.nodos[k];
+		nodo.current=undefined;
+	}
+}
+Red.prototype.restablecer2=function(){
+	console.log("restableciendo");
+	for(var t in this.currFichas){
+		var cf = this.currFichas[t];
+		
+		for(var ag in cf.fls){
+			var atob=cf.fls[ag];
+			atob.destroyme();
+		}
+		cf.fls=[]
+		rehabilitareventos(cf);
+		//cf.flecha=undefined;
+		cf.hacelineas=false;
+		cf._flecha=false;
+	}
+	for(var p in allarrows){ 
+		allarrows[p].destroyme();
+	} 
+	allarrows=[]
+	this.coneccioneshs=[];
+	this.conecciones=[];
+}
+Red.prototype.restablecer3=function(){
+	this.restablecer1();
+	this.restablecer2();
 }
