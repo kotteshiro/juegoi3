@@ -1,7 +1,7 @@
 function actitulo(conten){
 	var ac=new CAAT.ActorContainer();
 	
-	ac.setBounds(214, -43, 600, 280);
+	ac.setBounds(214, -100, 600, 340);
 	obj("inst04",ac,"titulo",0, 0,1,1)
 	conten.addChild(ac);
 	var rb = new CAAT.RotateBehavior().

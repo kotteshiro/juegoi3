@@ -45,9 +45,11 @@ var _images_= [
 	{id:'circulo',     url:'recursos/imagenes/j3/circulo-blanco.png'},
 	{id:'conjunto-circulos',     url:'recursos/imagenes/j3/conjunto-circulos-blancos.png'},
 	{id:'especies',     url:'recursos/imagenes/j3/ESPECIES.png'},
+	{id:'descripcion',     url:'recursos/imagenes/j3/intro_texto.png'},
+	
 ];
 var _sonido_espe_ = [
-	{id:"bgmusic" , url: "recursos/sonidos/j3/MUSICA-BIOLOGIA.ogg"},
+	{id:"bgmusic" , url: "recursos/sonidos/j3/MUSICA-BIOLOGIA.mp3"},
 	{id:"sonidoTitulo" , url: "recursos/sonidos/j2/VJ_001L_titulo.mp3"},
 	{id:"sonidoIntro" , url: "recursos/sonidos/j2/VJ_001L_intro.mp3"},
 	{id:"sonidoEnunciado" , url: "recursos/sonidos/j2/VJ_001L_enunciado.mp3"}

@@ -142,7 +142,7 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
 }
 
 function addLogro() {
-    //suena
+    sonido.play("ESTRELLA");
     var curr = logros.estrellas[logros.currlvl];
     trace("Current Level: " + logros.currlvl);
 	

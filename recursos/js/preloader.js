@@ -11,7 +11,7 @@ var Loader={
 		
 		console.log("cargado=",this.porcentajeTotal);
 		console.info("Unidades="+Math.round((this.unitstoload/3)*100),"Imagenes="+Math.round(this.porcentajeImagenes*100),"Audios="+Math.round((this.porcentajeAudios)*100))
-		if(this.porcentajeTotal>=100){
+		if(this.unitstoload==3){
 			this.porcentajeTotal=100;
 			//this.onFullLoaded();
 			
@@ -19,9 +19,10 @@ var Loader={
 			document.getElementById("loadinglayer").style["filter"]="alpha(opacity=50)";
 			document.getElementById("loadinglayer").style["-webkit-transition"]="opacity 1s linear";
 
-			setTimeout(this.onFullLoaded, 1000);
+			setTimeout(this.onFullFullLoaded, 1000);
 		}
 		document.getElementById("textoLoading").innerHTML=this.porcentajeTotal+"% cargado";
+		document.getElementById("loadinglayer").style["z-index"]="999";
 	},
 	onImgLoaded:function(){ //llamar cuando se cargan las imagenes
 		console.warn("IMGS CARGADOS!");
@@ -40,7 +41,7 @@ var Loader={
 		this.unitstoload++;
 		this.update();
 	},
-	onFullLoaded:function(){
+	onFullFullLoaded:function(){
 		document.getElementById("loadinglayer").style.display="none"
 	},
 	onUpdateImgsCounter:function(act,tot){

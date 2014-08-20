@@ -6,7 +6,7 @@ var logro;
 var menux;
 var escenajuego;
 var e1,e2,e3, etapa;
-var countDownTime = 60/60;
+var countDownTime = 30/60;
 var currE;
 var currM;
 var avisostimeout=["tit_intento1","tit_intento2"];
@@ -619,7 +619,7 @@ Etapa3.prototype.startIntento=function(){
 	var currFig=this.agregarFigura();
 	console.log(currFig)
 	var cv=getRandomA("vertices"+currFig.figura,currFig.vertices);
-	var letra=window.letra=ponerLetra({padre:this.ac,x:834,y:158},cv);
+	var letra=window.letra=ponerLetra({padre:this.ac,x:834,y:158-5},cv);
 	this.currinst.push(currFig.obj);
 	this.currNum1=currFig[cv][0];
 	this.currNum2=currFig[cv][1];

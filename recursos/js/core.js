@@ -265,12 +265,11 @@ function MovieClipSprite(spriteref,secuencia,fps,x,y){
 		setBackgroundImage(spriteref,true).
 		setLocation( x,y ).
 		setScale( 1 , 1 ).
-		setAnimationImageIndex( secuencia ).
+		/*setAnimationImageIndex( secuencia ).*/
 		setChangeFPS(this.fps).
 		setClip(false).
 		enableEvents(false);
 	//this.actor.backgroundImage.changeFPS=Number.MAX_VALUE;
-	
 	this.actor.backgroundImage.spriteIndex=this.currentFrame;
 	this.stop=function(ix){
 		if(!isNaN(ix)){
@@ -296,6 +295,85 @@ function MovieClipSprite(spriteref,secuencia,fps,x,y){
 		return this;
 	}
 	var self=this;
+	this._cbendanim=function(e){
+		trace("end",self.stopatend,self);
+		if(self.stopatend){
+			self.stop();
+		}
+	}
+	this.actor.setAnimationEndCallback(this._cbendanim)
+	this.getActor=function(){
+		return this.actor;
+	}
+	return this;
+}
+function FrameByFrameAnim(spriteref,fps,x,y){
+	this.fps=fps;
+	this.currentFrame=0;
+	this.stopatend=true;
+	this.lastAnimationPlayed=undefined;
+	this.lastAnimationaddd=undefined;
+	this.defaultanim=undefined;
+	var self=this;
+	this.actor=tmp = new CAAT.Actor().
+		setBackgroundImage(spriteref,true).
+		setLocation( x,y ).
+		setScale( 1 , 1 ).
+		/*setAnimationImageIndex( secuencia ).*/
+		setChangeFPS(this.fps).
+		setClip(false).
+		enableEvents(false);
+	
+	
+	//this.actor.backgroundImage.changeFPS=Number.MAX_VALUE;
+	
+	this.addAnimation = function(nombre,framearray,time, cb){
+		
+		time=time||100;
+		cb=cb||function(){};
+		this.actor.backgroundImage.addAnimation(nombre,framearray,time,function(e){ self._cbendanim(e); cb(e);  });
+		this.actor.backgroundImage.addAnimation("$stop"+nombre,[framearray[framearray.length-1]],100);
+		
+		if(this.defaultanim==undefined){
+			this.defaultanim=nombre;
+		}
+		this.lastAnimationaddd=nombre;
+		console.log("addanimation","nueva animacion",nombre,framearray)
+	}
+	
+	this.stop=function(aname){
+		if(this.lastAnimation!=undefined){
+			this.play("$stop"+this.lastAnimation);
+		}else if(aname!=undefined){
+			this.play("$stop"+aname);
+		}else{
+			this.play("$stop"+this.lastAnimationaddd);
+		}
+		return this;
+	}
+	this.static=function(ix){
+		if(this.actor.backgroundImage.mapInfo[ix]!=undefined)
+			this.actor.backgroundImage.spriteIndex=ix;
+		else
+			console.error("Le estas metiendo un index fuera del rango de frames")
+		return this;
+	}
+	
+	this.play=function(animationName,loop){
+		
+		loop=loop||false;
+		this.stopatend=!loop;
+		if(animationName.indexOf("$stop")<0){
+			this.lastAnimation=animationName||this.lastAnimation||this.defaultanim;
+			if(this.actor.backgroundImage.animationsMap[animationName]==undefined) console.error("animacion no existe:",this.lastAnimation)
+			this.actor.backgroundImage.playAnimation(this.lastAnimation);
+		}else{
+			if(this.actor.backgroundImage.animationsMap[animationName]==undefined) console.error("animacion no existe:",animationName)
+			this.actor.backgroundImage.playAnimation(animationName);
+		}
+	}
+	
+	
 	this._cbendanim=function(e){
 		trace("end",self.stopatend,self);
 		if(self.stopatend){

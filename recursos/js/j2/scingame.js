@@ -78,8 +78,8 @@ sc(function(escena) {
 		litFigureBookSprite = getsprt("flit_libros_sprite", 2, 2);
 	}
 	//= Nico
-    obj("fondo_escena", escenajuego, "fondo", 0, 0, 1, 1);
-    obj("fondo_hojas", escenajuego, "fondo_hojas", 9, 147, 1, 1);
+    obj("fondo_escena", escenajuego, "fondo", -1, 0, 1, 1);
+    obj("fondo_hojas", escenajuego, "fondo_hojas", 12, 147, 1, 1);
 	gamestart();
 });
 function gamestart(){

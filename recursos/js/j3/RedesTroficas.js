@@ -3,6 +3,7 @@ var currLevel=1;
 var avisostimeout=["tit_intento1","tit_intento2"];
 var avisoindex=0;
 var counterarmado=0;
+
 function avisoTO(){
 	
 	spashMsg(avisostimeout[avisoindex]);
@@ -180,7 +181,7 @@ Red.prototype.armar=function(cfg){
 	this.flechas.setBounds(0,0,1,1)
 	this.donde.addChild(this.flechas);
 	obj(uniq("enunciaedo"),this.donde,"enunciae1",161,30); 
-	window.conjunto=obj(uniq("conjuntoCirculos"),this.donde,"conjunto-circulos",157,171);
+	//window.conjunto=obj(uniq("conjuntoCirculos"),this.donde,"conjunto-circulos",157,171);
 	this.nodos=[];
 	this.seresPorGrupo={};
 	
@@ -228,8 +229,7 @@ Red.prototype.armar=function(cfg){
 				e.source.volver();
 			else
 				e.dropsOn.current=e.source;
-			e.source.x = e.dropsOn.x - 6;
-			e.source.y = e.dropsOn.y - 7;
+			poneren(e.source,e.dropsOn.x - 6,e.dropsOn.y - 7)
 			
 			this.papi.onDrop(e);
 			
@@ -314,7 +314,7 @@ Red.prototype.armar=function(cfg){
 	for(var j in this.currFichas){
 		addDragNDrop(this.currFichas[j],
 				function(e) {
-					this.setScale(.9, .9);
+					this.setScale(1, 1);
 					for(var g in this.papi.nodos){
 						this.papi.nodos[g].current=this.papi.nodos[g].current||undefined;
 						if(this==this.papi.nodos[g].current){
@@ -384,9 +384,9 @@ Red.prototype.armar1=function(cfg){
 				e.source.volver();
 			}else{
 				e.dropsOn.current=e.source;
+				
 			}
-			e.source.x = e.dropsOn.x - 6;
-			e.source.y = e.dropsOn.y - 7;
+			poneren(e.source,e.dropsOn.x - 6,e.dropsOn.y - 7)
 			
 			this.papi.onDrop(e);
 			
@@ -503,7 +503,6 @@ Red.prototype.armar1=function(cfg){
 										e.source.flecha.update();
 									};
 		this.currFichas[j].mouseUp  =function(e){
-									
 										var up=checkDrop(e,This.currFichas);
 										var ina=e.source;
 										var toa=up;
@@ -542,7 +541,10 @@ Red.prototype.armar1=function(cfg){
 										}
 										console.log("OKA=",oka);
 										bueno&=oka;
-										
+										var mismo=up==ina;
+										if(up!=false && !bueno && !mismo){
+											logro.wrongAnswer();
+										}
 										if(e.source.flecha!=undefined && (up==false || up==e.source || !bueno)){
 											e.source.flecha.contenedor.destroy();
 											e.source.flecha=undefined;
@@ -555,6 +557,7 @@ Red.prototype.armar1=function(cfg){
 											e.source.fls.push(e.source.flecha);
 											e.source.flecha=undefined;
 											e.source._flecha=false;
+											sonido.play("CORRECTO"); 
 										}
 										console.log("This.conecciones",This.conecciones);
 										console.log("This.coneccioneshs",This.coneccioneshs);
@@ -564,16 +567,12 @@ Red.prototype.armar1=function(cfg){
 		sube(this.currFichas[j]);
 		ika++;
 	}
-	//desordenar fichas
-	//intercambiarPosicionesRand(this.currFichas);
- 
-	/*
-*/
-	//this.menu=new MenuInGame(this.donde);
+
 	window.nodos=this.nodos;
 }
+
 Red.prototype.armar2=function(cfg){
-	fuearmado()
+	fuearmado();
 	this.cfg=cfg;
 	console.log("# >",this);
 	console.log("Armando",this.cfg,this.donde);
@@ -583,7 +582,7 @@ Red.prototype.armar2=function(cfg){
 	this.flechas=new CAAT.ActorContainer();
 	this.flechas.setBounds(0,0,1,1)
 	obj(uniq("enunciaedo2"),this.donde,"enunciae3",161,30); 
-	window.conjunto=obj(uniq("conjuntoCirculos"),this.donde,"conjunto-circulos",157,171);
+	//window.conjunto=obj(uniq("conjuntoCirculos"),this.donde,"conjunto-circulos",157,171);
 	this.donde.addChild(this.flechas);
 	this.nodos=[];
 	this.seresPorGrupo={};
@@ -620,8 +619,8 @@ Red.prototype.armar2=function(cfg){
 				This.ahoraFlecha(this);
 				e.dropsOn.current=e.source;
 			}
-			e.source.x = e.dropsOn.x - 6;
-			e.source.y = e.dropsOn.y - 7;
+			
+			poneren(e.source,e.dropsOn.x - 6,e.dropsOn.y - 7)
 			
 			this.papi.onDrop(e);
 			
@@ -809,7 +808,7 @@ Red.prototype.armar2=function(cfg){
 					if(this.hacelineas==true){
 					
 					}else{
-						this.setScale(.9, .9);
+						this.setScale(1, 1);
 						for(var g in this.papi.nodos){
 							this.papi.nodos[g].current=this.papi.nodos[g].current||undefined;
 							if(this==this.papi.nodos[g].current){
@@ -836,6 +835,7 @@ Red.prototype.armar2=function(cfg){
 	//pongo el menú
 	
 }
+
 Red.prototype.chequea1=function(){
 	console.log("CHEQUEADNDODOODO!!")
 	this.conecciones=this.conecciones||[];
@@ -855,6 +855,7 @@ Red.prototype.chequea1=function(){
 	}
 	
 }
+
 Red.prototype.ahoraFlecha=function(src){
 	var This=this;
 		src.mouseDown=function(e){
@@ -892,37 +893,45 @@ Red.prototype.ahoraFlecha=function(src){
 						}
 
 						if(bueno)
-						for(var g in ina.nodo.next){
-							console.log(">",ina.nodo.next[g],toa.nodo);
+							for(var g in ina.nodo.next){
+								console.log(">",ina.nodo.next[g],toa.nodo);
 
-							if(ina.nodo.next[g]==toa.nodo){
-								This.conecciones=This.conecciones||[];
-								This.coneccioneshs=This.coneccioneshs||[];
+								if(ina.nodo.next[g]==toa.nodo){
+									This.conecciones=This.conecciones||[];
+									This.coneccioneshs=This.coneccioneshs||[];
 
-								var hash=ina.name+" --> "+toa.name;
-								if(This.coneccioneshs.indexOf(hash)<0){
-									oka=true;
+									var hash=ina.name+" --> "+toa.name;
+									if(This.coneccioneshs.indexOf(hash)<0){
+										oka=true;
 
-									This.coneccioneshs.push(hash);
-									This.conecciones.push({a:ina,b:toa});
-									break;
+										This.coneccioneshs.push(hash);
+										This.conecciones.push({a:ina,b:toa});
+										break;
+									}
 								}
 							}
-						}
+						
 						console.log("OKA=",oka);
 						bueno&=oka;
 
+						var mismo=up==ina;
+						if(up!=false && !bueno && !mismo){
+							logro.wrongAnswer();
+						}
+						
 						if(e.source.flecha!=undefined && (up==false || up==e.source || !bueno)){
 							e.source.flecha.contenedor.destroy();
 							e.source.flecha=undefined;
 							e.source._flecha=false;
 							console.log("end");
+							
 						}else{
 							e.source.flecha.p2(up.x+(up.width/2),up.y+(up.height/2));
 							e.source.flecha.update();
 							e.source.fls=e.source.fls||[];
 							e.source.fls.push(e.source.flecha);
 							e.source.flecha=undefined;
+							sonido.play("CORRECTO"); 
 							e.source._flecha=false;
 						}
 						console.log("This.conecciones",This.conecciones);
@@ -930,6 +939,7 @@ Red.prototype.ahoraFlecha=function(src){
 						This.chequea1();
 					};
 }
+
 function inabilitareventos(source){
 	source.savedenvt={};
 	source.savedenvt.mouseDown=source.mouseDown;
@@ -941,6 +951,7 @@ function inabilitareventos(source){
 	source.mouseUp=function(){};
 	source.inabil=true;
 }
+
 function rehabilitareventos(source){
 	if(!source.savedenvt||source.savedenvt==undefined) return;
 	
@@ -949,6 +960,7 @@ function rehabilitareventos(source){
 	source.mouseUp=source.savedenvt.mouseUp;
 	source.inabil=false;
 }
+
 Escena.prototype.mecanica=function(){
 	this.currRed.onDrop=function(owo){
 		console.log("VALIDAR",owo,this);
@@ -974,6 +986,7 @@ Escena.prototype.mecanica=function(){
 				//this=new Escena(ac,"e1");
 				//();
 			}
+			sonido.play("CORRECTO"); 
 		}else{
 			//if(owo.dropsOn.current!=owo.source){
 				
@@ -989,6 +1002,7 @@ Escena.prototype.mecanica=function(){
 		}
 	}
 }
+
 function fuearmado(){
 	counterarmado++;
 	console.log("fuearmado();",counterarmado%redescfg.length);
@@ -1010,6 +1024,7 @@ Red.prototype.restablecer1=function(){
 		nodo.current=undefined;
 	}
 }
+
 Red.prototype.restablecer2=function(){
 	console.log("restableciendo");
 	for(var t in this.currFichas){
@@ -1032,7 +1047,15 @@ Red.prototype.restablecer2=function(){
 	this.coneccioneshs=[];
 	this.conecciones=[];
 }
+
 Red.prototype.restablecer3=function(){
 	this.restablecer1();
 	this.restablecer2();
+}
+function poneren(que, x, y){
+	que.moveTo(x,y,100)
+	que.scaleTo(1.1,1.1,10,100)
+	que.scaleTo(1  ,1  ,100,200)
+	
+	
 }

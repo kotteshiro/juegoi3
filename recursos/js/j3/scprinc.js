@@ -56,7 +56,7 @@ sc(function(escena){
 	tituloanim.y=-tituloanim.height;
 	tocasuena(tituloanim,"sonidoTitulo");
 	//placeHelper(tituloanim);
-	var g=tweenTranslation("tituloanim",tituloanim,1000,tituloanim.x,-80,rebote,false,600);
+	var g=tweenTranslation("tituloanim",tituloanim,1000,tituloanim.x,0,rebote,false,600);
 	trace("!>>>",tituloanim.y);
 	g.addListener({
 		behaviorExpired : function(behavior, time, actor) {
@@ -82,6 +82,7 @@ sc(function(escena){
 	btnb.setScale(0,0).scaleTo(1, 1, 1000, 0, .5, .5,rebote)
 	//obj("inst10",escena,"fondotexto",137,725,.5,.5); //678
 	//obj("inst11",escena,"barra-inferior",0,715,.25,.25); //678
+	
 	acmenupric(escena,[{ix:3,fn:clicbtn},{ix:5,fn:clicbtn},{ix:0,fn:clicbtn},{ix:5,fn:clicbtn},{ix:4,fn:clicbtn}]);
 	
 	function clicbtn(e){

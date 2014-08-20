@@ -12,11 +12,13 @@ var sonido={
 		for(var i in kha){	
 			if(kha[i])
 			createjs.Sound.registerSound(kha[i].url, kha[i].id);
+			console.log("kha[i].url",kha[i].url);
 		}
 		var countCargados=0;
 		 function loadHandler(event) {
-			countCargados++;
+			
 			Loader.onUpdateAudioCounter(i,countCargados);
+			console.warn("sonido",i,countCargados,event.src);
 			if(i==countCargados){
 				Loader.onAudioLoaded();
 			}
@@ -27,9 +29,10 @@ var sonido={
 				 trace("sonido cargado",event);
 				 bgmusic = createjs.Sound.createInstance("bgmusic"); //createjs.Sound.play("bgmusic");  // play using id.  Could also use full sourcepath or event.src.
 				 bgmusic.addEventListener("complete", handleComplete);
-				 bgmusic.setVolume(.5)
+				 bgmusic.setVolume(1)
 				 //bgmusic.play();
 			 }
+			 countCargados++;
 		 }
 		 
 		 function handleComplete(){
@@ -39,7 +42,7 @@ var sonido={
 		 
 	},
 	play:function(id, cb,volume){
-		volume=volume||.5;
+		volume=volume||1;
 		//soundManager.play(id);
 		if(soundList[id] === undefined) {
 			soundList[id] = createjs.Sound.createInstance(id);

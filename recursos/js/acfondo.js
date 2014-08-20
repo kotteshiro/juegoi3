@@ -32,7 +32,7 @@ function animbg(conten,vel){
 	function muevetenube(nube,origin,delay){
 		var dest=-nube.width;
 		var ybas=150;
-		var tiempomultiplier=1000;
+		var tiempomultiplier=3000;
 		delay=delay||0;
 		
 		nube.x=origin;

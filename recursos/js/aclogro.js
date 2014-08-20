@@ -68,8 +68,10 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
 			recreateSeq = false;
 		}
 		console.log("LOGRO SECUENCIA:",tmpSeq,ESC);
-		var tmpStar = new MovieClipSprite(spminilogros.getRef(), tmpSeq, 50, startPos-10, -6).stop(ESC);
-		tmpStar.secuencia=tmpSeq;
+		var tmpStar = new FrameByFrameAnim(spminilogros.getRef(), 50, startPos-10, -6);
+		tmpStar.addAnimation("animEstrella"+i,tmpSeq);
+		tmpStar.addAnimation("estrellavacia"+i,[ESC]);
+		tmpStar.play("estrellavacia"+i);
 		logros.estrellas.push(tmpStar);
 		ac.addChild(tmpStar.getActor());
 		startPos += sep;
@@ -109,7 +111,7 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
     
     this.reset = function() {
         for (var i in logros.estrellas) {
-            logros.estrellas[i].stop(logros.estrellas[i].secuencia[0]); 
+            logros.estrellas[i].stop(); 
         }
         logros.currlvl = 0;
 		currScore = 0;
@@ -136,7 +138,7 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
 			currScore -= rightScore * scoreLevelMultiplier;
 			this.updateScore();
 			logros.currlvl--;
-			curr.stop(curr.secuencia[0], true);
+			curr.static(0);
 		}
 	}
 	
@@ -160,6 +162,6 @@ function addLogro() {
 		this.updateScore();
         logros.currlvl++;
 		sube(curr.actor);
-        curr.play(0, true);
+        curr.play("animEstrella"+(logros.currlvl-1));
     }
 }

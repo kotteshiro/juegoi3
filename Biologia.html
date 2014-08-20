@@ -41,7 +41,7 @@
 	var canvas;
 	function resize(){
 		if(_inited){
-		if(window.innerHeight<768 || window.innerWidth<1024){
+		//if(window.innerHeight<768 || window.innerWidth<1024){
 				director.setScale(Math.min(window.innerWidth/1024, window.innerHeight/768),Math.min(window.innerWidth/1024, window.innerHeight/768))
 				var a=parseInt(Math.min(window.innerWidth/1024, window.innerHeight/768)*1024);
 				var h=parseInt(Math.min(window.innerWidth/1024, window.innerHeight/768)*768);
@@ -53,7 +53,7 @@
 				document.getElementById("_c").style["left"]=Math.round(sobrawidth/2)+"px";
 				//document.getElementById("_c").style.width=a+"px";
 				console.log("resize...",a,h);
-			}
+		//	}
 		}
 	}
 	function _onLoad(){
@@ -99,6 +99,7 @@
 		display: block;
 		position: fixed;
 		vertical-align: middle;
+		z-index: 9;
 	}
 	#centrado{
 		position: absolute;
