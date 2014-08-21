@@ -83,6 +83,11 @@ var _audio_= [
 	{id:'TITULO-ABRE',     					url:"recursos/sonidos/TITULO_ABRE.mp3"				},
 	{id:'TIME_OVER',     					url:"recursos/sonidos/TIME_OVER.mp3"				},
 	{id:'CORRECTO',     					url:"recursos/sonidos/CORRECTO.mp3"					},
+	{id:"pasar_de_nivel" ,					url: "recursos/sonidos/pasar_de_nivel.mp3"},
+	{id:"animo_1" , 						url: "recursos/sonidos/animo_1.mp3"},
+	{id:"animo_2" , 						url: "recursos/sonidos/animo_2.mp3"},
+	{id:"reloj" , 							url: "recursos/sonidos/reloj.mp3"},
+	{id:"excelente_2" , 					url: "recursos/sonidos/excelente_2.mp3"},
 	
 	
 ];

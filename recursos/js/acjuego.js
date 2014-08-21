@@ -140,9 +140,9 @@ function acjuego(conten){
 		trace("Cambio escena", e);
 		clockController("stop");
 		sonido.play("win");
-		spashMsg("tit_intento3",function(){muestraescenario();});
+		spashMsg("tit_intento3",function(){muestraescenario(); clockController("start");});
 		updatebtnmute();
-		clockController("start");
+		
 		//parafernalia
 	}
 	function mensajeExcelente(){
@@ -184,93 +184,6 @@ function acchrono(conten){
 	return ac;
 }
 
-function clockController(action){
-	//tjcolores.reloj=tjcolores.reloj || {}
-	//tjcolores.reloj.visible=tienetime;
-	var cdt = 10;
-	
-	if(typeof countDownTime !== "undefined")
-		cdt = countDownTime;
-	
-	if(clock.border == undefined)
-		clock.border = obj("clockBorder", escenajuego, "clockBorder", 30, 600-17, 1, 1);
-	
-	if(clock.progress == undefined){
-		var prsp= new CAAT.SpriteImage().initialize(director.getImage('relojanim'),10,36);
-		var sec=[];
-		for(var i=0;i<360;i++){ sec.push(i); }
-		clock.progress = new MovieClipSprite(prsp.getRef(), sec,75, 53, 648);
-		clock.progress.stop();
-		clock.progress.getActor().setScale(1.05,1.05)
-		escenajuego.addChild(clock.progress.getActor());
-		//clock.progress = obj("clockBorder", escenajuego, "clockBorder", 30, 600, 1, 1);
-	}
-	
-	if(clock.txt === undefined) {
-		clock.txt = timerTxt = new CAAT.TextActor()
-			.setFont("bold 24px Trebuchet MS, Helvetica, sans-serif")
-			.setTextAlign("center")
-			.setTextBaseline("bottom")
-			.setPosition(93, 700)
-			.setText("00:00")
-			.setTextFillStyle("#E84E1B");	
-		escenajuego.addChild(clock.txt);
-	}
-
-	switch(action) {
-		case 'init':
-			if(currTimer){
-				currTimer.cancelNextCallBackAtStop();
-				currTimer.stop(); //.reset();
-				currTimer = undefined;
-			}
-			startClock(cdt);
-			break;
-			
-		case 'pause':
-			currTimer.pause();
-			break;
-			
-		case 'stop':
-			currTimer.stop().reset();
-			break;
-			
-		case 'reset':
-			currTimer.reset();
-			break;
-			
-		case 'resume':
-			currTimer.resume();
-			break;
-			
-		case 'start':
-			currTimer.start(cdt);
-			break;
-	}
-	clock.sube=function(){
-		sube(clock.border);
-		sube(clock.progress.actor);
-		sube(clock.txt);
-	}
-	clock.sube();
-	/*clocktype=="countDown";
-	var sec=[];
-	switch(clocktype){
-		case "countDown":
-			for(var i=359;i>0;i--){ 
-				sec.push(i);
-			}
-		break;
-		case "timmer":
-			for(var i=0;i<360;i++){ 
-				sec.push(i);
-			}
-		break;
-	}
-	clock.progress.actor.backgroundImage.animationImageIndex=sec;*/
-	
-}
-
 function startClock(cdt) {
 	trace("Starting clock.", escenajuego);
 	
@@ -291,10 +204,11 @@ function setCountdown(cdt) {
 			delay: 1000/6,
 			onTick: function(time) {
 				clock.txt.setText(currTimer.format(time));
-				var degrree=Math.floor((time/1000)*6)+1;
-				//console.log(degrree,time);
-				if(degrree>=360) 
+				var degrree=Math.floor((time/(cdt*1000))*360/60)+1;
+				//console.log((time/(cdt*1000)),degrree,time,cdt);
+				if(degrree>=360)
 					degrree=359; //fix error 
+					
 				clock.progress.getActor().backgroundImage.spriteIndex=degrree;
 			},
 			onStop: onTimeOver || function(time) {
@@ -304,7 +218,7 @@ function setCountdown(cdt) {
 				//logro.calculateScoreFromTime(time);
 			}
 		})
-		currTimer.start(cdt);
+		currTimer.start(cdt);  
 	} else if(currTimer.isRunning()) {
 		currTimer.stop().reset().start(cdt);
 	}
@@ -325,7 +239,7 @@ function setTimer() {
 			},
 			onStop: function(time) {
 				trace("Clock stopped!", time);
-				logro.calculateScoreFromTime(time);
+				//logro.calculateScoreFromTime(time);
 			}
 		});
 		currTimer.start();

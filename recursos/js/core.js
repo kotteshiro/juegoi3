@@ -265,7 +265,7 @@ function MovieClipSprite(spriteref,secuencia,fps,x,y){
 		setBackgroundImage(spriteref,true).
 		setLocation( x,y ).
 		setScale( 1 , 1 ).
-		/*setAnimationImageIndex( secuencia ).*/
+		setAnimationImageIndex( secuencia ).
 		setChangeFPS(this.fps).
 		setClip(false).
 		enableEvents(false);
@@ -333,6 +333,7 @@ function FrameByFrameAnim(spriteref,fps,x,y){
 		cb=cb||function(){};
 		this.actor.backgroundImage.addAnimation(nombre,framearray,time,function(e){ self._cbendanim(e); cb(e);  });
 		this.actor.backgroundImage.addAnimation("$stop"+nombre,[framearray[framearray.length-1]],100);
+		this.actor.backgroundImage.addAnimation("$stopini"+nombre,[framearray[0]],100);
 		
 		if(this.defaultanim==undefined){
 			this.defaultanim=nombre;
@@ -348,6 +349,16 @@ function FrameByFrameAnim(spriteref,fps,x,y){
 			this.play("$stop"+aname);
 		}else{
 			this.play("$stop"+this.lastAnimationaddd);
+		}
+		return this;
+	}
+	this.stopini=function(aname){
+		if(this.lastAnimation!=undefined){
+			this.play("$stopini"+this.lastAnimation);
+		}else if(aname!=undefined){
+			this.play("$stopini"+aname);
+		}else{
+			this.play("$stopini"+this.lastAnimationaddd);
 		}
 		return this;
 	}
@@ -470,6 +481,8 @@ function spashMsg(src,fncb,requireclick,escena,timea){
 	requireclick=requireclick||false;
 	fncb=(fncb) ? fncb : function(){};
 	escondeescenario();
+	splashsound(src);
+	
 	var donde=escena||director.currentScene;
 	//obj("inst00",director,'fondo_a',0,0,.5,.5);
 	//spla=obj("splashmsg",donde,'tit_excelente',0,0,.5,.5);.
@@ -985,4 +998,40 @@ function enpausa(escena) {
 	
    	clicktap(h1_1,fn);
 	clicktap(h1_0,fn);
+}
+function splashsound(src){
+	var audio="";
+	var lag=1000;
+	switch(src){
+		case "tit_excelente":
+			audio="excelente_2";
+			lag=3000;
+		break;
+		case "tit_intento1":
+			audio="animo_1";
+		break;
+		case "tit_intento2":
+			audio="animo_2";
+		break;
+		case "tit_intento3":
+			audio="pasar_de_nivel";
+			
+		break;
+		case "":
+			audio="";
+		break;
+		case "":
+			audio="";
+		break;
+		case "":
+			audio="";
+		break;
+		case "":
+			audio="";
+		break;
+	}
+	if(audio!=""){
+		setTimeout(function(){  sonido.play(audio); }, lag);
+		
+	}
 }

@@ -33,6 +33,8 @@ var _images_= [
 	{id:'barra_logros_FONDO',     url:'recursos/imagenes/barra_logros_FONDO.png'},
 	{id:'en-pausa',     url:'recursos/imagenes/en-pausa.png'},
 	
+	{id:'fondo',     url:'recursos/imagenes/j3/fondo_Inicio.png'},
+	
 	{id:'fondobosque',     url:'recursos/imagenes/j3/RA1_ECbosque.png'},
 	{id:'fondoselva',     url:'recursos/imagenes/j3/RA2_ECamazonas.png'},
 	{id:'fondosartocp',     url:'recursos/imagenes/j3/RA3_ECantartica.png'},
@@ -50,8 +52,10 @@ var _images_= [
 ];
 var _sonido_espe_ = [
 	{id:"bgmusic" , url: "recursos/sonidos/j3/MUSICA-BIOLOGIA.mp3"},
-	{id:"sonidoTitulo" , url: "recursos/sonidos/j2/VJ_001L_titulo.mp3"},
-	{id:"sonidoIntro" , url: "recursos/sonidos/j2/VJ_001L_intro.mp3"},
-	{id:"sonidoEnunciado" , url: "recursos/sonidos/j2/VJ_001L_enunciado.mp3"}
+	{id:"sonidoTitulo" , url: "recursos/sonidos/j3/VJ_001B_titulo.mp3"},
+	{id:"sonidoIntro" , url: "recursos/sonidos/j3/VJ_001B_intro.mp3"},
+	{id:"sonidoEnunciado1" , url: "recursos/sonidos/j3/VJ_001B_enunciado_n1.mp3"},
+	{id:"sonidoEnunciado2" , url: "recursos/sonidos/j3/VJ_001B_enunciado_n2.mp3"},
+	{id:"sonidoEnunciado3" , url: "recursos/sonidos/j3/VJ_001B_enunciado_n3.mp3"},
 ];
 subtmitfiles(_images_);

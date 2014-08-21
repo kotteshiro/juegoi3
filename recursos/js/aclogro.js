@@ -111,20 +111,32 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
     
     this.reset = function() {
         for (var i in logros.estrellas) {
-            logros.estrellas[i].stop(); 
+            logros.estrellas[i].stopini(); 
         }
         logros.currlvl = 0;
 		currScore = 0;
 		this.updateScore();
     }
 	
-	this.calculateScoreFromTime = function(millis) {
-		trace("Calculating score to add...", millis);
+	this.calculateScoreFromTime = function(segundos,tot) {
+		/*trace("Calculating score to add...", millis);
 		var minutes = getMinutesFromMillis(millis);
 		trace("Minutes", minutes);
-		currScore += ((rightScore / 2) * (scoreLevelMultiplier * 0.3)) - (minutes * spentTimeScore);
+		currScore += ((rightScore / 2) * (scoreLevelMultiplier * 0.3)) - (minutes * spentTimeScore);*/
+		//no me gustó
+		//var segundos = Math.round(millis/1000);
+		console.log("seg=",segundos);
+		var bonotiempo=0;
+		if(segundos>=tot/4){
+			bonotiempo=((segundos*97)*(Math.round(segundos/(tot/4))+1));
+			
+			
+		}
+		console.log("BONO TIEMPO: tiempo restante:",segundos,Math.round(segundos/tot*100)+"%"," Puntaje bono:", bonotiempo);
+		currScore += bonotiempo
 		this.updateScore();
 	};
+	
 	this.removeLogro=function(){
 		var curr = logros.estrellas[logros.currlvl-1];
 		if (curr != undefined) {
@@ -138,10 +150,14 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
 			currScore -= rightScore * scoreLevelMultiplier;
 			this.updateScore();
 			logros.currlvl--;
-			curr.static(0);
+			curr.stopini();
 		}
 	}
 	
+	this.resetetapa=function(){
+		currScore = Math.round(currScore/2);
+		this.updateScore();
+	}
     return this;
 }
 

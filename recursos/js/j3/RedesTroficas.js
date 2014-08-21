@@ -83,10 +83,13 @@ function Play(ac){
 	
 		console.log("levl=",logro.getLvlIx());
 		if(logro.getLvlIx()<3){
+			countDownTime = 60/60;
 			redes.viewEscena(logro.getLvlIx())
 		}else if(logro.getLvlIx()<6){
+			countDownTime = 90/60;
 			redes.viewEscena(logro.getLvlIx())
 		}else if(logro.getLvlIx()<9){
+			countDownTime = 120/60;
 			redes.viewEscena(logro.getLvlIx())
 		}else{
 		}
@@ -180,7 +183,8 @@ Red.prototype.armar=function(cfg){
 	this.flechas=new CAAT.ActorContainer();
 	this.flechas.setBounds(0,0,1,1)
 	this.donde.addChild(this.flechas);
-	obj(uniq("enunciaedo"),this.donde,"enunciae1",161,30); 
+	var enunc1=obj(uniq("enunciaedo"),this.donde,"enunciae1",161,30); 
+	tocasuena(enunc1,"sonidoEnunciado1");
 	//window.conjunto=obj(uniq("conjuntoCirculos"),this.donde,"conjunto-circulos",157,171);
 	this.nodos=[];
 	this.seresPorGrupo={};
@@ -345,7 +349,8 @@ Red.prototype.armar1=function(cfg){
 	
 	this.inst={};
 	this.inst.fondo=obj(uniq("fondo"),this.donde,this.cfg.fondo,0,0);	
-	obj(uniq("enunciaedo1"),this.donde,"enunciae2",161,20); 
+	var enunc2=obj(uniq("enunciaedo1"),this.donde,"enunciae2",161,20); 
+	tocasuena(enunc2,"sonidoEnunciado2");
 	this.flechas=new CAAT.ActorContainer();
 	this.flechas.setBounds(0,0,1,1)
 	this.donde.addChild(this.flechas);
@@ -581,7 +586,8 @@ Red.prototype.armar2=function(cfg){
 	this.inst.fondo=obj(uniq("fondo"),this.donde,this.cfg.fondo,0,0);	
 	this.flechas=new CAAT.ActorContainer();
 	this.flechas.setBounds(0,0,1,1)
-	obj(uniq("enunciaedo2"),this.donde,"enunciae3",161,30); 
+	var enunc3=obj(uniq("enunciaedo3"),this.donde,"enunciae3",161,30); 
+	tocasuena(enunc3,"sonidoEnunciado3");
 	//window.conjunto=obj(uniq("conjuntoCirculos"),this.donde,"conjunto-circulos",157,171);
 	this.donde.addChild(this.flechas);
 	this.nodos=[];
@@ -614,11 +620,12 @@ Red.prototype.armar2=function(cfg){
 			droppedOn.hasElement = true;
 			if(e.dropsOn.current!=undefined){ 
 				e.source.volver();
-			}else{
+			}
+			
 				inabilitareventos(e.source);
 				This.ahoraFlecha(this);
 				e.dropsOn.current=e.source;
-			}
+			
 			
 			poneren(e.source,e.dropsOn.x - 6,e.dropsOn.y - 7)
 			

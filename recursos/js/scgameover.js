@@ -63,12 +63,12 @@ sc(function(escena){
 
 function acPuntaje(conten,padre){
 	var ac=new CAAT.ActorContainer();
-	ac.setBounds(214, -43, 600, 280);
+	ac.setBounds(214, -43, 600, 275);
 	padre.scoreText = new CAAT.TextActor()
-	.setFont("bold 29px Trebuchet MS, Helvetica, sans-serif")
+	.setFont("bold 40px Trebuchet MS, Helvetica, sans-serif")
 	.setTextAlign("center")
 	.setTextBaseline("bottom")
-	.setPosition(350+10, 205)
+	.setPosition(350+10, 214)
 	.setText(currScore.toLocaleString());
    window.textoscore=padre.scoreText;
 	obj("ainst04",ac,"puntaje",0, 0,1,1);

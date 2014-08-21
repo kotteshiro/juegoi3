@@ -118,7 +118,7 @@ function getCoordRand(awayfromme){
 	awayfromme=awayfromme||[];
 	window.allcordsposib=[];
 	if(window.allcordsposib.length<=0){
-		var coords=[1,2,3,4,5,6,7,8,9,10];
+		var coords=[1,2,3,4,5,6,7,8,9];
 		for(var xi in coords){
 			for(var yi in coords){
 				window.allcordsposib.push([coords[xi],coords[yi]]);
@@ -135,7 +135,7 @@ function getCoordRand(awayfromme){
 		else{
 			for(var k in awayfromme){
 				var d = dist(selected,awayfromme[k]);
-				if(d>3){
+				if(d>2){
 					pasa&=true
 				}else{
 					pasa&=false

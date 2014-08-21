@@ -24,22 +24,26 @@ function avisoTO(){
 function onTimeOver(time) {
 	//alert("Time's upa!"+time);
 	//logro.reset();
+	
 	if(time==0){
 		 sonido.play("timeout");
 		if(logro.getLvlIx()<4){
 			while(logro.getLvlIx()>0){
 				logro.removeLogro();
 			}
+			logro.resetetapa();
 			avisoTO();
 		}else if(logro.getLvlIx()<8){
 			while(logro.getLvlIx()>4){
 				logro.removeLogro();
 			}
+			logro.resetetapa();
 			avisoTO();
 		}else{
 			while(logro.getLvlIx()>8){
 				logro.removeLogro();
 			}
+			logro.resetetapa();
 			avisoTO();
 		}
 		clockController("init");
@@ -109,17 +113,21 @@ function chekalvl(){
 				clockController("stop");
 				//spashMsg("tit_intento3",_etapa2,false);
 				sonido.play("PASAR-NIVEL");
+				logro.calculateScoreFromTime(Math.round(clockController("gettime")/1000),countDownTime*60)
 				spashMsg("tit_intento3",function(){ setTimeout(_etapa2, 400); },false);
 				//logro.wrongAnswer();
 			break;
 			case 8:
 				clockController("stop");
 				sonido.play("PASAR-NIVEL");
-					spashMsg("tit_intento3",function(){ setTimeout(_etapa3, 400); },false);
-				//logro.wrongAnswer();
+				logro.calculateScoreFromTime(Math.round(clockController("gettime")/1000),countDownTime*60)
+				spashMsg("tit_intento3",function(){ setTimeout(_etapa3, 400); },false);
+				//logro.wrongAnswer(); 
 			break;
 			case 12:
+				logro.calculateScoreFromTime(Math.round(clockController("gettime")/1000),countDownTime*60)
 				spashMsg("tit_excelente"); 
+				
 		}
 		
 	}else{
@@ -129,7 +137,7 @@ function chekalvl(){
 }
 function Etapa1(padre){
 	trace("Class Etapa1");
-	
+	countDownTime = 30/60;
 	this.virgrill=[
 	[0,0,0,0,0,0,0,0,0,0],
 	[0,0,0,0,0,0,0,0,0,0],
@@ -192,7 +200,11 @@ function Etapa1(padre){
 			var tm=getCoordRand(this.ocupadas);
 			num1=tm[0]-1;
 			num2=tm[1]-1;
-			if(this.virgrill[num1][num2]<=0){
+			var sepeude = true;
+			/*sepeude&=(num1<9);
+			sepeude&=(num2<9);*/
+			console.log(num1,num2);
+			if(this.virgrill[num1][num2]<=0 && sepeude){
 				var bid=getRandomA("rellenabid",[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]);
 				this.virgrill[num1][num2]=bid;
 				this.ocupadas.push(tm);
@@ -202,6 +214,7 @@ function Etapa1(padre){
 		for(var i=0;i<10;i++){
 			for(var e=0;e<10;e++){
 				if(this.virgrill[i][e]>0){
+					
 					var props=this.grilla.getCoord(i+1,e+1);//x e y
 					props.click=this.onbicho;
 					props.ccart=[i,e];
@@ -253,6 +266,7 @@ function Etapa1(padre){
 	padre.addChild(this.ac);
 }
 function Etapa2(padre){
+	countDownTime = 30/60;
 	trace("Class Etapa2");
 	
 	this.virgrill=[
@@ -533,7 +547,7 @@ function confirmdialog(ac,cb){
 
 function Etapa3(padre){
 	trace("Class Etapa3");
-	
+	countDownTime = 45/60;
 	this.virgrill=[
 	[0,0,0,0,0,0,0,0,0,0],
 	[0,0,0,0,0,0,0,0,0,0],
@@ -590,7 +604,7 @@ Etapa3.prototype.agregarFigura=function(){
 	var currFig=getRandomA("figus",this.figuras);
 	//currFig="figura7";
 	var x=randomInt(1,figprop[currFig].max[0]);
-	var y=randomInt(figprop[currFig].max[1],10);
+	var y=randomInt(figprop[currFig].max[1],9);
 	var v=figprop[currFig].vertices;
 	var resp={pos:[x,y]};
 	resp.figura=currFig;
