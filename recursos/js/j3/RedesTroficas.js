@@ -458,8 +458,8 @@ Red.prototype.armar1=function(cfg){
 				if(this.nodos[ja].current==undefined){
 					this.nodos[ja].current=nya
 					nya.nodo=this.nodos[ja];
-					nya.x=this.nodos[ja].x;
-					nya.y=this.nodos[ja].y;
+					nya.x=this.nodos[ja].x-5;
+					nya.y=this.nodos[ja].y-5;
 					break;
 				}
 			}
