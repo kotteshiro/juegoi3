@@ -185,7 +185,7 @@ function toscenaanim(ixin){
 		ixin, CAAT.Scene.EASE_TRANSLATE,CAAT.Actor.prototype.ANCHOR_TOP,
 		ixout,CAAT.Scene.EASE_TRANSLATE,CAAT.Actor.prototype.ANCHOR_TOP,
 		1000,.1,oi,oi);
-	updatebtnmute();
+	updatebtnmutebg();
 }
 /** Editor **/
 
@@ -477,7 +477,7 @@ function getsprt(spritename,ancho,alto){
 	return sprtglobal[spritename];
 }
 function spashMsg(src,fncb,requireclick,escena,timea){
-	timea=timea||2000;
+	timea=timea||3000;
 	requireclick=requireclick||false;
 	fncb=(fncb) ? fncb : function(){};
 	escondeescenario();
@@ -792,7 +792,8 @@ function Linea(from,to, where,color){
 	}
 }
 function sube(that){
-	if(that!=undefined)
+
+	if(typeof(that) != "undefined" && typeof(that.parent) != "undefined" && that.parent)	
 	that.parent.setZOrder( that, Number.MAX_VALUE );
 	else
 	console.log("wut");
@@ -884,8 +885,7 @@ function MenuInGame(escena) {
     }
     menux = acmenu(escena, [{ix: 2,fn: clicbtn}, {ix: 0,fn: clicbtn}, {ix: 5,fn: clicbtn}]); //siempre al top
 	console.log("Nuevo menu in game");
-	updatebtnmute();
-	updatebgmbtnmute();
+	updatebtnmutebg();
     return menux;
 }
 function destroySmooty(whata){
@@ -933,13 +933,12 @@ function confirmdialog(ac, cb) {
 }
 function mutebtnaction(){
 		//director.setSoundEffectsEnabled(!director.audioManager.isSoundEffectsEnabled());
-		sonido.mute(!sonido.ismute())
-		updatebtnmute();
-		
+		sonido.mutebg(!sonido.ismutebg())
+		updatebtnmutebg();
+		/*
 		if(sonido.ismute()==false){
 			bgmusic.setMute(window.bgmismute); //seteamos el estado guardado de bgm
 			updatebgmbtnmute();
-			//window.bgmismute=bgmusic.getMute();
 		}else{		
 			//está muteado
 			window.bgmismute=bgmusic.getMute(); //guardamos el estado de bgm
@@ -948,7 +947,7 @@ function mutebtnaction(){
 			}
 			
 		}
-		updatebgmbtnmute();
+		updatebgmbtnmute();*/
 		
 		
 }
@@ -962,7 +961,7 @@ function mutebgmbtnaction(force){
 		updatebgmbtnmute();
 }
 
-function updatebtnmute(){
+/*function updatebtnmute(){
 	for(var i in director.scenes){
 		if(director.scenes[i].botonmute !== undefined){
 			if(sonido.ismute())
@@ -972,7 +971,20 @@ function updatebtnmute(){
 		}
 	} 
 	updatebgmbtnmute();
+}*/
+function updatebtnmutebg(){
+	sonido.mutebg(sonido.ismutebg());
+	for(var i in director.scenes){
+		if(director.scenes[i].botonbgmmute !== undefined){
+			if(!sonido.ismute())
+				director.scenes[i].botonbgmmute.setButtonImageIndex(5, 5+7, 5, 5);
+			else
+				director.scenes[i].botonbgmmute.setButtonImageIndex(6, 6+7, 6, 6);
+		}
+	}
 }
+
+/*
 function updatebgmbtnmute(){
 	if(sonido.ismute==undefined) return;
 	for(var i in director.scenes){
@@ -983,7 +995,7 @@ function updatebgmbtnmute(){
 				director.scenes[i].botonbgmmute.setButtonImageIndex(6, 6+7, 6, 6);
 		}
 	}
-}
+}*/
 function enpausa(escena) {
 	trace("En Pausa!");
     clockController("pause");
@@ -1005,7 +1017,7 @@ function splashsound(src){
 	switch(src){
 		case "tit_excelente":
 			audio="excelente_2";
-			lag=3000;
+			lag=2000;
 		break;
 		case "tit_intento1":
 			audio="animo_1";
@@ -1034,4 +1046,20 @@ function splashsound(src){
 		setTimeout(function(){  sonido.play(audio); }, lag);
 		
 	}
+}
+function balancea(que){
+	var rb = new CAAT.RotateBehavior().
+			setCycle(true).
+			setFrameTime(0, 8000).
+			setValues( -Math.PI / 40, Math.PI / 40, .50, 0 ).
+			setInterpolator(
+					new CAAT.Interpolator().
+					createCubicBezierInterpolator(
+							{x:0,y:0},
+							{x:1,y:0},
+							{x:0,y:1},
+							{x:1,y:1},
+							true)
+					);
+	que.addBehavior(rb);
 }

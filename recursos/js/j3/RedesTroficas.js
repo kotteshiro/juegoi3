@@ -113,10 +113,7 @@ function Play(ac){
 				}
             	break;
             case 9:
-				clockController("stop");
-				clockController("destroy");  
-				sonido.play("EXCELENTE",function(){ if(!bgmusic.setVolume(.5)) bgmusic.setMute(false);},1);
-				spashMsg("tit_excelente",function(){pantallaGameOver(currScore)},false);		
+						
 				return false;
 				break;
         }
@@ -129,7 +126,12 @@ function Play(ac){
 	//window.flechauniversal=new FlechaAtoB(ac,{x:200,y:200},{x:200,y:200});
 
 }
-
+function win(){
+	clockController("stop");
+	clockController("destroy");  
+	sonido.play("EXCELENTE",function(){ if(!bgmusic.setVolume(.5)) bgmusic.setMute(false);},1);
+	spashMsg("tit_excelente",function(){pantallaGameOver(currScore)},false);
+}
 function Red(eta,name){
 	this.name=name
 	this.etapa=eta;
@@ -619,24 +621,38 @@ Red.prototype.armar2=function(cfg){
 			e.dropsOn = droppedOn;
 			droppedOn.hasElement = true;
 			if(e.dropsOn.current!=undefined){ 
-				e.source.volver();
+				e.dropsOn.current.volver();
 			}
 			
-				inabilitareventos(e.source);
-				This.ahoraFlecha(this);
-				e.dropsOn.current=e.source;
+			//inabilitareventos(e.source);
+			//This.ahoraFlecha(this);
+			e.dropsOn.current=e.source;
 			
 			
 			poneren(e.source,e.dropsOn.x - 6,e.dropsOn.y - 7)
 			
 			this.papi.onDrop(e);
 			
-			e.source.hacelineas=true;
+		
 			
 		} else {
 				trace("VOLVER");
 				window.volve=e.source;
 				e.source.volver.call(e.source);
+		}
+		
+		var listo=true;
+		for(var i in this.papi.nodos){
+			var ba=this.papi.nodos[i];
+			listo&=ba.current!=undefined;
+		}
+		if(listo){
+			for(var kl in this.papi.nodos){
+				ba=this.papi.nodos[kl].current;
+				ba.hacelineas=true;
+				inabilitareventos(ba);
+				This.ahoraFlecha(ba);
+			}
 		}
 		
 	}
@@ -720,6 +736,7 @@ Red.prototype.armar2=function(cfg){
 					}
 				}
 			}
+			this.nodos[ja].current=undefined
 		}
 		this.currFichas.push(nya);
 	}
@@ -812,9 +829,9 @@ Red.prototype.armar2=function(cfg){
 	for(var j in this.currFichas){
 		addDragNDrop(this.currFichas[j],
 				function(e) {
-					if(this.hacelineas==true){
+					/*if(this.hacelineas==true){
 					
-					}else{
+					}else{*/
 						this.setScale(1, 1);
 						for(var g in this.papi.nodos){
 							this.papi.nodos[g].current=this.papi.nodos[g].current||undefined;
@@ -822,14 +839,16 @@ Red.prototype.armar2=function(cfg){
 								this.papi.nodos[g].current=undefined;
 							}
 						}
-					}
+					/*}*/
 				},
 				this.dragin,
 				function(e){
 					
 				}
 			);
-		this.currFichas[j].setPosition(138+(129*j),160);
+		var margen=138;
+		margen+=((6-this.currFichas.length)*129/2)
+		this.currFichas[j].setPosition(margen+(129*j),160);
 		//setoriginalpos(this.currFichas[j]);
 		this.currFichas[j].visible=true;
 		sube(this.currFichas[j]);
@@ -854,7 +873,7 @@ Red.prototype.chequea1=function(){
 	console.log(totalConecciones,this.conecciones.length,this.coneccioneshs.length);
 	if(totalConecciones==this.coneccioneshs.length){
 		logro.addLogro();
-		
+		chkwin();
 		var This=this;
 		setTimeout(function(){
 			This.etapa.juego.siguiente();
@@ -972,9 +991,7 @@ Escena.prototype.mecanica=function(){
 	this.currRed.onDrop=function(owo){
 		console.log("VALIDAR",owo,this);
 		if(!owo.source.isDistractor && (owo.dropsOn.grupo.charAt(0)==owo.source.grupo.charAt(0))){
-			//logro.addLogro()
 			var listo=true;
-			//owo.source
 			inabilitareventos(owo.source);
 			for(var k in this.nodos){
 				console.log("chekuing",this.nodos[k].current,k);
@@ -982,6 +999,7 @@ Escena.prototype.mecanica=function(){
 			}
 			if(listo){
 				logro.addLogro();
+				chkwin();
 				var This=this;
 				//clockController("stop");
 				setTimeout(function(){
@@ -1065,4 +1083,9 @@ function poneren(que, x, y){
 	que.scaleTo(1  ,1  ,100,200)
 	
 	
+}
+function chkwin(){
+	if(logros.currlvl==9){
+		win();
+	}
 }

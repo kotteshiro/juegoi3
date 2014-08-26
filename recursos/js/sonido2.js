@@ -1,4 +1,5 @@
-var bgmusic={play:function(){}},
+var bgmusic={play:function(){}};
+var bgmusicvolumen=1;
 soundList = [];
 var sonido={
 	init:function(){
@@ -13,12 +14,15 @@ var sonido={
 			if(kha[i])
 			createjs.Sound.registerSound(kha[i].url, kha[i].id);
 			console.log("kha[i].url",kha[i].url);
+			if(kha[i].id == "bgmusic"){
+				bgmusicvolumen=1;//kha[i].volume||1;
+			}
 		}
 		var countCargados=0;
 		 function loadHandler(event) {
 			
 			Loader.onUpdateAudioCounter(i,countCargados);
-			console.warn("sonido",i,countCargados,event.src);
+			//console.warn("sonido",i,countCargados,event.src);
 			if(i==countCargados){
 				Loader.onAudioLoaded();
 			}
@@ -29,7 +33,8 @@ var sonido={
 				 trace("sonido cargado",event);
 				 bgmusic = createjs.Sound.createInstance("bgmusic"); //createjs.Sound.play("bgmusic");  // play using id.  Could also use full sourcepath or event.src.
 				 bgmusic.addEventListener("complete", handleComplete);
-				 bgmusic.setVolume(1)
+				 bgmusic.setVolume(bgmusicvolumen)
+				bgmusic.setMute(localStorage.bgmute=="true");
 				 //bgmusic.play();
 			 }
 			 countCargados++;
@@ -37,8 +42,9 @@ var sonido={
 		 
 		 function handleComplete(){
 			bgmusic.play();
+			sonido.mutebg(sonido.ismutebg())
 		 }
-		this.mute(this.ismute())
+		
 		 
 	},
 	play:function(id, cb,volume){
@@ -53,16 +59,22 @@ var sonido={
 		if(soundList[id] == false)
 			console.error(soundList[id],"Error reproduciendo sonido",id);
 	},
-	mute:function(a){
-		//k=(a) ? soundManager.mute() : soundManager.unmute();
-		
-		var mu=createjs.Sound.setMute(a);
-		localStorage.mute=(a==true);
-		return mu;
+	playloop:function(id,volume){
+		volume=volume||1;
+		//soundManager.play(id);
+		if(soundList[id] === undefined) {
+			soundList[id] = createjs.Sound.createInstance(id);
+			soundList[id].addEventListener("complete", function() {	sonido.playloop(id,volume);	});
+		}
+		soundList[id].setVolume(volume)
+		soundList[id].play();
+		if(soundList[id] == false)
+			console.error(soundList[id],"Error reproduciendo sonido",id);
 	},
+	
 	ismute:function(){
 		localStorage = localStorage || {};
-		var mut=localStorage.mute || createjs.Sound.getMute();
+		var mut=localStorage.bgmute || createjs.Sound.getMute();
 		switch(mut){
 			case "true":
 			case true:
@@ -73,6 +85,26 @@ var sonido={
 				return false;
 			default:
 		}
+	},
+	mutebg:function(a){
+		//k=(a) ? soundManager.mute() : soundManager.unmute();
+		if(!bgmusic.setMute) return;
+		if(a){
+			bgmusic.setMute(true)
+		}else{
+			bgmusic.setMute(false)
+		}
+		localStorage.bgmute=(a==true);
+	},
+	ismutebg:function(){
+		localStorage = localStorage || {};
+		if(bgmusic && bgmusic.getMute){
+			var mut= (localStorage.bgmute=="true") ||bgmusic.getMute();
+			localStorage.bgmute=mut;
+		}else{
+			return localStorage.bgmute=="true" || false;
+		}
+		return mut;
 	},
 	stop: function(id) {
 		if(soundList[id] !== undefined) {

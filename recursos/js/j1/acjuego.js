@@ -204,11 +204,13 @@ function setCountdown(cdt) {
 			delay: 1000/6,
 			onTick: function(time) {
 				clock.txt.setText(currTimer.format(time));
-				var degrree=Math.floor((time/1000)*6)+1;
-				//console.log(degrree,time);
-				if(degrree>=360) 
+				var degrree=Math.floor((time/(cdt*1000))*360/60)+1;
+				//console.log((time/(cdt*1000)),degrree,time,cdt);
+				if(degrree>=360)
 					degrree=359; //fix error 
+					
 				clock.progress.getActor().backgroundImage.spriteIndex=degrree;
+				if(typeof(clock.progress.getActor().parent)!="undefined") sube(clock.progress.getActor().parent)
 			},
 			onStop: onTimeOver || function(time) {
 				// Game end.
@@ -232,9 +234,10 @@ function setTimer() {
 				clock.txt.setText(currTimer.format(time));
 				
 				
-				if(clock.progress.getActor().backgroundImage.spriteIndex+1>=360 || Math.floor(time/1000)<=0) 
-					clock.progress.getActor().backgroundImage.spriteIndex=0;
-				clock.progress.getActor().backgroundImage.spriteIndex++;
+				if(clock.progress.getActor().backgroundImage.spriteIndex<0 || Math.floor(time/1000)<=0) 
+					clock.progress.getActor().backgroundImage.spriteIndex=360;
+				clock.progress.getActor().backgroundImage.spriteIndex--;
+				if(typeof(clock.progress.getActor().parent)!="undefined") sube(clock.progress.getActor().parent)
 			},
 			onStop: function(time) {
 				trace("Clock stopped!", time);

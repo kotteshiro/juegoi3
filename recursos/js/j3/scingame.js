@@ -34,10 +34,12 @@ function nuevo(escena){
 	menux=undefined;
 	e1=undefined,e2=undefined,e3=undefined;
 	//jcomandos=undefined;
+	
 	if(currintento!=undefined){
 		currintento.destroy();
 		currintento=undefined;
 	}
+	
 	var cont=new CAAT.ActorContainer().setBounds(0,0,1024,768);
 	var redes=window.redes=new Play(cont);
 	escena.addChild(cont);	

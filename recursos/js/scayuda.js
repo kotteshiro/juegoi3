@@ -12,7 +12,7 @@ sc(function(escena){
 	
 	var h2_2=obj("pg_info",escena,'pg_info',0,0,1,1);
 	acmenupric(escena,[{ix:4,fn:clicbtn},{ix:5,fn:clicbtn},{ix:0,fn:clicbtn},{ix:5,fn:clicbtn},{ix:4,fn:clicbtn}]);
-	updatebtnmute();
+	updatebtnmutebg();
 	function clicbtn(e){
 		switch(e.name){
 			case "btn4":

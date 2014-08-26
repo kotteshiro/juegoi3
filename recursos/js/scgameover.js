@@ -74,17 +74,19 @@ function acPuntaje(conten,padre){
 	obj("ainst04",ac,"puntaje",0, 0,1,1);
 	 ac.addChild(padre.scoreText);
 	conten.addChild(ac);
-	
+	balancea(ac);
 	return ac; 
 }
 
 function pantallaGameOver(puntaje,splash){
-	toscenaanim("scgameover");
+	 setTimeout(function(){
+		toscenaanim("scgameover");
+	 }, 1000);
+	
 	 window.textoscore.setText(puntaje.toLocaleString());
 	 if(splash){
 		 setTimeout(function(){
-		 spashMsg(splash,undefined,undefined,scgameover);
-		 
+		 	spashMsg(splash,undefined,undefined,scgameover);
 		 }, 800);
 		 
 		

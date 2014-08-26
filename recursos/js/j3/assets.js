@@ -51,7 +51,7 @@ var _images_= [
 	
 ];
 var _sonido_espe_ = [
-	{id:"bgmusic" , url: "recursos/sonidos/j3/MUSICA-BIOLOGIA.mp3"},
+	{id:"bgmusic" , url: "recursos/sonidos/j3/MUSICA-BIOLOGIA.mp3", volume:.5},
 	{id:"sonidoTitulo" , url: "recursos/sonidos/j3/VJ_001B_titulo.mp3"},
 	{id:"sonidoIntro" , url: "recursos/sonidos/j3/VJ_001B_intro.mp3"},
 	{id:"sonidoEnunciado1" , url: "recursos/sonidos/j3/VJ_001B_enunciado_n1.mp3"},

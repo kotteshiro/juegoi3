@@ -4,21 +4,10 @@ function actitulo(conten){
 	ac.setBounds(214, -100, 600, 340);
 	obj("inst04",ac,"titulo",0, 0,1,1)
 	conten.addChild(ac);
-	var rb = new CAAT.RotateBehavior().
-                    setCycle(true).
-                    setFrameTime(0, 8000).
-                    setValues( -Math.PI / 40, Math.PI / 40, .50, 0 ).
-                    setInterpolator(
-                            new CAAT.Interpolator().createCubicBezierInterpolator(
-                                    {x:0,y:0},
-                                    {x:1,y:0},
-                                    {x:0,y:1},
-                                    {x:1,y:1},
-                                    true)
-									);
-	ac.addBehavior(rb);
+	balancea(ac);
 	return ac;
 }
+
 
 function acdesc(content) {
 	var ac = new CAAT.ActorContainer()

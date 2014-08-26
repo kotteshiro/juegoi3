@@ -31,7 +31,7 @@ var _images_= [
 	
 ];
 var _sonido_espe_ = [
-    {id:"bgmusic" , url: "recursos/sonidos/j1/MUSICA-MATEMATICA.mp3"},
+    {id:"bgmusic" , url: "recursos/sonidos/j1/MUSICA-MATEMATICA.mp3",volume:.3},
     {id:"sonidoTitulo" , url: "recursos/sonidos/j1/VJ_001M_titulo.mp3"},
 	{id:"sonidoIntro" , url: "recursos/sonidos/j1/VJ_001M_intro.mp3"},
 ];

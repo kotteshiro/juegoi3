@@ -1,4 +1,5 @@
 //biologia
+var cdt;
 var  texttest;
 var selectglobal;
 var tryFails=0;
@@ -199,6 +200,7 @@ function setCountdown(cdt) {
 					degrree=359; //fix error 
 					
 				clock.progress.getActor().backgroundImage.spriteIndex=degrree;
+				if(typeof(clock.progress.getActor().parent)!="undefined") sube(clock.progress.getActor().parent)
 			},
 			onStop: window.onTimeOver || function(time) {
 				// Game end.
@@ -215,19 +217,21 @@ function setCountdown(cdt) {
 
 function setTimer() {
 	trace("Timer!");
-	cdt=cdt||60000;
+	cdt=cdt||60;
 	if(!currTimer) {
 		currTimer = new Timer({
 			delay: 1000/6,
 			onTick: function(time) {
+				//console.log(Math.floor(time/1000));
 				clock.txt.setText(currTimer.format(time));
-				var degrree=Math.floor((time/(cdt*1000))*360/60)+1;
-				//console.log((time/(cdt*1000)),degrree,time,cdt);
-				if(degrree>=360)
-					degrree=359; //fix error 
-					
-				clock.progress.getActor().backgroundImage.spriteIndex=degrree;
-				},
+				
+				
+				if(clock.progress.getActor().backgroundImage.spriteIndex<0 || Math.floor(time/1000)<=0) 
+					clock.progress.getActor().backgroundImage.spriteIndex=360;
+				clock.progress.getActor().backgroundImage.spriteIndex--;
+				
+				if(typeof(clock.progress.getActor().parent)!="undefined") sube(clock.progress.getActor().parent)
+			},
 			onStop: function(time) {
 				trace("Clock stopped!", time);
 				logro.calculateScoreFromTime(time);

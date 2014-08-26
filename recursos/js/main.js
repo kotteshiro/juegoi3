@@ -65,18 +65,21 @@ function clockController(action){
 			.setTextBaseline("bottom")
 			.setPosition(93, 117)
 			.setText("00:00")
-			.setTextFillStyle("#E84E1B");	
+			.setTextFillStyle("#E84E1B")
+			.enableEvents(false);
 		conten.addChild(clock.txt);
 	}
 
 	switch(action) {
 		case 'init':
+		sonido.stop("reloj");
 			if(currTimer){
 				currTimer.cancelNextCallBackAtStop();
 				currTimer.stop(); //.reset();
 				currTimer = undefined;
 			}
 			startClock(cdt);
+			
 			break;
 			
 		case 'pause':
@@ -89,6 +92,7 @@ function clockController(action){
 			
 		case 'reset':
 			currTimer.reset();
+			sonido.stop("reloj");
 			break;
 			
 		case 'resume':
@@ -106,6 +110,17 @@ function clockController(action){
 		sube(conten);
 	}
 	escenajuego.addChild(conten);
-	tocasuena(conten,"reloj");
+	//tocasuena(conten,"reloj");
+	clicktap(conten,function(){ 
+		if(conten.playing==true){
+			conten.playing=false;
+			sonido.stop("reloj");
+		}else{
+			sonido.playloop("reloj");
+			conten.playing=true;
+		}
+	
+	});
+	
 	clock.sube();
 }
