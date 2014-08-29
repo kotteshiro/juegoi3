@@ -5,7 +5,10 @@ var rightScore = 1000,
 	spentTimeScore = 30,  // Substracts 30 for every second.
 	timeUp = -1250,
 	currScore = 0,
-	scoreLevelMultiplier = 1;
+	scoreLevelMultiplier = 1,
+	scoreVisible=0,
+	cuanto=11,
+	intervaltim;
 
 function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
     var ac = new CAAT.ActorContainer();
@@ -28,7 +31,7 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
     //placeHelper(bajoestrellas);
     
     var scoreText = new CAAT.TextActor()
-		.setFont("bold 24px Trebuchet MS, Helvetica, sans-serif")
+		.setFont("bold 24px 'Patrick Hand SC' 'Trebuchet MS'")
 		.setTextAlign("right")
 		.setTextBaseline("bottom")
 		.setPosition(790, 40)
@@ -36,7 +39,7 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
 		
 	console.log("puntaje:",Number(currScore).toLocaleString());
     ac.addChild(scoreText);
-	
+
     var sep = 35;
 	var startPos = 99,
 		ESC = 0,
@@ -105,8 +108,26 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
 		
 		if(currScore < 0)
 			currScore = 0;
-			
-        scoreText.setText(currScore.toLocaleString());
+			if(intervaltim)
+			clearInterval(intervaltim);
+			intervaltim=setInterval(function(){
+				if(scoreVisible<=currScore)	{
+					if(scoreVisible+cuanto<currScore){
+						scoreVisible+=cuanto;
+					}else{
+						scoreVisible=currScore;
+					}
+					
+				}else{
+					if(scoreVisible-cuanto>currScore){
+						scoreVisible-=cuanto;
+					}else{
+						scoreVisible=currScore;
+					}
+				}
+				scoreText.setText(scoreVisible.toLocaleString()) ;
+			}, 10);
+        //scoreText.setText(currScore.toLocaleString());
     }
     
     this.reset = function() {
@@ -115,6 +136,7 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
         }
         logros.currlvl = 0;
 		currScore = 0;
+		scoreVisible=0;
 		this.updateScore();
     }
 	

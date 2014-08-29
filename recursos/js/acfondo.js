@@ -2,7 +2,7 @@ function animbg(conten,vel){
 	
 	vel = (vel!=undefined) ? vel : 40000;
 	var ac=new CAAT.ActorContainer().setClip(true);
-	ac.setBounds( 12,5, 1024-10,768-10 );
+	ac.setBounds( 12,5, 1024-10-14,768-10 );
 	/*
             setFillStyle( 'red' ).
             setAlpha(.25);*/

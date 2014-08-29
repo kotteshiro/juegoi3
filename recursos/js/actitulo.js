@@ -5,6 +5,7 @@ function actitulo(conten){
 	obj("inst04",ac,"titulo",0, 0,1,1)
 	conten.addChild(ac);
 	balancea(ac);
+	tocasuena(ac,"sonidoTitulo");
 	return ac;
 }
 

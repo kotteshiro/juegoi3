@@ -19,24 +19,28 @@ sc(function(escena){
 			case "calma":
 				sonido.stop("sonidoIntro");
 				sonido.stop("sonidoTitulo");
-				sonido.play("sonidoEnunciado");
+				//sonido.play("sonidoEnunciado");
 				logro.reset();
 				currLevel=1;
 				tienetime=false;
 				toscenaanim("scingame");
 				clockController("init");
+				comenzo1=false;
 				gamestart();
 				//toscenaanim("scingame");
 			break;
 			case "tiempo":
 				sonido.stop("sonidoIntro");
 				sonido.stop("sonidoTitulo");
-				sonido.play("sonidoEnunciado");
+				//sonido.play("sonidoEnunciado");
 				logro.reset();
 				currLevel=1;
 				tienetime=true;
 				toscenaanim("scingame");
 				clockController("init");
+				clockController("start")
+				clockController("pause");
+				comenzo1=false;
 				gamestart();
 				//toscenaanim("scingame");
 			break;

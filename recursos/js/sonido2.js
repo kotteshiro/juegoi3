@@ -1,6 +1,7 @@
 var bgmusic={play:function(){}};
 var bgmusicvolumen=1;
 soundList = [];
+localStorage.bgmute=false;
 var sonido={
 	init:function(){
 		 
@@ -54,8 +55,32 @@ var sonido={
 			soundList[id] = createjs.Sound.createInstance(id);
 			soundList[id].addEventListener("complete", cb || function() {});
 		}
+		console.log("Sonido",soundList[id]);
 		soundList[id].setVolume(volume)
 		soundList[id].play();
+		if(soundList[id] == false)
+			console.error(soundList[id],"Error reproduciendo sonido",id);
+	},
+	playStop:function(id, cb,volume){
+		volume=volume||1;
+		//soundManager.play(id);
+		if(soundList[id] === undefined) {
+			soundList[id] = createjs.Sound.createInstance(id);
+			soundList[id].addEventListener("complete", cb || function() {});
+		}
+		soundList[id].setVolume(volume)
+		console.log("soud state:",soundList[id].playState);
+		if(soundList[id].playState!="playSucceeded"){
+			for(var i in soundList){
+				if(soundList[i].playState=="playSucceeded"){
+					soundList[i].stop();
+				}
+			}
+			soundList[id].play();	
+		}else{
+			soundList[id].stop();
+		}
+		
 		if(soundList[id] == false)
 			console.error(soundList[id],"Error reproduciendo sonido",id);
 	},

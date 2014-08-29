@@ -8,6 +8,8 @@ var escenajuego;
 var e1,e2,e3;
 var jcomandos;
 var currintento;
+
+
 sc(function(escena){
 	escenajuego=escena;
 	escena.name="scingame";

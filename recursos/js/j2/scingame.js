@@ -19,9 +19,12 @@ var avisoindex=0;
 var currLevel=1;
 var currE;
 var currM;
+var comenzo1=false;
+var comenzo2=false;
+var comenzo3=false;
 function avisoTO(){
-	
 	spashMsg(avisostimeout[avisoindex]);
+	comenzo1=false;
 	sonido.play("TIME_OVER");
 	avisoindex++;
 	if(avisoindex>=avisostimeout.length){
@@ -77,7 +80,8 @@ sc(function(escena) {
 		trace("Loading literary figure books sprite");
 		litFigureBookSprite = getsprt("flit_libros_sprite", 2, 2);
 	}
-	//= Nico
+
+
     obj("fondo_escena", escenajuego, "fondo", -1, 0, 1, 1);
     obj("fondo_hojas", escenajuego, "fondo_hojas", 12, 147, 1, 1);
 	gamestart();
@@ -91,8 +95,6 @@ function gamestart(){
 		logro.reset();		
 	}else
 		logro=new aclogro(escenajuego, 200, 700);
-	
-		
 }
 function limpiaescenario(){
 	if(currE){
@@ -114,6 +116,7 @@ function _etapa1(){
     e1.menu=new MenuInGame(escenajuego);
 	etapa = e1;
 }
+
 function _etapa2(){
 	trace("Etapa 2");
 	limpiaescenario();
@@ -126,6 +129,7 @@ function _etapa2(){
  
 function _etapa3(){
    // e2.ac.destroy();
+   countDownTime=90/60;
    limpiaescenario();
     currE=e3=new Etapa3(escenajuego);
     e3.startIntento();
@@ -162,6 +166,7 @@ function Etapa1(padre) {
 }
 
 function Etapa2(padre) {
+	
     trace("Class Etapa2");
 	var actors;
     //*** FIN DECLARACIONES ***//
@@ -172,6 +177,9 @@ function Etapa2(padre) {
     
     this.startIntento = function() {
 		clockController("start");
+		if(!comenzo1){
+			clockController("pause");
+		}
         this.actors = loadLiteraryBooks(this.ac, 3);
 		trace("startIntento:");
 		trace(this.actors);
@@ -190,7 +198,13 @@ function Etapa3(padre) {
     this.enunciado = new Enunciado(this.ac);
     
     this.startIntento = function() {
+		
 		clockController("start");
+		
+		if(!comenzo1){
+			clockController("pause");
+		}
+		
         this.actors = loadLiteraryBooks(this.ac, 4);
 		trace("startIntento:");
 		trace(this.actors);
@@ -270,7 +284,6 @@ function loadLiteraryBooks(where, count) {
 	
 	if(count < 4) {
 		cols = new Array();
-		
 		for(var i = 0; i < count + 1; i++) {
 			cols.push(i);
 		}
@@ -307,6 +320,7 @@ function loadLiteraryBooks(where, count) {
 					hoveranim:false
 				}
 			);
+			
 			tmp.id = getLiteraryTypeName(cols[1]);
 			tmp.generic = "book";
 			actors.books.push(tmp);
@@ -467,6 +481,7 @@ function loadLiteraryPages(where, spriteArray, startPosX) {
 		tmp.id = element.id;
 		addDragNDrop(tmp,
 			function(e) {
+				comenza(1);
 			},
 			function(e) {
 				trace("onDrop");
@@ -493,7 +508,15 @@ function loadLiteraryPages(where, spriteArray, startPosX) {
 				}
 			},
 			function(e) {
-				
+				/*var droppedOn = checkDrop(e);
+				if(droppedOn){
+					console.log("plama",droppedOn);
+					droppedOn.origaa=droppedOn.backgroundImage.spriteIndex;
+					droppedOn.backgroundImage.spriteIndex=droppedOn.origaa+4;
+					//droppedOn.
+				}else{
+				//	droppedOn.backgroundImage.spriteIndex=droppedOn.origaa
+				}*/
 			}
 		);
 		actors.push(tmp);
@@ -505,15 +528,18 @@ function loadLiteraryPages(where, spriteArray, startPosX) {
 
 function getLiteraryTypeName(index) {
 	var lname = spritePrefix + figsLiters[index];
-	trace("Literary Type name: " + lname);
+	trace("Literary Type name: " + lname, index);
 	return lname;
 }
+
+
 
 function addDragNDrop(object, onDrag, onDrop, onDragging) {
 	object.originalx = object.x;
 	object.originaly = object.y;
 	
 	object.mouseDown = function(e) {
+		comenza(1);
 		sube(this);
 		trace("Start dragging.");
 		trace(e);
@@ -619,17 +645,13 @@ function checkEarnCondition() {
 
 function advanceLevel(){
     if(logro) {
-      /*  if(logro.getLvlIx()!=12 && logro.getLvlIx()!=4 && logro.getLvlIx()!=8) {
-            sonido.play("mostrarpanel");
-        }*/
-		
         switch(logro.getLvlIx()){
             case 4:
 				if(currLevel!=2){
 					currLevel=2;
+					comenzo1=false;
 					clockController("stop");
 					sonido.play("PASAR-NIVEL");
-					
 					spashMsg("tit_intento3",function(){ setTimeout(_etapa2, 400); },false);
 				}
 				return false;
@@ -637,6 +659,7 @@ function advanceLevel(){
             case 8:
 				if(currLevel!=3){
 					currLevel=3
+					comenzo1=false;
 					clockController("stop");
 					sonido.play("PASAR-NIVEL");
 					spashMsg("tit_intento3",function(){ setTimeout(_etapa3, 400); },false);
@@ -646,8 +669,8 @@ function advanceLevel(){
             case 12:
 				clockController("stop");
 				clockController("destroy");  
+				comenzo1=false;
 				if(!bgmusic.setVolume(.08)) bgmusic.setMute(true)
-				
 				sonido.play("EXCELENTE",function(){ if(!bgmusic.setVolume(.5)) bgmusic.setMute(false);},1);
 				spashMsg("tit_excelente",function(){pantallaGameOver(currScore)},false);
 				return false;

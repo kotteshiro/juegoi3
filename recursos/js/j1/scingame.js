@@ -19,6 +19,7 @@ function avisoTO(){
 	if(avisoindex>=avisostimeout.length){
 		avisoindex=0;
 	}
+	comenzo1=false;
 }
 
 function onTimeOver(time) {
@@ -77,23 +78,26 @@ function limpiaescenario(){
 	}
 }
 function _etapa1(){
+	comenzo1=false;
 	limpiaescenario();
 	currE=e1=new Etapa1(escenajuego);
 	e1.menu=new MenuInGame(escenajuego);
 	etapa = e1;
 }
 function _etapa2(){
+	comenzo1=false;
 	limpiaescenario();
 	currE=e2=new Etapa2(escenajuego);
 	e2.startIntento();
 	e2.menu=new MenuInGame(escenajuego);
 	etapa = e2;
 	clockController("start");
+	clockController("pause");
 //	alert("etapa2");
 }
 
 function _etapa3(){
-	
+	comenzo1=false;
 	limpiaescenario();
 	
 	currE=e3=new Etapa3(escenajuego);
@@ -101,6 +105,7 @@ function _etapa3(){
 	e3.menu=new MenuInGame(escenajuego);
 	etapa = e3;
 	clockController("start");
+	clockController("pause");
 }
 
 function chekalvl(){
@@ -159,6 +164,7 @@ function Etapa1(padre){
 		cx.destroy();
 	}
 	this.onbicho=function(cx){
+		comenza(1);
 		trace("Le has dado al;",cx.prop.ccart);
 		trace("Tienes que darle al:",cx.escena.currCoords);
 		if(cx.escena.currCoords[0]==cx.prop.ccart[0]+1 && cx.escena.currCoords[1]==cx.prop.ccart[1]+1){
@@ -317,6 +323,7 @@ function setMISC(act,cbdrag,cbdrop,cbdraging,grilla){
 	
 	act.mouseDrag=function(e){
 		//console.log(e);
+		comenza(1);
 		cbdraging.call(this,e);
 	}
 	
@@ -655,6 +662,7 @@ function Enunciado_e3(dad){
 function DropDownNumeros(dad,x,y,cbselect){
 	console.log("DropDown");
 	window.globalmdfn=function(actor){
+		
 		for(var g in window.opa){
 			window.opa[g].visible=false;
 			
@@ -675,6 +683,7 @@ function DropDownNumeros(dad,x,y,cbselect){
 		this.parent_.onselect(this.valor);
 	}
 	this.click0=function(){
+		comenza(1);
 		console.log(this);
 		this.opciones.visible=true;
 	}

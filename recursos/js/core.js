@@ -3,6 +3,7 @@ var loading;
 var funciones=[];
 var funciones1=[];
 var allarrows = new Array();
+var comenzo1=false;
 function sc(fncallback,scena){
 	funciones.push({cb:fncallback,sc:scena});
 }
@@ -815,7 +816,7 @@ function Button(elemento,clickCb){
 }
 
 function tocasuena(que,cual){
-	clicktap(que,function(){ sonido.play(cual) });
+	clicktap(que,function(){ sonido.playStop(cual) });
 }
 
 function shakeevery(what,ini,to){
@@ -958,7 +959,7 @@ function mutebgmbtnaction(force){
 		//director.setSoundEffectsEnabled(!director.audioManager.isSoundEffectsEnabled());
 		//bgmusic.setMute(!bgmusic.getMute())
 		mutebtnaction();
-		updatebgmbtnmute();
+		updatebtnmutebg();
 }
 
 /*function updatebtnmute(){
@@ -1062,4 +1063,15 @@ function balancea(que){
 							true)
 					);
 	que.addBehavior(rb);
+}
+function comenza(i){
+	if(!comenzo1){
+		console.log("comienza1!");
+		comenzo1=true;
+		if(!tienetime){
+			clockController("resume");
+		}else{
+			clockController("start");
+		}
+	}
 }

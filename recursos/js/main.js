@@ -72,14 +72,15 @@ function clockController(action){
 
 	switch(action) {
 		case 'init':
-		sonido.stop("reloj");
+			sonido.stop("reloj");
 			if(currTimer){
 				currTimer.cancelNextCallBackAtStop();
 				currTimer.stop(); //.reset();
 				currTimer = undefined;
 			}
 			startClock(cdt);
-			
+			clockController("start");
+			currTimer.pause();
 			break;
 			
 		case 'pause':
@@ -101,6 +102,14 @@ function clockController(action){
 			
 		case 'start':
 			currTimer.start(cdt);
+			if(tienetime){
+				clock.txt.setText(currTimer.format(cdt*1000*60));
+				clock.progress.getActor().backgroundImage.spriteIndex=359;
+				if(cdt=0) clock.progress.getActor().backgroundImage.spriteIndex=0
+			}else{
+				clock.txt.setText(currTimer.format(0));
+				clock.progress.getActor().backgroundImage.spriteIndex=359;		
+			}
 			break;
 	}
 	clock.sube=function(){

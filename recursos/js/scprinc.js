@@ -54,7 +54,6 @@ sc(function(escena){
 	var  bg=animbg(escena,300000);
 	tituloanim=actitulo(escena);
 	tituloanim.y=-tituloanim.height;
-	tocasuena(tituloanim,"sonidoTitulo");
 	//placeHelper(tituloanim);
 	var g=tweenTranslation("tituloanim",tituloanim,1000,tituloanim.x,-80,rebote,false,600);
 	trace("!>>>",tituloanim.y);
@@ -68,7 +67,7 @@ sc(function(escena){
 	});
 	var bgDesc = acdesc(escena);
 	window.bgDesc=bgDesc;
-	tocasuena(tituloanim,"sonidoTitulo");
+	
 	tocasuena(bgDesc,"sonidoIntro");
 	//menu=new MenuInGame(escena);
 	//obj("inst06",escena,"gal",770,255,.5,.5);

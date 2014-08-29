@@ -196,7 +196,7 @@ function startClock(cdt) {
 		}
 	}
 }
-
+ 
 function setCountdown(cdt) {
 	trace("CountDown!");
 	if(!currTimer) {
@@ -204,11 +204,9 @@ function setCountdown(cdt) {
 			delay: 1000/6,
 			onTick: function(time) {
 				clock.txt.setText(currTimer.format(time));
-				var degrree=Math.floor((time/(cdt*1000))*360/60)+1;
-				//console.log((time/(cdt*1000)),degrree,time,cdt);
-				if(degrree>=360)
-					degrree=359; //fix error 
-					
+				var degrree=Math.floor((time/(countDownTime*1000))*360/60)+1;
+				if(degrree>=360) degrree=359; //fix error 
+				if(degrree<0) degrree=0;
 				clock.progress.getActor().backgroundImage.spriteIndex=degrree;
 				if(typeof(clock.progress.getActor().parent)!="undefined") sube(clock.progress.getActor().parent)
 			},
@@ -219,9 +217,9 @@ function setCountdown(cdt) {
 				//logro.calculateScoreFromTime(time);
 			}
 		})
-		currTimer.start(cdt);  
+		currTimer.start(countDownTime);  
 	} else if(currTimer.isRunning()) {
-		currTimer.stop().reset().start(cdt);
+		currTimer.stop().reset().start(countDownTime);
 	}
 }
 function setTimer() {

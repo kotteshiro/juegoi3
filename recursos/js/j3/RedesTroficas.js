@@ -5,7 +5,7 @@ var avisoindex=0;
 var counterarmado=0;
 
 function avisoTO(){
-	
+	comenzo1=false;
 	spashMsg(avisostimeout[avisoindex]);
 	sonido.play("TIME_OVER");
 	avisoindex++;
@@ -164,6 +164,7 @@ function Escena(ac,name,juego){
 
 //Play
 Play.prototype.viewEscena=function(id){
+	comenzo1=false;
 	var arr=this.escenas;
 	for(var g in arr){
 		arr[g].ac.visible=false
@@ -226,6 +227,7 @@ Red.prototype.armar=function(cfg){
 	this.sprtanimalesRedes = getsprt("especies", 12, 6);
 	var This=this;
 	this.dragin=function(e) {
+		comenza(1);
 		var droppedOn = checkDrop(e,this.papi.nodos);
 		console.log("drop",this);
 		if(droppedOn != false){// && droppedOn.hasElement == false) {
@@ -320,6 +322,7 @@ Red.prototype.armar=function(cfg){
 	for(var j in this.currFichas){
 		addDragNDrop(this.currFichas[j],
 				function(e) {
+					comenza(1);
 					this.setScale(1, 1);
 					for(var g in this.papi.nodos){
 						this.papi.nodos[g].current=this.papi.nodos[g].current||undefined;
@@ -382,6 +385,7 @@ Red.prototype.armar1=function(cfg){
 	this.sprtanimalesRedes = getsprt("especies", 12, 6);
 	var This=this;
 	this.dragin=function(e) {
+		comenza(1);
 		var droppedOn = checkDrop(e,this.papi.nodos);
 		console.log("drop",this);
 		if(droppedOn != false){// && droppedOn.hasElement == false) {
@@ -499,6 +503,7 @@ Red.prototype.armar1=function(cfg){
 		this.currFichas[j].mouseDown=function(e){
 										console.log("down",this,e);
 										e.source._flecha=true; 
+										comenza(1);
 									}
 		this.currFichas[j].mouseDrag=function(e){
 										if(e.source._flecha){
@@ -615,6 +620,7 @@ Red.prototype.armar2=function(cfg){
 	this.sprtanimalesRedes = getsprt("especies", 12, 6);
 	var This=this;
 	this.dragin=function(e) {
+		comenza(1);
 		var droppedOn = checkDrop(e,this.papi.nodos);
 		console.log("drop",this);
 		if(droppedOn != false){// && droppedOn.hasElement == false) {
@@ -750,6 +756,7 @@ Red.prototype.armar2=function(cfg){
 	this.conecciones=[];
 	for(var j in this.currFichas){
 		this.currFichas[j].mouseDown=function(e){
+									comenza(1);
 										console.log("down",this,e);
 										e.source._flecha=true; 
 									}
@@ -829,6 +836,7 @@ Red.prototype.armar2=function(cfg){
 	for(var j in this.currFichas){
 		addDragNDrop(this.currFichas[j],
 				function(e) {
+					comenza(1);
 					/*if(this.hacelineas==true){
 					
 					}else{*/
@@ -885,6 +893,7 @@ Red.prototype.chequea1=function(){
 Red.prototype.ahoraFlecha=function(src){
 	var This=this;
 		src.mouseDown=function(e){
+						comenza(1);
 						console.log("down",this,e);
 						e.source._flecha=true; 
 					}
