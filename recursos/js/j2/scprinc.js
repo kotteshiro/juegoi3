@@ -56,8 +56,7 @@ sc(function(escena){
 	var g=tweenTranslation("tituloanim",tituloanim,1000, tituloanim.x, -20,rebote,false,600);
 	trace("!>>>",tituloanim.y);
 	g.addListener({
-		behaviorExpired : function(behavior, time, actor) {
-	
+		behaviorExpired : function(behavior, time, actor){
 		},
 		behaviorStarted: function(behavior, time, actor){
 			sonido.play("TITULO-ABRE");
@@ -79,12 +78,11 @@ sc(function(escena){
 	function clicbtn(e){
 		switch(e.name){
 			case "btn3":
-				/*lastScena=director.scenes.indexOf(director.currentScene);
-				toscenaanim(3);*/
-				mutebgmbtnaction();
-			break;
 			case "btn5":
 				mutebtnaction();
+				updatebtnmutebg();
+			
+				//mutebtnaction();
 			break;
 		}
 		trace(e);

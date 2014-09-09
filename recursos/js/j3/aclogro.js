@@ -5,7 +5,10 @@ var rightScore = 1000,
 	spentTimeScore = 30,  // Substracts 30 for every second.
 	timeUp = -1250,
 	currScore = 0,
-	scoreLevelMultiplier = 1;
+	scoreLevelMultiplier = 1,
+	scoreVisible=0,
+	cuanto=11,
+	intervaltim;
 
 function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
     var ac = new CAAT.ActorContainer();
@@ -101,8 +104,26 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
 		
 		if(currScore < 0)
 			currScore = 0;
-			
-        scoreText.setText(currScore.toLocaleString());
+			if(intervaltim)
+			clearInterval(intervaltim);
+			intervaltim=setInterval(function(){
+				if(scoreVisible<=currScore)	{
+					if(scoreVisible+cuanto<currScore){
+						scoreVisible+=cuanto;
+					}else{
+						scoreVisible=currScore;
+					}
+					
+				}else{
+					if(scoreVisible-cuanto>currScore){
+						scoreVisible-=cuanto;
+					}else{
+						scoreVisible=currScore;
+					}
+				}
+				scoreText.setText(scoreVisible.toLocaleString()) ;
+			}, 10);
+        //scoreText.setText(currScore.toLocaleString());
     }
     
     this.reset = function() {
@@ -114,13 +135,25 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
 		this.updateScore();
     }
 	
-	this.calculateScoreFromTime = function(millis) {
-		trace("Calculating score to add...", millis);
+	this.calculateScoreFromTime = function(segundos,tot) {
+		/*trace("Calculating score to add...", millis);
 		var minutes = getMinutesFromMillis(millis);
 		trace("Minutes", minutes);
-		currScore += ((rightScore / 2) * (scoreLevelMultiplier * 0.3)) - (minutes * spentTimeScore);
+		currScore += ((rightScore / 2) * (scoreLevelMultiplier * 0.3)) - (minutes * spentTimeScore);*/
+		//no me gustó
+		//var segundos = Math.round(millis/1000);
+		console.log("seg=",segundos);
+		var bonotiempo=0;
+		if(segundos>=tot/4){
+			bonotiempo=((segundos*97)*(Math.round(segundos/(tot/4))+1));
+			
+			
+		}
+		console.log("BONO TIEMPO: tiempo restante:",segundos,Math.round(segundos/tot*100)+"%"," Puntaje bono:", bonotiempo);
+		currScore += bonotiempo
 		this.updateScore();
 	};
+	
 	this.removeLogro=function(){
 		var curr = logros.estrellas[logros.currlvl-1];
 		if (curr != undefined) {

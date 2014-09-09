@@ -84,12 +84,16 @@ function Play(ac){
 		console.log("levl=",logro.getLvlIx());
 		if(logro.getLvlIx()<3){
 			countDownTime = 60/60;
+			logro.calculateScoreFromTime(Math.round(clockController("gettime")/1000),countDownTime*60)
+			startiempoam();
 			redes.viewEscena(logro.getLvlIx())
 		}else if(logro.getLvlIx()<6){
 			countDownTime = 90/60;
+			logro.calculateScoreFromTime(Math.round(clockController("gettime")/1000),countDownTime*60)
 			redes.viewEscena(logro.getLvlIx())
 		}else if(logro.getLvlIx()<9){
 			countDownTime = 120/60;
+			logro.calculateScoreFromTime(Math.round(clockController("gettime")/1000),countDownTime*60)
 			redes.viewEscena(logro.getLvlIx())
 		}else{
 		}

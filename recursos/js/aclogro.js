@@ -31,7 +31,7 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
     //placeHelper(bajoestrellas);
     
     var scoreText = new CAAT.TextActor()
-		.setFont("bold 24px 'Patrick Hand SC' 'Trebuchet MS'")
+		.setFont("bold 24px 'Trebuchet MS'")
 		.setTextAlign("right")
 		.setTextBaseline("bottom")
 		.setPosition(790, 40)
@@ -65,7 +65,9 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
 			tmpSeq = new Array();
 			
 			for(var j = 0; j < cuantos; j++) {
-				tmpSeq.push(j + ESC);
+				var cu=j + ESC;
+				if(cu>=0 && cu<=71)
+					tmpSeq.push(cu);
 			}
 			
 			recreateSeq = false;
@@ -87,6 +89,7 @@ function aclogro(conten, x, y, cbTimeUp, cbTimerTick, cbTimerCancel) {
     this.getLvl = function() {
         return logros.estrellas[logros.currlvl];
     }
+	
     this.getLvlIx = function() {
         return logros.currlvl;
     }

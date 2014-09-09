@@ -122,14 +122,8 @@ var sonido={
 		localStorage.bgmute=(a==true);
 	},
 	ismutebg:function(){
-		localStorage = localStorage || {};
-		if(bgmusic && bgmusic.getMute){
-			var mut= (localStorage.bgmute=="true") ||bgmusic.getMute();
-			localStorage.bgmute=mut;
-		}else{
-			return localStorage.bgmute=="true" || false;
-		}
-		return mut;
+		if(!bgmusic.getMute) return false;
+		return bgmusic.getMute();
 	},
 	stop: function(id) {
 		if(soundList[id] !== undefined) {

@@ -20,6 +20,8 @@ function acmenu(conten,btns){
 	updatebtnmutebg();
 	//conten.botonmute=btn4;
 	conten.botonbgmmute=btn3;
+	window.botonesmutes=window.botonesmutes||[];
+	window.botonesmutes.push(btn3);
 	director.currentScene.botonbgmmute=btn3;
 	/*btn("inst16" ,ac,{sprite:[spiconos, 6, 6+sp], x: -10, y:333+40-110, click:scprinc.fnclick}).setScale(.5,.5);
 	btn("inst17" ,ac,{sprite:[spiconos, 6, 6+sp], x: -10, y:377+40-110, click:scprinc.fnclick}).setScale(.5,.5);
@@ -70,6 +72,8 @@ function acmenupric(conten,btns){
 	updatebtnmutebg();
 	//conten.botonmute=btn4;
 	director.currentScene.botonbgmmute=btn1;
+	window.botonesmutes=window.botonesmutes||[];
+	window.botonesmutes.push(btn1);
 	conten.botonbgmmute=btn1;
 	/*btn("inst16" ,ac,{sprite:[spiconos, 6, 6+sp], x: -10, y:333+40-110, click:scprinc.fnclick}).setScale(.5,.5);
 	btn("inst17" ,ac,{sprite:[spiconos, 6, 6+sp], x: -10, y:377+40-110, click:scprinc.fnclick}).setScale(.5,.5);

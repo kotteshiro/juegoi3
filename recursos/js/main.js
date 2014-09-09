@@ -111,6 +111,9 @@ function clockController(action){
 				clock.progress.getActor().backgroundImage.spriteIndex=359;		
 			}
 			break;
+		case "gettime":
+			return currTimer.gettime();
+		break;
 	}
 	clock.sube=function(){
 		sube(clock.border);

@@ -2,20 +2,15 @@ var instances=[];
 var loading;
 var funciones=[];
 var funciones1=[];
-var allarrows = new Array();
-var comenzo1=false;
 function sc(fncallback,scena){
 	funciones.push({cb:fncallback,sc:scena});
 }
-
 function trace(){
 	if(true) console.log(arguments);
 }
-
 loading=function(pc){
 	trace("cargando: ",pc);
 }
-
 function obj(namae,escena,imgid,x,y,sx,sy){
 
 	x= x ? x : 0;
@@ -27,7 +22,6 @@ function obj(namae,escena,imgid,x,y,sx,sy){
 	var a = new CAAT.Actor().
 		setBackgroundImage(director.getImage(imgid));
 		a.setLocation(0,0);
-		a.enableEvents(false);
 		a.setScaleAnchored(sx,sy,0,0);
 	switch(x){
 		case "center":
@@ -46,43 +40,32 @@ function obj(namae,escena,imgid,x,y,sx,sy){
 	if(escena.instancias[namae] != undefined) console.warn("Instancia de nombre: "+escena.instancias[namae].name+" ya existe.");
 	escena.instancias[namae]=a;
 	a.name=namae;
-	
 	return a;
-}
 
+}
 function btn(namae,escena,prop){
 	//spr,x,y,fncb
 	trace("miau");
 	prop.sprite[3]=prop.sprite[3] ? prop.sprite[3] : prop.sprite[2];
 	prop.sprite[4]=prop.sprite[4] ? prop.sprite[4] : prop.sprite[2];
-	prop.hoveranim=(prop.hoveranim===false) ? false : true;
-	prop.subir=prop.subir||false;
 	// setAsButton(spriteImageIndex, normal, over, press, disabled, fn)
 	var b1= new CAAT.Actor().setAsButton(prop.sprite[0].getRef(), prop.sprite[1], prop.sprite[2], prop.sprite[3], prop.sprite[4], prop.click).
             setLocation(prop.x,prop.y);
 	escena.addChild(b1);
 	b1.name=namae;
 	b1.olffunc=b1.mouseEnter;
-	var sonidohover=prop.soundhover||"ELEMENTO";
+	
 	b1.mouseEnter=function(e){
 		console.log(e);
-		if(prop.subir)
-		sube(e.source);
-		e.source.currsx=e.source.currsx||1;
-		e.source.currsy=e.source.currsy||1;
-		if(prop.hoveranim)
-		e.source.scaleTo(e.source.currsx + 0.1 , e.source.currsy + 0.1, 80) ;
-		
+		e.source.scaleTo(1.1, 1.1, 50);
 		b1.olffunc();
 		if(prop.mouseEnter) prop.mouseEnter(e);
-		sonido.play(sonidohover);
+		sonido.play("boton")
 	}
 	b1.olffuncme=b1.mouseExit;
 	
 	b1.mouseExit=function(e){
-		e.source.currsx=e.source.currsx||1;
-		e.source.currsy=e.source.currsy||1;
-		e.source.scaleTo(e.source.currsx, e.source.currsy, 50);
+		e.source.scaleTo(1, 1, 50);
 		b1.olffuncme()
 		
 		if(prop.mouseExit) prop.mouseExit(e);
@@ -129,10 +112,9 @@ function destacadoonmover(actor){
 		actor.setAlpha(.5);
 	}
 }
-function tweenTranslation(id,actor,time,tox,toy,interpolacion,cycle,delay,x,y,pingpong){
+function tweenTranslation(id,actor,time,tox,toy,interpolacion,cycle,delay,x,y){
 	//interpolacion=interpolacion ? interpolacion : new CAAT.Interpolator().createExponentialOutInterpolator(1,false);
     //TO-DO: Reciclar comportamientos (Behavior), actualmente se agregan N por cada llamada a esta funcion, la idea es que al llamar al mismo tween si existe reprodusca uno ya existente.
-	pingpong=pingpong||false;
 	delay=(delay!=undefined) ? delay : 0;
 	x=(x!=undefined) ? x : 0;
 	y=(y!=undefined) ? y : 0;
@@ -151,7 +133,6 @@ function tweenTranslation(id,actor,time,tox,toy,interpolacion,cycle,delay,x,y,pi
 			trace("setenado traslasion");
 			path_behavior.setTranslation(x,y);// set path traverse by the center of the rectangle shape.
 		}*/
-		if(pingpong) path_behavior.setPingPong(pingpong);
 	actor.addBehavior( path_behavior );
 	return path_behavior;
 }
@@ -189,7 +170,7 @@ function toscenaanim(ixin){
 		ixin, CAAT.Scene.EASE_TRANSLATE,CAAT.Actor.prototype.ANCHOR_TOP,
 		ixout,CAAT.Scene.EASE_TRANSLATE,CAAT.Actor.prototype.ANCHOR_TOP,
 		1000,.1,oi,oi);
-	updatebtnmutebg();
+	updatebtnmute();
 }
 /** Editor **/
 
@@ -268,12 +249,13 @@ function MovieClipSprite(spriteref,secuencia,fps,x,y){
 	this.actor=tmp = new CAAT.Actor().
 		setBackgroundImage(spriteref,true).
 		setLocation( x,y ).
-		setScale( 1 , 1 ).
+		setScale( 1,1 ).
 		setAnimationImageIndex( secuencia ).
 		setChangeFPS(this.fps).
-		setClip(false).
 		enableEvents(false);
 	//this.actor.backgroundImage.changeFPS=Number.MAX_VALUE;
+	
+	
 	this.actor.backgroundImage.spriteIndex=this.currentFrame;
 	this.stop=function(ix){
 		if(!isNaN(ix)){
@@ -299,96 +281,6 @@ function MovieClipSprite(spriteref,secuencia,fps,x,y){
 		return this;
 	}
 	var self=this;
-	this._cbendanim=function(e){
-		trace("end",self.stopatend,self);
-		if(self.stopatend){
-			self.stop();
-		}
-	}
-	this.actor.setAnimationEndCallback(this._cbendanim)
-	this.getActor=function(){
-		return this.actor;
-	}
-	return this;
-}
-function FrameByFrameAnim(spriteref,fps,x,y){
-	this.fps=fps;
-	this.currentFrame=0;
-	this.stopatend=true;
-	this.lastAnimationPlayed=undefined;
-	this.lastAnimationaddd=undefined;
-	this.defaultanim=undefined;
-	var self=this;
-	this.actor=tmp = new CAAT.Actor().
-		setBackgroundImage(spriteref,true).
-		setLocation( x,y ).
-		setScale( 1 , 1 ).
-		/*setAnimationImageIndex( secuencia ).*/
-		setChangeFPS(this.fps).
-		setClip(false).
-		enableEvents(false);
-	
-	
-	//this.actor.backgroundImage.changeFPS=Number.MAX_VALUE;
-	
-	this.addAnimation = function(nombre,framearray,time, cb){
-		
-		time=time||100;
-		cb=cb||function(){};
-		this.actor.backgroundImage.addAnimation(nombre,framearray,time,function(e){ self._cbendanim(e); cb(e);  });
-		this.actor.backgroundImage.addAnimation("$stop"+nombre,[framearray[framearray.length-1]],100);
-		this.actor.backgroundImage.addAnimation("$stopini"+nombre,[framearray[0]],100);
-		
-		if(this.defaultanim==undefined){
-			this.defaultanim=nombre;
-		}
-		this.lastAnimationaddd=nombre;
-		console.log("addanimation","nueva animacion",nombre,framearray)
-	}
-	
-	this.stop=function(aname){
-		if(this.lastAnimation!=undefined){
-			this.play("$stop"+this.lastAnimation);
-		}else if(aname!=undefined){
-			this.play("$stop"+aname);
-		}else{
-			this.play("$stop"+this.lastAnimationaddd);
-		}
-		return this;
-	}
-	this.stopini=function(aname){
-		if(this.lastAnimation!=undefined){
-			this.play("$stopini"+this.lastAnimation);
-		}else if(aname!=undefined){
-			this.play("$stopini"+aname);
-		}else{
-			this.play("$stopini"+this.lastAnimationaddd);
-		}
-		return this;
-	}
-	this.static=function(ix){
-		if(this.actor.backgroundImage.mapInfo[ix]!=undefined)
-			this.actor.backgroundImage.spriteIndex=ix;
-		else
-			console.error("Le estas metiendo un index fuera del rango de frames")
-		return this;
-	}
-	
-	this.play=function(animationName,loop){
-		
-		loop=loop||false;
-		this.stopatend=!loop;
-		if(animationName.indexOf("$stop")<0){
-			this.lastAnimation=animationName||this.lastAnimation||this.defaultanim;
-			if(this.actor.backgroundImage.animationsMap[animationName]==undefined) console.error("animacion no existe:",this.lastAnimation)
-			this.actor.backgroundImage.playAnimation(this.lastAnimation);
-		}else{
-			if(this.actor.backgroundImage.animationsMap[animationName]==undefined) console.error("animacion no existe:",animationName)
-			this.actor.backgroundImage.playAnimation(animationName);
-		}
-	}
-	
-	
 	this._cbendanim=function(e){
 		trace("end",self.stopatend,self);
 		if(self.stopatend){
@@ -480,20 +372,16 @@ function getsprt(spritename,ancho,alto){
 	sprtglobal[spritename]=sprtglobal[spritename] || new CAAT.SpriteImage().initialize(director.getImage(spritename),alto,ancho);
 	return sprtglobal[spritename];
 }
-function spashMsg(src,fncb,requireclick,escena,timea){
-	timea=timea||3000;
+function spashMsg(src,fncb,requireclick){
 	requireclick=requireclick||false;
 	fncb=(fncb) ? fncb : function(){};
 	escondeescenario();
-	splashsound(src);
-	
-	var donde=escena||director.currentScene;
 	//obj("inst00",director,'fondo_a',0,0,.5,.5);
-	//spla=obj("splashmsg",donde,'tit_excelente',0,0,.5,.5);.
-	var zona2 = obj(uniq("z"),donde,'zonasensiblefull',0,0,1,1);
+	//spla=obj("splashmsg",director.currentScene,'tit_excelente',0,0,.5,.5);.
+	var zona2 = obj(uniq("z"),director.currentScene,'zonasensiblefull',0,0,1,1);
 	var img=director.getImage(src);
 	var comporta1=new CAAT.ScaleBehavior() //aparece
-		.setFrameTime( donde.time, 500 )
+		.setFrameTime( director.currentScene.time, 500 )
 		.setValues( 0, 1, 0, 1 )
 		.setInterpolator(new CAAT.Interpolator().createBounceOutInterpolator(0,false));
 	
@@ -501,7 +389,7 @@ function spashMsg(src,fncb,requireclick,escena,timea){
 	trace("!>>>",tituloanim.y);*/
 	comporta1.addListener({
 		behaviorExpired : function(behavior, time, actor) {
-			if(!requireclick) setTimeout(function(){spla.desapareceme()},timea)
+			if(!requireclick) setTimeout(function(){spla.desapareceme()},800)
 
 		//tweenTranslation("tituloanim",actor,5000,actor.x,actor.y+10,new CAAT.Interpolator().createExponentialInOutInterpolator(true,1),true,0,0,0);
 	}});
@@ -511,14 +399,14 @@ function spashMsg(src,fncb,requireclick,escena,timea){
 		.emptyBehaviorList()
 		.addBehavior( comporta1 );
 	
-	donde.addChild(spla);
+	director.currentScene.addChild(spla);
 	spla.mouseEnabled=true;
 	
 	spla.clickcb=fncb;
 	spla.desapareceme=function(){
 		zona2.destroy();
 		var comporta2=new CAAT.ScaleBehavior() //desaparece
-		.setFrameTime( donde.time, 300 )
+		.setFrameTime( director.currentScene.time, 300 )
 		.setValues( 1, 0, 1, 0 );
 		//.setInterpolator(new CAAT.Interpolator().createBounceOutInterpolator(0,false));
 		
@@ -529,7 +417,6 @@ function spashMsg(src,fncb,requireclick,escena,timea){
 	           actor.destroy()
 	        }});
 		this.clickcb();
-		this.desapareceme=function(){};
 		//this.destroy();
 	}
 	spla.mouseDown=spla.desapareceme;
@@ -538,7 +425,6 @@ function spashMsg(src,fncb,requireclick,escena,timea){
 	return spla;
 	
 }
-var splashmsg=spashMsg;
 function randomInt(ini,to){ return Math.round(Math.random()*(to-ini))+ini }
 
 function layout(position) {
@@ -599,15 +485,8 @@ function addDragNDrop(object, onDrag, onDrop, onDragging) {
 			onDragging.call(this, e);
 	}
 	
-	object.volver = function(animado) {
-		if(animado==undefined) animado=true;
-		if(animado)
-			animaa(this, {x: this.originalx, y: this.originaly, scalex: 1, scaley: 1, alpha: 1});
-		else{
-			this.x=this.originalx; 
-			this.y=this.originaly;
-			this.alpha=this.scalex=this.scaley=1;
-		}
+	object.volver = function() {
+		animaa(this, {x: this.originalx, y: this.originaly, scalex: 1, scaley: 1, alpha: 1});
 	}
 }
 
@@ -670,7 +549,6 @@ function setoriginalpos(that){
 }
 
 function FlechaAtoB(where,a,b,margen){
-	allarrows.push(this);
 	this.margen=margen||60;
 	this.color="rgb(0,0,0);";
 	this.x0=a.x;
@@ -702,6 +580,7 @@ function FlechaAtoB(where,a,b,margen){
 	this.l2=this.l2||new Linea({x:this.x1+(Math.cos(-this.rotation+(Math.PI/4)+Math.PI)*20),y:this.y1+(Math.sin(-this.rotation+(Math.PI/4)+Math.PI)*20)},{x:this.x1,y:this.y1},where,this.color);
 	this.l3=this.l3||new Linea({x:this.x1+(Math.cos(-this.rotation-(Math.PI/4)+Math.PI)*20),y:this.y1+(Math.sin(-this.rotation-(Math.PI/4)+Math.PI)*20)},{x:this.x1,y:this.y1},where,this.color);
 	this.update=function(){
+			
 			this._rotation=getAngulo({x:this.x0,y:this.y0},{x:this.x1,y:this.y1});	
 			this.rotation=this._rotation.radianes;
 			this.xi=this.x0+(Math.cos(this.rotation)*this.margen);
@@ -735,9 +614,6 @@ function FlechaAtoB(where,a,b,margen){
 		this.x1=x1;
 		this.y1=y1;
 		this.update();
-	}
-	this.destroyme=function(){
-		this.contenedor.destroy();
 	}
 	//this.update();
 }
@@ -793,298 +669,5 @@ function Linea(from,to, where,color){
 	this.p2=function(x,y){
 		this.line.to.x=x;
 		this.line.to.y=y;
-	}
-}
-function sube(that){
-
-	if(typeof(that) != "undefined" && typeof(that.parent) != "undefined" && that.parent)	
-	that.parent.setZOrder( that, Number.MAX_VALUE );
-	else
-	console.log("wut");
-}
-function clicktap(obj, fncb){
-	obj.enableEvents(true);
-	obj._clicktaps=obj._clicktaps||[];
-	obj._clicktaps.push(fncb);
-	obj.mouseDown=function(e){				
-		console.log("mousedown",e);
-		for(var k in this._clicktaps){
-			this._clicktaps[k](e);
-		}
-		this.mouseUp(e);
-	}
-}
-function Button(elemento,clickCb){
-	
-}
-
-function tocasuena(que,cual){
-	clicktap(que,function(){ sonido.playStop(cual) });
-}
-
-function shakeevery(what,ini,to){
-	
-	var rb = new CAAT.RotateBehavior().
-				setCycle(false).
-				setFrameTime(what.time+randomInt(ini,to), 500).
-				setValues( 0, Math.PI/20 , .50, .50 ).
-				setPingPong(true);
-		window.bha=rb;
-	rb.addListener({
-		behaviorExpired : function(behavior, time, actor) {
-			//jump(what,ini,to);
-			shakeevery(what,ini,to);
-		}});
-	if(what.shake!=false){
-		what.addBehavior(rb);
-	}else{
-		//what.removeBehaviour(what.behaviorList[0]);
-	}
-
-}
-function jump(what,ini,to){
-	var g=tweenTranslation(uniq("what!"),what,1000, what.x, what.y-20,rebote,false,randomInt(ini,to),0,0,true);
-	trace("!>>>",tituloanim.y);
-	g.addListener({
-		behaviorExpired : function(behavior, time, actor) {
-			jump(what,ini,to);
-		},
-		behaviorStarted: function(behavior, time, actor){
-			
-		}
-	});
-}
-
-function MenuInGame(escena) {
-    var clicbtn= function(e) {
-		console.log("click btn menu",e.name);
-        switch (e.name) {
-            case "btn2": //volver
-				clockController("pause");
-                confirmdialog(escena, function(conf) {
-                    if (conf) {
-						clockController("destroy");
-                        toscenaanim(1);
-						if(game1)
-							game1.obj.init();
-                    }
-                });
-                
-                break;
-            case "btn0":
-				trace("Btn0 - PAUSE");
-                enpausa(escena);
-                //play
-                break;
-            case "btn3": //info
-                //lastScena = director.scenes.indexOf(director.currentScene);
-                //toscenaanim(3);
-				mutebtnaction();
-                break;
-            case "btn5":
-                mutebtnaction();
-                break;
-        }
-        trace(e);
-    }
-    menux = acmenu(escena, [{ix: 2,fn: clicbtn}, {ix: 0,fn: clicbtn}, {ix: 5,fn: clicbtn}]); //siempre al top
-	console.log("Nuevo menu in game");
-	updatebtnmutebg();
-    return menux;
-}
-
-function destroySmooty(whata){
-	var rb = new CAAT.AlphaBehavior().
-		setValues(1,0).
-        setCycle(false).
-        setFrameTime( whata.time, 600 );
-		
-	whata.addBehavior(rb);
-	rb.addListener({
-		behaviorExpired : function(behavior, time, actor) {
-			actor.destroy();
-			actor=undefined;
-		},
-		behaviorStarted: function(behavior, time, actor){
-		}
-	});
-}
-
-function confirmdialog(ac, cb) {
-    var h1_1 = obj("inst08", ac, 'fondo_ayuda', 0, 0, 1, 1);
-    var h1_0 = obj("inst08", ac, 'dejar_juego', 222, 137, 1, 1);
-    
-    var h1_2 = btn("BTNSI", ac, {sprite: [spsino, 0, 0],x: 394,y: 331,click: _cb}).setScale(1, 1);
-    var h1_3 = btn("BTNNO", ac, {sprite: [spsino, 1, 1],x: 394 + 100,y: 331,click: _cb}).setScale(1, 1);
-    
-    function _cb(e) {
-        trace("0>>>>>", e);
-        switch (e.name) {
-            case "BTNSI":
-                h1_0.destroy();
-                h1_1.destroy();
-                h1_2.destroy();
-                h1_3.destroy();
-                cb(true);
-                break;
-            case "BTNNO":
-                h1_0.destroy();
-                h1_1.destroy();
-                h1_2.destroy();
-                h1_3.destroy();
-                cb(false);
-                break;
-        }
-    }
-}
-
-function mutebtnaction(){
-		//director.setSoundEffectsEnabled(!director.audioManager.isSoundEffectsEnabled());
-		sonido.mutebg(!sonido.ismutebg())
-		updatebtnmutebg();
-		/*
-		if(sonido.ismute()==false){
-			bgmusic.setMute(window.bgmismute); //seteamos el estado guardado de bgm
-			updatebgmbtnmute();
-		}else{		
-			//está muteado
-			window.bgmismute=bgmusic.getMute(); //guardamos el estado de bgm
-			if(!bgmusic.getMute()){ //muteamos el bgm
-				//mutebgmbtnaction(true);
-			}
-			
-		}
-		updatebgmbtnmute();*/
-		
-		
-}
-function mutebgmbtnaction(force){
-		force=force||false
-		
-		if(!force && sonido.ismute()) return;
-		//director.setSoundEffectsEnabled(!director.audioManager.isSoundEffectsEnabled());
-		//bgmusic.setMute(!bgmusic.getMute())
-		mutebtnaction();
-		updatebtnmutebg();
-}
-
-/*function updatebtnmute(){
-	for(var i in director.scenes){
-		if(director.scenes[i].botonmute !== undefined){
-			if(sonido.ismute())
-				director.scenes[i].botonmute.setButtonImageIndex(4, 4+7, 4, 4);	
-			else
-				director.scenes[i].botonmute.setButtonImageIndex(3, 3+7, 3, 3);
-		}
-	} 
-	updatebgmbtnmute();
-}*/
-function updatebtnmutebg(){
-	sonido.mutebg(sonido.ismutebg());
-	for(var i in director.scenes){
-		if(director.scenes[i].botonbgmmute !== undefined){
-			if(sonido.ismute())
-				director.scenes[i].botonbgmmute.setButtonImageIndex(6, 6+7, 6, 6);
-			else
-				director.scenes[i].botonbgmmute.setButtonImageIndex(5, 5+7, 5, 5);
-		}
-	}
-	for(var h in window.botonesmutes){
-		var ki=window.botonesmutes[h];
-		if(sonido.ismute())
-			ki.setButtonImageIndex(6, 6+7, 6, 6);
-		else
-			ki.setButtonImageIndex(5, 5+7, 5, 5);
-	}
-}
-
-/*
-function updatebgmbtnmute(){
-	if(sonido.ismute==undefined) return;
-	for(var i in director.scenes){
-		if(director.scenes[i].botonbgmmute !== undefined){
-			if(!sonido.ismute())
-				director.scenes[i].botonbgmmute.setButtonImageIndex(5, 5+7, 5, 5);
-			else
-				director.scenes[i].botonbgmmute.setButtonImageIndex(6, 6+7, 6, 6);
-		}
-	}
-}*/
-function enpausa(escena) {
-	trace("En Pausa!");
-    clockController("pause");
-    var h1_1 = obj("pa8a", escena, 'fondo_ayuda', 0, 0, 1, 1);
-    var h1_0 = obj("fost08b", escena, 'en-pausa', 222, 137, 1, 1); //222,137
-	
-	var fn=function(a) {
-		clockController("resume");
-        h1_1.destroy();
-        h1_0.destroy();
-    }
-	
-   	clicktap(h1_1,fn);
-	clicktap(h1_0,fn);
-}
-function splashsound(src){
-	var audio="";
-	var lag=1000;
-	switch(src){
-		case "tit_excelente":
-			audio="excelente_2";
-			lag=2000;
-		break;
-		case "tit_intento1":
-			audio="animo_1";
-		break;
-		case "tit_intento2":
-			audio="animo_2";
-		break;
-		case "tit_intento3":
-			audio="pasar_de_nivel";
-			
-		break;
-		case "":
-			audio="";
-		break;
-		case "":
-			audio="";
-		break;
-		case "":
-			audio="";
-		break;
-		case "":
-			audio="";
-		break;
-	}
-	if(audio!=""){
-		setTimeout(function(){  sonido.play(audio); }, lag);
-		
-	}
-}
-function balancea(que){
-	var rb = new CAAT.RotateBehavior().
-			setCycle(true).
-			setFrameTime(0, 8000).
-			setValues( -Math.PI / 40, Math.PI / 40, .50, 0 ).
-			setInterpolator(
-					new CAAT.Interpolator().
-					createCubicBezierInterpolator(
-							{x:0,y:0},
-							{x:1,y:0},
-							{x:0,y:1},
-							{x:1,y:1},
-							true)
-					);
-	que.addBehavior(rb);
-}
-function comenza(i){
-	if(!comenzo1){
-		console.log("comienza1!");
-		comenzo1=true;
-		if(!tienetime){
-			clockController("resume");
-		}else{
-			clockController("start");
-		}
 	}
 }

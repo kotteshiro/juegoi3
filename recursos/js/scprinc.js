@@ -51,7 +51,7 @@ sc(function(escena){
 	}
 	
 	
-	var  bg=animbg(escena,300000);
+	var  bg=animbg(escena,30000000);
 	tituloanim=actitulo(escena);
 	tituloanim.y=-tituloanim.height;
 	//placeHelper(tituloanim);

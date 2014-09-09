@@ -650,6 +650,7 @@ function advanceLevel(){
 				if(currLevel!=2){
 					currLevel=2;
 					comenzo1=false;
+					logro.calculateScoreFromTime(Math.round(clockController("gettime")/1000),countDownTime*60)
 					clockController("stop");
 					sonido.play("PASAR-NIVEL");
 					spashMsg("tit_intento3",function(){ setTimeout(_etapa2, 400); },false);
@@ -660,6 +661,8 @@ function advanceLevel(){
 				if(currLevel!=3){
 					currLevel=3
 					comenzo1=false;
+					logro.calculateScoreFromTime(Math.round(clockController("gettime")/1000),countDownTime*60)
+					
 					clockController("stop");
 					sonido.play("PASAR-NIVEL");
 					spashMsg("tit_intento3",function(){ setTimeout(_etapa3, 400); },false);
@@ -667,6 +670,7 @@ function advanceLevel(){
 				}
             	break;
             case 12:
+				logro.calculateScoreFromTime(Math.round(clockController("gettime")/1000),countDownTime*60)	
 				clockController("stop");
 				clockController("destroy");  
 				comenzo1=false;
